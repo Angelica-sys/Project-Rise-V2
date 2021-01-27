@@ -279,42 +279,62 @@ public class StartingScreen extends JFrame {
 			}
 
 			if (e.getSource() == btnStartGame) {
-
-				if(tfPlayer1.getText().length()==0 || tfPlayer2.getText().length()==0 || tfPlayer3.getText().length()==0 || tfPlayer4.getText().length()==0) {
-					JOptionPane.showMessageDialog(null, "All players must have a name");
-				} else {
-
-					switch(amountOfPlayers) {
-
-					case 2:
-						if(playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())) {
-							JOptionPane.showMessageDialog(null, "Two players are not allowed to have the same color");
-						} else {
-							startUpGame();
+				boolean nameUnique = true;
+				String[] playerNames = new String[4];
+				playerNames[0] = tfPlayer1.getText();
+				playerNames[1] = tfPlayer2.getText();
+				playerNames[2] = tfPlayer3.getText();
+				playerNames[3] = tfPlayer4.getText();
+				for(int i = 0; i<playerNames.length-1 ; i++) {
+					for(int j = i+1; j<playerNames.length; j++) {
+						if (playerNames[i].equals(playerNames[j])) {
+							nameUnique = false;
+							JOptionPane.showMessageDialog(null, "Two players can not have the same name");
 						}
-						break;
+					}
+				}
 
-					case 3:
-						if(playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem()) 
-								|| playerColors[2].getSelectedItem().equals(playerColors[0].getSelectedItem())) {
-							JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-						} else {
-							startUpGame();
-						}
-						break;
 
-					case 4:
-						if(playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem()) 
-								|| playerColors[2].getSelectedItem().equals(playerColors[3].getSelectedItem())
-								|| playerColors[0].getSelectedItem().equals(playerColors[3].getSelectedItem())) {
-							JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-						} else {
-							startUpGame();
+				if(nameUnique) {
+					if (tfPlayer1.getText().length() == 0 || tfPlayer2.getText().length() == 0 || tfPlayer3.getText().length() == 0 || tfPlayer4.getText().length() == 0) {
+						JOptionPane.showMessageDialog(null, "All players must have a name");
+					} else {
+
+						switch (amountOfPlayers) {
+
+							case 2:
+								if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())) {
+									JOptionPane.showMessageDialog(null, "Two players are not allowed to have the same color");
+								} else {
+									startUpGame();
+								}
+								break;
+
+							case 3:
+								if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
+										|| playerColors[2].getSelectedItem().equals(playerColors[0].getSelectedItem())) {
+									JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
+								} else {
+									startUpGame();
+								}
+								break;
+
+							case 4:
+								if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
+										|| playerColors[2].getSelectedItem().equals(playerColors[3].getSelectedItem())
+										|| playerColors[0].getSelectedItem().equals(playerColors[3].getSelectedItem())) {
+									JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
+								} else {
+									startUpGame();
+								}
+								break;
 						}
-						break;
 					}
 				}
 			}
+
+
+
 		}
 
 		/**
