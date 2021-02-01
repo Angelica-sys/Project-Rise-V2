@@ -66,6 +66,14 @@ public class Tavern implements Tile{
 				+ "Total rent:        Read Rules";
 		return info;
 	}
+
+	public String getRent(){
+		return "Read Rules";
+	}
+
+	public int getRentPerLevel(){
+		return 0;
+	}
 	
 	public void setPurchaseable(boolean b) {
 		this.purchasable = b;

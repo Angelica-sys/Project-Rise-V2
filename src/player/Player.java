@@ -337,6 +337,21 @@ public class Player {
 
 	}
 
+	public void sellTavern(Tavern tavern) {
+
+		int total = (tavern.getPrice());
+
+		int res = JOptionPane.showConfirmDialog(null,
+				"Do you really want to sell " + tavern.getName() + " for: " + total);
+
+		if (res == 0) {
+			increaseBalance(total);
+			this.propertiesOwned.remove(tavern);
+			tavern.setOwner(null);
+		}
+
+	}
+
 	/**
 	 * @param newTavern add a new Tavern to a user
 	 */
@@ -408,6 +423,18 @@ public class Player {
 	 */
 	public ArrayList<Tavern> getTaverns() {
 		return this.tavernsOwned;
+	}
+
+
+	/**
+	 * Gets Tavern at specified position
+	 *
+	 * @param pos
+	 * @return a Tavern
+	 */
+	public Tavern getTavernAt(int pos)   {
+
+		return this.tavernsOwned.get(pos);
 	}
 
 	/**

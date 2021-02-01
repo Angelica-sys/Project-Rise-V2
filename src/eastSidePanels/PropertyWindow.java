@@ -18,14 +18,13 @@ public class PropertyWindow extends JPanel {
 	private PlayerList playerList;
 	private JTabbedPane tab;
 	private PlayerProperties playerProperties;
+	private PlayerTavern playerTaverns;
 
 	private int playerAt;
 
 	private int[] size;
 
 	/**
-	 * @param playerList
-	 * 
 	 *this method is used to update the panel
 	 */
 	
@@ -72,6 +71,18 @@ public class PropertyWindow extends JPanel {
 			tab.addTab("Property" + (i + 1), playerProperties);
 			tab.setBackgroundAt(i, playerList.getPlayerFromIndex(getPlayerAt()).getProperty(i).getColor());
 
+		}
+
+		//TODO - arbetar med att försöka skapa taverns i en tab
+		//Behövs kanske skapas en playerTaverns
+		int tavernSize = playerList.getPlayerFromIndex(getPlayerAt()).getTaverns().size();
+
+		for (int i = 0; i < tavernSize; i++) {
+
+			new PropertyWindow();
+			playerTaverns = new PlayerTavern(playerList, getPlayerAt(), i);
+			tab.addTab("Tavern" + (i + 1), playerProperties);
+			tab.setBackgroundAt(i, playerList.getPlayerFromIndex(getPlayerAt()).getTavernAt(i).getColor());
 		}
 
 	}
