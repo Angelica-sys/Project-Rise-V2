@@ -15,6 +15,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * @author Hanna My Jansson, 2021-02-01
+ * Denna klassen skapade jag för att kunna presentera taverns också på sidan,
+ *
+ */
 public class PlayerTavern extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1L;

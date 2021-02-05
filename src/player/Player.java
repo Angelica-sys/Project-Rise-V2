@@ -36,7 +36,6 @@ public class Player {
 
 	private ArrayList<Property> propertiesOwned;
 	private ArrayList<Tile> tilesOwned;
-
 	private ArrayList<Tavern> tavernsOwned;
 
 	/**

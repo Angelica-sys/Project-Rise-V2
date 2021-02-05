@@ -73,15 +73,14 @@ public class PropertyWindow extends JPanel {
 
 		}
 
-		//TODO - arbetar med att försöka skapa taverns i en tab
-		//Behövs kanske skapas en playerTaverns
+		//TODO - arbetar med att försöka skapa taverns i en tab, Det funkar typ men har inte hunnit testa det
 		int tavernSize = playerList.getPlayerFromIndex(getPlayerAt()).getTaverns().size();
 
 		for (int i = 0; i < tavernSize; i++) {
 
 			new PropertyWindow();
 			playerTaverns = new PlayerTavern(playerList, getPlayerAt(), i);
-			tab.addTab("Tavern" + (i + 1), playerProperties);
+			tab.addTab("Tavern" + (i + 1), playerTaverns);
 			tab.setBackgroundAt(i, playerList.getPlayerFromIndex(getPlayerAt()).getTavernAt(i).getColor());
 		}
 
