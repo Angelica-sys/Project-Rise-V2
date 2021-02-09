@@ -1,5 +1,4 @@
-package model;
-
+package model.player;
 
 /** 
  * Enum class used to deal with the players rank. That is, different things happen
@@ -7,7 +6,6 @@ package model;
  * 
  * @author AevanDino
  */
-
 public enum PlayerRanks {
 	
 	/**
@@ -88,17 +86,14 @@ public enum PlayerRanks {
 			return 200;
 		}
 	},
-	
-	
+
 	KINGS {
 		
 		/**
 		 * How salary is calculated for the king
 		 */
 		public int getSalary(int dots) {
-		
 			return 40 * dots;
-			
 		}
 
 		/**

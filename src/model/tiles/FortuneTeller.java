@@ -1,4 +1,4 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
@@ -10,8 +10,7 @@ import javax.swing.ImageIcon;
  * @author SebastianViro, AevanDino, MuhammadAbdulkhuder
  *
  */
-public class FortuneTeller implements Tile{
-	
+public class FortuneTeller implements Tile {
 	private Color color = Color.WHITE;
 	private static final String NAME = "Fortune Teller";
 	
@@ -38,12 +37,12 @@ public class FortuneTeller implements Tile{
 	 * @param amount, amount to pay or be paid.
 	 */
 	public FortuneTeller(Boolean isBlessing, String description, int amount) {
-		
-		if(isBlessing) {
+		if (isBlessing) {
 			setFortune("BLESSING");
-		}else {
+		} else {
 			setFortune("CURSE");
 		}
+
 		setDescription(description);
 		setAmount(amount);
 	}

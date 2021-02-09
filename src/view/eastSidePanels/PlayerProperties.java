@@ -20,16 +20,15 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants; 
 import javax.swing.border.MatteBorder;
 
-import model.Player;
-import model.PlayerList;
-import view.tiles.Property;
+import model.player.Player;
+import model.player.PlayerList;
+import model.tiles.Property;
 
 /**
  * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
  *
  */
 public class PlayerProperties extends JPanel implements ActionListener {
-
 	private static final long serialVersionUID = 1L;
 	private JLabel lblName = new JLabel("Name");
 	private JLabel lblPicture = new JLabel("");
@@ -52,13 +51,11 @@ public class PlayerProperties extends JPanel implements ActionListener {
 	 * @param propertyAtI 
 	 */
 	public PlayerProperties(PlayerList playerList, int playerAtI, int propertyAtI) {
-
 		this.playerList = playerList;
 		this.playerAtI = playerAtI;
 		this.propertyAtI = propertyAtI;
 
 		setBorder(null);
-
 		setOpaque(false);
 		setBackground(Color.DARK_GRAY);
 		setPreferredSize(new Dimension(330, 607));
@@ -135,26 +132,20 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		Image resizedImg = img.getScaledInstance(lblPicture.getWidth(), lblPicture.getHeight(), Image.SCALE_SMOOTH);
 
 		lblPicture.setIcon(new ImageIcon(resizedImg));
-
 		btnUpgrade.addActionListener(this);
 		btnDowngrade.addActionListener(this);
 		btnSell.addActionListener(this);
 		btnTrade.addActionListener(this);
-
 	}
 
 	/**
 	 * What happens when a button is pressed
 	 */
 	public void actionPerformed(ActionEvent e) {
-
 		// Sell properties
 		if (e.getSource() == btnSell) {
-
 			Property tempProperty = playerList.getPlayerFromIndex(playerAtI).getPropertyAt(propertyAtI);
-
 			playerList.getPlayerFromIndex(playerAtI).sellProperty(tempProperty);
-
 		}
 		// upgrade properties
 		if (e.getSource() == btnUpgrade) {
@@ -165,24 +156,18 @@ public class PlayerProperties extends JPanel implements ActionListener {
 
 			if (tempRes.length() < tempProperty.getLevel()) {
 				taLevel.append(plus);
-
 			}
-
 		}
 		// downgrade properties
 		if (e.getSource() == btnDowngrade) {
 			Property tempProperty = playerList.getPlayerFromIndex(playerAtI).getPropertyAt(propertyAtI);
-
 			tempProperty.decreaseLevel();
-
 			String tempRes = taLevel.getText();
 
 			if (tempRes.length() > tempProperty.getLevel()) {
-
 				tempRes = tempRes.substring(0, tempRes.length() - 1);
 				taLevel.setText(tempRes);
 			}
-
 		}
 
 		// trade with a certain model.player
@@ -195,110 +180,103 @@ public class PlayerProperties extends JPanel implements ActionListener {
 			int confirm;
 
 			do {
-			otherPlayerInt = (Integer
-					.parseInt(JOptionPane.showInputDialog(null,
-							"Which model.player do you want to trade with?\n 1 for model.player 1 \n 2 for model.player 2 and so on..."))
-					- 1);
-			  
-	
-			
+				String otherPlayerChoice = JOptionPane.showInputDialog(
+						null,
+						"Which model.player do you want to trade with?\n " +
+								"1 for model.player 1 \n " +
+								"2 for model.player 2 and so on..."
+				);
+				otherPlayerInt = (Integer.parseInt(otherPlayerChoice) - 1);
 
-			} while(otherPlayerInt == playerList.getActivePlayer().getPlayerIndex() || otherPlayerInt > playerList.getLength()-1);
+			} while (
+					otherPlayerInt == playerList.getActivePlayer().getPlayerIndex() ||
+					otherPlayerInt > playerList.getLength()-1
+			);
 			
 			Player activePlayer = playerList.getActivePlayer();
 			Player otherPlayer = playerList.getPlayerFromIndex(otherPlayerInt);
-			
-			if ( otherPlayer.getProperties().size() > 0) {
-				
-			
-			do {			
-				type = (Integer.parseInt(JOptionPane.showInputDialog(null,
-						"Pick a trade type\n 1 = Property for property \n 2 = Money for property\n 3 = Both")));	
-			} while (type<0 ||type >3);
-			
 
-			if (type == 1 || type == 3) {
-				
+			if (otherPlayer.getProperties().size() > 0) {
 				do {
-					whichPropertyToGive = (Integer.parseInt(JOptionPane.showInputDialog(null,
-							"Which property do you want to give away \n 1 for property 1 \n 2 for property 2 and so on..."))
-							- 1);
-				} while (whichPropertyToGive > activePlayer.getProperties().size());
-				
-			}
+					type = (Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Pick a trade type\n 1 = Property for property \n 2 = Money for property\n 3 = Both")));
+				} while (type<0 ||type >3);
 
-			if (type == 2 || type == 3) {
-				do {
-					offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
-							"How much do you offer " + otherPlayer.getName() + "?")));
-				} while (offer > activePlayer.getBalance());
-			
-			}
+				if (type == 1 || type == 3) {
+					do {
+						whichPropertyToGive = (Integer.parseInt(JOptionPane.showInputDialog(null,
+								"Which property do you want to give away \n 1 for property 1 \n 2 for property 2 and so on..."))
+								- 1);
+					} while (whichPropertyToGive > activePlayer.getProperties().size());
+				}
 
-			do {
-				whichPropertyYouWant = (Integer.parseInt(JOptionPane.showInputDialog(null,
-						"Which property do you want \n 1 for property 1 \n 2 for property 2 and so on...")) - 1);
-			} while (whichPropertyYouWant > otherPlayer.getProperties().size());
-			
-
-			Property activePlayerProperty = playerList.getActivePlayer().getPropertyAt(whichPropertyToGive);
-
-			Property otherPlayersProperty = playerList.getPlayerFromIndex(otherPlayerInt)
-					.getPropertyAt(whichPropertyYouWant);
-
-			
-
-			if (type == 1 || type == 3) {
-				confirm = JOptionPane.showConfirmDialog(null,
-						otherPlayer.getName() + " Are you okay with this trade?" + "\n You are getting " + offer
-								+ "Gold coins" + "\n and are trading away " + otherPlayersProperty.getName() + "\n for "
-								+ activePlayerProperty.getName());
-
-				if (confirm == 0) {
-
-					activePlayer.removeProperty(activePlayerProperty);
-					otherPlayer.removeProperty(otherPlayersProperty);
-
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
-
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
-
-					activePlayerProperty.setOwner(otherPlayer);
-					activePlayer.addNewProperty(otherPlayersProperty);
-
-					otherPlayersProperty.setOwner(activePlayer);
-					otherPlayer.addNewProperty(activePlayerProperty);
-
-					JOptionPane.showMessageDialog(null, "Trade Complete! Omedato gosaimasu!!!");
+				if (type == 2 || type == 3) {
+					do {
+						offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
+								"How much do you offer " + otherPlayer.getName() + "?")));
+					} while (offer > activePlayer.getBalance());
 
 				}
 
-			}
+				do {
+					whichPropertyYouWant = (Integer.parseInt(JOptionPane.showInputDialog(null,
+							"Which property do you want \n 1 for property 1 \n 2 for property 2 and so on...")) - 1);
+				} while (whichPropertyYouWant > otherPlayer.getProperties().size());
 
-			if (type == 2) {
-				confirm = JOptionPane.showConfirmDialog(null, otherPlayer.getName() + " Are you okay with this trade?"
-						+ "\n You are getting " + offer + "Gold coins for " + otherPlayersProperty.getName());
+				Property activePlayerProperty = playerList.getActivePlayer().getPropertyAt(whichPropertyToGive);
+				Property otherPlayersProperty = playerList.getPlayerFromIndex(otherPlayerInt).getPropertyAt(whichPropertyYouWant);
 
-				if (confirm == 0) {
+				if (type == 1 || type == 3) {
+					confirm = JOptionPane.showConfirmDialog(
+							null,
+							otherPlayer.getName() + " Are you okay with this trade?" + "\n You are getting " +
+									offer + "Gold coins" + "\n and are trading away " + otherPlayersProperty.getName() +
+									"\n for " + activePlayerProperty.getName()
+					);
 
-					otherPlayer.removeProperty(otherPlayersProperty);
-					activePlayerProperty.setOwner(otherPlayer);
-					activePlayer.addNewProperty(otherPlayersProperty);
+					if (confirm == 0) {
+						activePlayer.removeProperty(activePlayerProperty);
+						otherPlayer.removeProperty(otherPlayersProperty);
 
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
+						activePlayer.decreaseBalace(offer);
+						activePlayer.decreaseNetWorth(offer);
 
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
-					JOptionPane.showMessageDialog(null, "Trade Complete! Omedato gosaimasu!!!");
+						otherPlayer.increaseBalance(offer);
+						otherPlayer.increaseNetWorth(offer);
 
+						activePlayerProperty.setOwner(otherPlayer);
+						activePlayer.addNewProperty(otherPlayersProperty);
+
+						otherPlayersProperty.setOwner(activePlayer);
+						otherPlayer.addNewProperty(activePlayerProperty);
+
+						JOptionPane.showMessageDialog(null, "Trade Complete! Omedato gosaimasu!!!");
+					}
 				}
-			}
-		}
-			else {
-				JOptionPane.showMessageDialog(null, "Trade can not be done! The model.player you picked does not own any properties!");
+
+				if (type == 2) {
+					confirm = JOptionPane.showConfirmDialog(null, otherPlayer.getName() +
+							" Are you okay with this trade?"
+							+ "\n You are getting " + offer + "Gold coins for " + otherPlayersProperty.getName());
+					if (confirm == 0) {
+						otherPlayer.removeProperty(otherPlayersProperty);
+						activePlayerProperty.setOwner(otherPlayer);
+						activePlayer.addNewProperty(otherPlayersProperty);
+
+						activePlayer.decreaseBalace(offer);
+						activePlayer.decreaseNetWorth(offer);
+
+						otherPlayer.increaseBalance(offer);
+						otherPlayer.increaseNetWorth(offer);
+						JOptionPane.showMessageDialog(null, "Trade Complete! Omedato gosaimasu!!!");
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(
+						null,
+						"Trade can not be done! The model.player" +
+						"you picked does not own any properties!"
+				);
 			}
 		}
 	}
@@ -312,10 +290,8 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		int lvl = playerList.getPlayerFromIndex(playerIndex).getPropertyAt(propertyIndex).getLevel();
 
 		for (int i = 0; i < lvl; i++) {
-
 			taLevel.append(plus);
 		}
-
 	}
 
 	/**
@@ -325,11 +301,7 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		int lvl = property.getLevel();
 
 		for (int i = 0; i < lvl; i++) {
-
 			taLevel.append(plus);
-
 		}
-
 	}
-
 }

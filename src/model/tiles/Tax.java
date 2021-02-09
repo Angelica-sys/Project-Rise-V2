@@ -1,13 +1,12 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
-import model.Player;
+import model.player.Player;
 
 public class Tax implements Tile {
-
 	private final static String NAME = "Kings tax";
 	private final static Boolean PURCHASABLE = false;
 	private final static Color COLOR = Color.WHITE;
@@ -19,6 +18,7 @@ public class Tax implements Tile {
 	public Tax() {
 		
 	}
+
 	public void onLanding() {
 		taxToPay =  player.getPlayerRank().calculateTax();
 	}

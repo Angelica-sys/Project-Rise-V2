@@ -1,19 +1,19 @@
-package view.tileCollection;
+package model.tileCollection;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
-import view.tiles.Jail;
-import view.tiles.Tavern;
-import view.tiles.Work;
-import view.tiles.FortuneTeller;
-import view.tiles.Go;
-import view.tiles.GoToJail;
-import view.tiles.Property;
-import view.tiles.SundayChurch;
-import view.tiles.Tax;
-import view.tiles.Tile;
+import model.tiles.Jail;
+import model.tiles.Tavern;
+import model.tiles.Work;
+import model.tiles.FortuneTeller;
+import model.tiles.Go;
+import model.tiles.GoToJail;
+import model.tiles.Property;
+import model.tiles.SundayChurch;
+import model.tiles.Tax;
+import model.tiles.Tile;
 
 
 /** 
@@ -23,11 +23,9 @@ import view.tiles.Tile;
  */
 
 public class TileCollection {
-
 	private Tile[] tileArray = new Tile[40];
 
 	public TileCollection() {
-		
 		tileArray[0] = new Go("GO");
 		tileArray[1] = new Property("Wood Cutter Camp", 60, 2, 30, new Color(58,20,56,255), 50,new ImageIcon("tilePics/Wood.png"));
 		tileArray[2] = new FortuneTeller();
@@ -67,14 +65,10 @@ public class TileCollection {
 		tileArray[36] = new FortuneTeller();
 		tileArray[37] = new Property("Church", 350, 35, 300, new Color(4,74,159, 255),200, new ImageIcon("tilePics/churchp.png"));
 		tileArray[38] = new Tax(); 
-		tileArray[39] = new Property("The Castle", 400, 50, 400, new Color(4,74,159, 255),200, new ImageIcon("tilePics/castle.png"));		
-
+		tileArray[39] = new Property("The Castle", 400, 50, 400, new Color(4,74,159, 255),200, new ImageIcon("tilePics/castle.png"));
 	}
-	
-	 
+
 	public Tile getTileAtIndex(int index) {
 		return tileArray[index];
 	}
-	
-	
 }

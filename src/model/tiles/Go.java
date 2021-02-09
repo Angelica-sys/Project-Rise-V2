@@ -1,4 +1,4 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
@@ -9,10 +9,8 @@ import javax.swing.ImageIcon;
  * @author AevanDino, SebastianViro
  */
 public class Go implements Tile {
-
 	private String info;
 	private String name = "GO";
-	
 	private ImageIcon img = new ImageIcon("tilePics/Go.png");
 	
 	/**

@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import view.tiles.Property;
-import view.tiles.Tavern;
-import view.tiles.Tile;
+import model.tiles.Property;
+import model.tiles.Tavern;
+import model.tiles.Tile;
 
 /**
  * Player class deals with everything that has to do with a model.player.
  * 
- * @author AevanDino, Seth Öberg, Muhammad Hasan, Sebastian Viro
+ * @author AevanDino, Seth ï¿½berg, Muhammad Hasan, Sebastian Viro
  */
 public class Player {
 	private String name;
@@ -49,7 +49,6 @@ public class Player {
 	 */
 
 	public Player(String inPlayerName, ImageIcon playerIcon, int playerIndex) {
-
 		setName(inPlayerName);
 		this.playerIcon = playerIcon;
 		setIsAlive(true);
@@ -321,9 +320,7 @@ public class Player {
 	}
 
 	public void sellProperty(Property property) {
-
 		int total = (property.getPrice() + (property.getLevel() * property.getLevelPrice()));
-
 		int res = JOptionPane.showConfirmDialog(null,
 				"Do you really want to sell " + property.getName() + " for: " + total);
 
@@ -332,7 +329,6 @@ public class Player {
 			this.propertiesOwned.remove(property);
 			property.setOwner(null);
 		}
-
 	}
 
 	/**
@@ -358,15 +354,14 @@ public class Player {
 	public void clearPlayer() {
 		for (int i = 0; i < propertiesOwned.size(); i++) {
 			propertiesOwned.get(i).clearProperty();
-
 		}
+
 		for (int i = 0; i < tavernsOwned.size(); i++) {
 			tavernsOwned.get(i).clearTavern();
 		}
 	}
 
 	public Property getPropertyAt(int pos)   {
-
 		return this.propertiesOwned.get(pos);
 	}
 
@@ -381,7 +376,6 @@ public class Player {
 	}
 
 	public void checkPlayerRank() {
-
 		if (getNetWorth() >= 2000) {
 			setPlayerRank(PlayerRanks.KNIGHT);
 		}
@@ -416,5 +410,4 @@ public class Player {
 	public Color getPlayerColor() {
 		return playerColor;
 	}
-
 }

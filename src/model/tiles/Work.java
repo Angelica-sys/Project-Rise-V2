@@ -1,10 +1,10 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
-import model.Player;
+import model.player.Player;
 
 /**
  * @author Muhammad abdulkhuder, AevanDino, Sebastian Viro, .
@@ -27,13 +27,10 @@ public class Work implements Tile {
 		setRoll(nbrOfDots);
 		player.increaseBalance(player.getPlayerRank().getSalary(nbrOfDots));
 		player.increaseNetWorth(getPay());
-
 	}
 
 	public int getPay() {
-
 		return player.getPlayerRank().getSalary(getRoll());
-
 	}
 
 	public String getName() {
@@ -60,8 +57,6 @@ public class Work implements Tile {
 	public Player setPlayer(Player player) {
 		return this.player = player;
 	}
-
-	
 
 	@Override
 	public String getTitle() {

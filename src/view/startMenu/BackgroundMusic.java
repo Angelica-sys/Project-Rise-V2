@@ -13,7 +13,6 @@ import javax.sound.sampled.Clip;
  * @author AevanDino
  */
 public class BackgroundMusic extends Thread {
- 
 	private Clip clip;
 	private Thread musicPlayer;
 	public Boolean isPlaying;
@@ -28,12 +27,9 @@ public class BackgroundMusic extends Thread {
 	 * playing the chosen file, that is if there is a file to be played.
 	 */
 	public void startMusic() {
-		
-		if(clip!=null && isPlaying) {
+		if (clip!=null && isPlaying) {
 			clip.setFramePosition(musicPausedAt);
 			clip.start();
-			
-		
 		} else if(musicPlayer==null) {
 			musicPlayer = new Thread(this);
 			isPlaying=true;
@@ -45,7 +41,7 @@ public class BackgroundMusic extends Thread {
 	 * Pauses music, music continues where it stopped when model.player asks for music again.
 	 */
 	public void pauseMusic() {
-		if(clip!=null) {
+		if (clip!=null) {
 			musicPausedAt = clip.getFramePosition();
 			clip.stop();
 		}
@@ -55,7 +51,7 @@ public class BackgroundMusic extends Thread {
 	 * Run method from Thread class. This method starts playing music until told to stop.
 	 */
 	public void run() {
-		while(isPlaying && clip == null) {
+		while (isPlaying && clip == null) {
 			try {
 				File musicPath = new File("music/bgMusic.wav");				
 				AudioInputStream ais = AudioSystem.getAudioInputStream(musicPath);
@@ -63,9 +59,7 @@ public class BackgroundMusic extends Thread {
 				clip.open(ais);
 				clip.loop(Clip.LOOP_CONTINUOUSLY);
 				clip.start();
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.out.println("You did not choose a WAV file");
 			}
 		}

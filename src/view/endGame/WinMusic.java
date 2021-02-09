@@ -11,8 +11,6 @@ import javax.sound.sampled.Clip;
  *
  */
 public class WinMusic extends Thread {
-
-
 	private Clip clip;
 	private Thread musicPlayer;
 	public Boolean isPlaying;
@@ -25,8 +23,7 @@ public class WinMusic extends Thread {
 	 * Starts music
 	 */
 	public void startMusic() {
-
-		if(musicPlayer==null) {
+		if (musicPlayer==null) {
 			musicPlayer = new Thread(this);
 			isPlaying=true;
 			musicPlayer.start();
@@ -37,8 +34,7 @@ public class WinMusic extends Thread {
 	 * Stops the music
 	 */
 	public void stopMusic() {
-		
-		if(musicPlayer != null) {
+		if (musicPlayer != null) {
 			clip.stop();
 			musicPlayer = null;
 			isPlaying = false;
@@ -52,6 +48,7 @@ public class WinMusic extends Thread {
 	public void run() {
 		File musicPath;
 		AudioInputStream ais;
+
 		while(isPlaying && clip == null) {
 			try {
 				musicPath = new File("music/victory.wav");				

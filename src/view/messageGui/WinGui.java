@@ -12,7 +12,6 @@ import javax.swing.JPanel;
  * @author Mohammad Abdulkhuder.
  */
 public class WinGui extends JPanel {
-
 	private JLabel lblLblpic = new JLabel("lblPic");
 
 	/**

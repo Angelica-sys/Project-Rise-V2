@@ -1,11 +1,11 @@
-package model;
+package model.player;
 
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
 import view.board.ColorIconMap;
-import view.colorsAndIcons.StringColorMap;
+import view.StringColorMap;
 import view.eastSidePanels.EastSidePanel;
 
 /**
@@ -13,7 +13,6 @@ import view.eastSidePanels.EastSidePanel;
  * @author Seth Oberg
  *
  */
-
 public class PlayerList {
 	private LinkedList<Player> activePlayers = new LinkedList<Player>();
 	private ColorIconMap colorIcons = new ColorIconMap();
@@ -22,15 +21,13 @@ public class PlayerList {
 	private ImageIcon playerIcon = new ImageIcon(); 
 	private int currentPlayer = 0; 
 	private int playerListLength = 0;
-	
-	
+
 	/**
 	 * Constructor that sets the active model.player to 0 immediately at the start of a game
 	 * @param p
 	 */
 	public PlayerList(EastSidePanel p) {
-		currentPlayer = 0;  
-		
+		currentPlayer = 0;
 	}
 	
 	/**
@@ -112,7 +109,6 @@ public class PlayerList {
 	 * Used to switch to the current model.player to the next one
 	 */
 	public void switchToNextPlayer() {
-		
 		if(currentPlayer < (activePlayers.size() - 1) ) {
 			currentPlayer = currentPlayer + 1;
 		}
@@ -120,5 +116,4 @@ public class PlayerList {
 			currentPlayer = 0; 
 		}	
 	}
-
 }

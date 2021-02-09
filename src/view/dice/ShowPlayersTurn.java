@@ -9,7 +9,7 @@ import javax.swing.*;
  * A Lable which shows current players turn
  * @author Rohan Samandari
  */
-public class ShowPlayersTurn extends JPanel{
+public class ShowPlayersTurn extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel lblPlayer;
@@ -41,6 +41,7 @@ public class ShowPlayersTurn extends JPanel{
 		lblPlayer.setBorder(BorderFactory.createLineBorder(Color.white));
 		add(lblPlayer);
 	}
+
 	/**
 	 * @param playerName
 	 * @param color

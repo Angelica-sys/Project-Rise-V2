@@ -15,9 +15,7 @@ import javax.swing.JPanel;
  * Class to draw a GUI when players are eliminated
  * @author Sebastian Viro, Muhammad Abdulkhuder
  */
-public class DeathGUI extends JPanel implements ActionListener{
-
-
+public class DeathGUI extends JPanel implements ActionListener {
 	private JLabel lblPic = new JLabel("");
 	private JButton btnExit = new JButton("The plague has taken you, you lost");
 	private Font font = new Font("Gabriola", Font.BOLD, 32);

@@ -1,4 +1,4 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 

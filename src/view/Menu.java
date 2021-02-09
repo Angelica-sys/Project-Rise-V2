@@ -1,4 +1,4 @@
-package view.menu;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import view.board.Rules;
-import view.combinedPanels.GamePanels;
 import view.startMenu.BackgroundMusic;
 import view.startMenu.StartingScreen;
 

@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import model.PlayerList;
+import model.player.PlayerList;
 
 /**
  * This class is used to show information about the players
@@ -19,7 +19,6 @@ import model.PlayerList;
  *
  */
 public class PlayerInfoPanel extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 
 	private JLabel lblName = new JLabel("");
@@ -30,9 +29,7 @@ public class PlayerInfoPanel extends JPanel {
 	private JPanel p2 = new JPanel();
 	private JPanel p3 = new JPanel();
 	private JPanel p4 = new JPanel();
-	
 	private PropertyWindow propertyWindow = new PropertyWindow();
-
 	private Font font = new Font("ALGERIAN", Font.PLAIN, 18);
 
 	/**
@@ -43,7 +40,6 @@ public class PlayerInfoPanel extends JPanel {
 	 * playernbr is to specify what model.player
 	 */
 	public PlayerInfoPanel(PlayerList playerList, int playernbr) {
-
 		setPreferredSize(new Dimension(345, 860));
 		p1.setBounds(10, 5, 330, 50);
 		setBackground(Color.DARK_GRAY);
@@ -93,7 +89,5 @@ public class PlayerInfoPanel extends JPanel {
 		propertyWindow.setPlayerAt(playernbr);
 		propertyWindow.addPlayerList(playerList);
 		add(propertyWindow);
-
 	}
-
 }

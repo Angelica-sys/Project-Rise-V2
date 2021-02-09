@@ -1,18 +1,17 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import model.Player;
+import model.player.Player;
 
 /**
  * Class for property.
  * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder
  */
 public class Property implements Tile {
-
 	private String name, info;
 	private int price, rentPerLevel, defaultRent, levels;
 	private Boolean purchaseable;
@@ -48,7 +47,7 @@ public class Property implements Tile {
 	 */
 	public String getTileInfo() {
 		String ownerName = "";
-		if(player == null) {
+		if (player == null) {
 			ownerName = "No Owner";
 		} else {
 			ownerName = player.getName();
@@ -178,5 +177,4 @@ public class Property implements Tile {
 	public ImageIcon getPicture(){
 		return this.img;
 	}
-
 }

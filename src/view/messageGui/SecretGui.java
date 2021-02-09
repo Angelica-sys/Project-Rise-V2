@@ -14,7 +14,6 @@ import javax.swing.JLabel;
  * @author Muhammad Abdulkhuder, Sebastian Viro
  */
 public class SecretGui extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JLabel lblSecret = new JLabel();
     private Thread thread;
@@ -52,15 +51,14 @@ public class SecretGui extends JFrame {
 	 *
 	 */
 	 private class Sleeper extends Thread {
-	    	
-	    	public void run() {
-	    		try { 
-	    			Thread.sleep(15000);
-	    		} catch (Exception e) {
-	    			e.printStackTrace();
-	    		} finally {
-					dispose();
-				}
-	    	}
-	    }
+		public void run() {
+			try {
+				Thread.sleep(15000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				dispose();
+			}
+		}
+	}
 }

@@ -20,9 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import view.combinedPanels.GamePanels;
-import view.menu.Menu;
-import model.PlayerList;
+import view.GamePanels;
+import view.Menu;
+import model.player.PlayerList;
 
 /**
  * First screen which model.player sees, here he is able to choose the amount of players and
@@ -104,70 +104,68 @@ public class StartingScreen extends JFrame {
 	 * Method to initilize the GUI.
 	 */
 	public void initializeGUI() {
-
 		bgm.startMusic();
-
 		createFrame();
 		bgm.startMusic();
 
-		/**
+		/*
 		 * JPanel for information about players
 		 */
 		pnlPlayerInfo.setBounds(0, 0, 900, 830);
 		pnlPlayerInfo.setOpaque(false);
 		pnlPlayerInfo.setLayout(null);
 
-		/**
+		/*
 		 * Label used to create a background
 		 */
 		lblBackground.setBounds(0, 0, 900, 830);
 		lblBackground.setIcon(imgBackground);
 		lblBackground.setLayout(null);
 
-		/**
+		/*
 		 *  Header reading "RISE"
 		 */
 		lblRise.setFont(fontHeader);
 		lblRise.setBounds(375, 125, 175, 200);
 		lblBackground.add(lblRise);
 
-		/**
+		/*
 		 * JLabel reading "How many players?"
 		 */
 		lblPlayer.setFont(fontLabel);
 		lblPlayer.setBounds(315, 175, 300, 200);
 
-		/**
+		/*
 		 * Create three JRadioButtons
 		 */
 		createRadioButtons();
 
-		/**
+		/*
 		 * Confirm button
 		 */
 		btnConfirm.setBounds(375, 315, 150, 30);
 		btnConfirm.addActionListener(new ButtonListener());
 
-		/**
+		/*
 		 * Create players
 		 */
 		CreatePlayers();
 
-		/**
+		/*
 		 * Start game button
 		 */
 		btnStartGame.setBounds(350, 530, 200, 40);
 		btnStartGame.setVisible(false);
 		btnStartGame.addActionListener(new ButtonListener());
 
-		/**
+		/*
 		 * Rest button
 		 */
 		btnReset.setBounds(375, 575, 150, 30);
 		btnReset.setVisible(false);
 		btnReset.addActionListener(new ButtonListener());
 
-		/**
+		/*
 		 * Mute button
 		 */
 		mute.setBounds(2, 740, 150, 35);
@@ -176,7 +174,7 @@ public class StartingScreen extends JFrame {
 		mute.setOpaque(false);
 		mute.addActionListener(new ButtonListener());
 
-		/**
+		/*
 		 * Adding stuff to background label
 		 */
 		lblBackground.add(lblRise);
@@ -400,6 +398,7 @@ public class StartingScreen extends JFrame {
 				}
 			}
 		}
+
 		/**
 		 * Nothing will happen with the other implemented methods. Methods must be implemented by MouseListener.
 		 */

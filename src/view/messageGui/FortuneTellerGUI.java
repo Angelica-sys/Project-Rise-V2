@@ -18,7 +18,6 @@ import javax.swing.SwingConstants;
  *
  */
 public class FortuneTellerGUI extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel centerPanel = new JPanel();
     private JPanel outerPanel = new JPanel();

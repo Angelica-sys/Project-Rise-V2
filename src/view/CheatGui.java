@@ -1,4 +1,4 @@
-package view.cheat;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -13,7 +13,6 @@ import view.dice.Dice;
 
 /**
  * @author Sebastian Viro, Muhammad Abdulkhuder
- * 
  *         This class is used for testing purposes only.
  */
 public class CheatGui extends JPanel implements ActionListener {

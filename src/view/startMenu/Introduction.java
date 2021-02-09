@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
  * @author Muhammad Abdulkhuder, Sebastian Viro
  */
 public class Introduction extends JPanel {
-
 	private JLabel lblTitel = new JLabel("Welcome to Rise!");
 	private JLabel lblPic = new JLabel();
 	private JFrame frame;
@@ -47,10 +46,14 @@ public class Introduction extends JPanel {
 		taText.setBounds(10, 53, 600, 286);
 		lblTitel.setFont(fontTitel);
 		lblTitel.setHorizontalAlignment(SwingConstants.CENTER);
-		taText.setText("Salutations adventurers and welcome to Rise! The people you see next to you are no longer your friends. This is a race to the top where only one will triumph as king! \r\n" + 
-				"\r\n" + 
-				"You start as peasants and will rise through the ranks when your total wealth reaches a certain number. Player one will now begin by rolling the view.dice and then after that the model.player will press the end turn button to let the next model.player begin his turn. To know more press the info button in the view.menu tab. Now good luck on your adventures!  \r\n" +
-				"");
+		taText.setText(
+				"Salutations adventurers and welcome to Rise! The people you see next to you are no longer " +
+				"your friends. This is a race to the top where only one will triumph as king! \r\n" + "\r\n" +
+				"You start as peasants and will rise through the ranks when your total wealth reaches a certain " +
+				"number. Player one will now begin by rolling the view.dice and then after that the " +
+				"model.player will press the end turn button to let the next model.player begin his turn. To know " +
+				"more press the info button in the view.menu tab. Now good luck on your adventures!  \r\n" + ""
+		);
 		
 		taText.setEditable(false);
 		lblTitel.setBackground(Color.black);
@@ -71,7 +74,6 @@ public class Introduction extends JPanel {
 		}
 
 		Image resizedImg = img.getScaledInstance(lblPic.getWidth(), lblPic.getHeight(), Image.SCALE_SMOOTH);
-
 		lblPic.setIcon(new ImageIcon(resizedImg));
 		
 		add(lblTitel);

@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import view.board.Board;
 import view.eastSidePanels.EastSidePanel;
 import controller.ManageEvents;
-import model.PlayerList;
+import model.player.PlayerList;
 import view.WestSidePanel;
 
 /**
@@ -53,12 +53,8 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	public void addPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
-		
-		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(),
-				playerList.getActivePlayer().getPlayerColor());
-		
+		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(), playerList.getActivePlayer().getPlayerColor());
 		manageEvents = new ManageEvents(board, playerList, westSidePnl, this, eastSidePnl);
-		
 	}
 
 	/**

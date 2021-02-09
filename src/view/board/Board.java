@@ -10,32 +10,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Player;
-import model.PlayerList;
-import view.tiles.Tile;
-import view.tileCollection.TileCollection;
-import view.tiles.TileInfo;
+import model.player.Player;
+import model.player.PlayerList;
+import model.tiles.Tile;
+import model.tileCollection.TileCollection;
+import model.tiles.TileInfo;
 import view.WestSidePanel;
-
-
 
 /**
  * @author Muhammad Abdulkhuder, Seth �berg, Rohan Samandari
  *
  */
 public class Board extends JPanel {
-	
 	private WestSidePanel pnlWest;
 	private TileInfo info = new TileInfo();
-	
 	private GUITile[] guiTiles = new GUITile[40]; //Creates empty tile objects with a background.  
 	private PlayerList playerList = new PlayerList();
 	private Listener listener = new Listener();
-	
 	private TileCollection tileCollection = new TileCollection();
-		
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel p1 = new JPanel();
 	private JPanel p2 = new JPanel();
 	private JPanel p3 = new JPanel();
@@ -77,8 +72,8 @@ public class Board extends JPanel {
 	private JPanel p39 = new JPanel();
 	private JPanel p40 = new JPanel();
 
-	private JPanel[] panelarray = { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-			p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40 };
+	private JPanel[] panelarray = { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19,
+			p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40 };
 
 	JLabel lblNewLabel = new JLabel();
 
@@ -319,7 +314,6 @@ public class Board extends JPanel {
 	public void initializeGUI() {
 		addEmptyGridPanels();
 		paintNewBoard(guiTiles); //Requires a array with all 40 view.westSidePanel.tiles to be sent to paintNewBoard.
-		
 	}
 	
 	/**
@@ -329,36 +323,35 @@ public class Board extends JPanel {
 	public GUITile getTileAtIndex(int index) {
 		return guiTiles[index];
 	}
-	
-	
+
 	/**
 	 * Tile objects are created with an int depending on their position on the view.board.
 	 */
 	public void addEmptyGridPanels() {
 		for (int i = 0; i < guiTiles.length; i++) {
 			
-			/**
+			/*
 			 * If index is between 0-10 then labels are placed in north.
 			 */
 			if(i < 11) {
 				guiTiles[i] = new GUITile(1); 
 			}
 			
-			/**
+			/*
 			 * If index is between 11-20 then labels are placed in east.
 			 */
 			else if(i < 20) {
 				guiTiles[i] = new GUITile(2); 
 			}
 
-			/**
+			/*
 			 * If index is between 20 and 30 then labels are placed in south.
 			 */
 			else if(i < 31) {
 				guiTiles[i] = new GUITile(3); 
 			}
 			
-			/**
+			/*
 			 * If index is between 31-39 then labels are placed in west.
 			 */
 			else if(i < 40) {
@@ -382,8 +375,7 @@ public class Board extends JPanel {
 	public void removePlayer(Player player) {
 		guiTiles[player.getPosition()].removePlayer(player);
 	}
-	
-	
+
 	/**
 	 * Method is called when the user arrives at the destination tile
 	 * @param index of tile.
@@ -398,7 +390,6 @@ public class Board extends JPanel {
 	 * @param spaces, receives a array with all 40 tile objects.
 	 */
 	public void paintNewBoard(GUITile[] spaces) {
-
 		for(int i = 0; i < panelarray.length; i ++) {
 			panelarray[i].add(spaces[i]);
 		}	
@@ -415,6 +406,7 @@ public class Board extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 
 		}
+
 		/**
 		 * Method for when hovering over view.westSidePanel.tiles.
 		 */
@@ -426,41 +418,39 @@ public class Board extends JPanel {
 							i == 20 ||i == 22 || i == 25 || i == 30 ||
 							i == 33 ||i == 35 || i == 36 || i == 38){
 							pnlWest.setTitleText(info.getInfo(i), info.getTitle(i), Color.DARK_GRAY, Color.white);
-					}else if(i==26 || i==27 || i==29) {
+					} else if(i==26 || i==27 || i==29) {
 						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(),
 								tileCollection.getTileAtIndex(i).getTitle(), new Color(254,231,11, 255), Color.black);
-					}
-					else if(i == 12 || i == 28) {
+					} else if(i == 12 || i == 28) {
 						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(), 
 								tileCollection.getTileAtIndex(i).getName(), Color.DARK_GRAY, Color.white);
-					}
-					else {						
+					} else {
 						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(),
 							tileCollection.getTileAtIndex(i).getTitle(), tileCollection.getTileAtIndex(i).getColor(), Color.white );
 					}
 				}
-			}		
 			}
-		
-			/**
-			 * Calls method to set default text when mouse leaves a tile.
-			 */
-			public void mouseExited(MouseEvent e) {
-				pnlWest.setTextDefault();
-			}
+		}
 
-			/**
-			 * Nothing happens when mouse is pressed.
-			 */
-			public void mousePressed(MouseEvent e) {
+		/**
+		 * Calls method to set default text when mouse leaves a tile.
+		 */
+		public void mouseExited(MouseEvent e) {
+			pnlWest.setTextDefault();
+		}
 
-			}
-			
-			/**
-			 * Nothing happens by releasing mouse.
-			 */
-			public void mouseReleased(MouseEvent e) {
+		/**
+		 * Nothing happens when mouse is pressed.
+		 */
+		public void mousePressed(MouseEvent e) {
 
-			}
+		}
+
+		/**
+		 * Nothing happens by releasing mouse.
+		 */
+		public void mouseReleased(MouseEvent e) {
+
+		}
 	}
 }

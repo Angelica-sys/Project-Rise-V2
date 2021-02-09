@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import model.Player;
+import model.player.Player;
 
 /**
  * 
@@ -20,9 +20,7 @@ import model.Player;
  * 
  * @author sethoberg
  */
-
 public class GUITile extends JLabel {
-
 	private static final long serialVersionUID = 1L;
 	private Font labelFont = new Font("Arial", Font.BOLD, 10);
 	private JLabel infoLabel = new JLabel("", SwingConstants.CENTER);
@@ -54,7 +52,6 @@ public class GUITile extends JLabel {
 
 	/**
 	 * Constructor receiving an int gets the location of the info JLabel object
-	 * 
 	 * @param SouthWestNorthEast either 1, 2, 3, 4
 	 */
 	public GUITile(int SouthWestNorthEast) {
@@ -107,7 +104,9 @@ public class GUITile extends JLabel {
 		labels[3] = label4;
 	}
 
-	// Adds 4 j label
+	/**
+	 * Adds 4 j label
+	 */
 	public void addLabelsToGrid() {
 		for (int i = 0; i < labels.length; i++) {
 			labels[i].setPreferredSize(new Dimension(200, 200));
@@ -116,17 +115,18 @@ public class GUITile extends JLabel {
 		add(labelArray, BorderLayout.CENTER);
 	}
 
-	// update level on property
+	/**
+	 * update level on property
+	 * @param level
+	 */
 	public void changeLevel(String level) {
 		infoLabel.setText(level);
 	}
 
 	/**
 	 * Each gui tile has 4 places where a model.player can be placed
-	 * 
-	 * @param index
+	 * @param player
 	 */
-
 	public void setPlayer(Player player) {
 		labels[player.getPlayerIndex()].setIcon(player.getImage());
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
@@ -136,5 +136,4 @@ public class GUITile extends JLabel {
 		labels[player.getPlayerIndex()].setIcon(null);
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
 	}
-
 }

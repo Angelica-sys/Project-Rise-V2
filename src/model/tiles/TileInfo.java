@@ -1,4 +1,4 @@
-package view.tiles;
+package model.tiles;
 
 /**
  * Information about each view.westSidePanel.tiles.

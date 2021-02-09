@@ -15,18 +15,18 @@ import view.messageGui.DeathGUI;
 import view.messageGui.FortuneTellerGUI;
 import view.messageGui.SecretGui;
 import view.messageGui.WinGui;
-import model.Player;
-import model.PlayerList;
-import model.PlayerRanks;
-import view.tiles.FortuneTeller;
-import view.tiles.GoToJail;
-import view.tiles.Jail;
-import view.tiles.Property;
-import view.tiles.SundayChurch;
-import view.tiles.Tavern;
-import view.tiles.Tax;
-import view.tiles.Tile;
-import view.tiles.Work;
+import model.player.Player;
+import model.player.PlayerList;
+import model.player.PlayerRanks;
+import model.tiles.FortuneTeller;
+import model.tiles.GoToJail;
+import model.tiles.Jail;
+import model.tiles.Property;
+import model.tiles.SundayChurch;
+import model.tiles.Tavern;
+import model.tiles.Tax;
+import model.tiles.Tile;
+import model.tiles.Work;
 import view.WestSidePanel;
 
 /**
@@ -184,15 +184,15 @@ public class ManageEvents {
 	 * @param player
 	 */
 	public void workEvent(Tile tile, Player player) {
-
 		Work tempWorkObject = (Work) tile;
 		tempWorkObject.setPlayer(player);
 		tempWorkObject.payPlayer(getRoll());
 
 		westPanel.append(player.getName() + " Got " + tempWorkObject.getPay() + " GC\n");
-		JOptionPane.showMessageDialog(null,
-				"The roll is " + roll + "\n" + "You got: " + tempWorkObject.getPay() + " GC for your hard work");
-
+		JOptionPane.showMessageDialog(
+				null,
+				"The roll is " + roll + "\n" + "You got: " + tempWorkObject.getPay() + " GC for your hard work"
+		);
 	}
 
 	/**
@@ -309,9 +309,11 @@ public class ManageEvents {
 	 * @param player in question.
 	 */
 	public void propertyDialog(Property property, Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(null,
-				property.getName() + "\n" + "Do you want to purchase this property for " + property.getPrice() + " GC",
-				"Decide your fate!", JOptionPane.YES_NO_OPTION);
+		int yesOrNo = JOptionPane.showConfirmDialog(
+				null,
+				property.getName() + "\n" + "Do you want to purchase this property for " +
+						property.getPrice() + " GC", "Decide your fate!", JOptionPane.YES_NO_OPTION
+		);
 
 		if (yesOrNo == 0 && (property.getPrice() <= player.getBalance())) {
 			property.setOwner(player);
@@ -319,9 +321,7 @@ public class ManageEvents {
 			property.setPurchaseable(false);
 			player.decreaseBalace(property.getPrice());
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
-		}
-
-		else {
+		} else {
 			westPanel.append(player.getName() + " did not purchase " + property.getName() + "\n");
 		}
 	}
@@ -332,8 +332,12 @@ public class ManageEvents {
 	 * @param player, model.player who landed on the tavern.
 	 */
 	public void tavernDialog(Tavern tavern, Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(null, "Do you want to purchase this property?", "JOption",
-				JOptionPane.YES_NO_OPTION);
+		int yesOrNo = JOptionPane.showConfirmDialog(
+				null,
+				"Do you want to purchase this property?",
+				"JOption",
+				JOptionPane.YES_NO_OPTION
+		);
 
 		if (yesOrNo == 0 && (tavern.getPrice() <= player.getBalance())) {
 			tavern.setOwner(player);
@@ -367,9 +371,13 @@ public class ManageEvents {
 	 * @param player in jail.
 	 */
 	public void jailDialog(Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(null,
-				"Do you want to pay the bail\nWhich is " + (player.getJailCounter() * 50) + " GC?", "JOption",
-				JOptionPane.YES_NO_OPTION);
+		int yesOrNo = JOptionPane.showConfirmDialog(
+				null,
+				"Do you want to pay the bail\nWhich is " + (player.getJailCounter() * 50) + " GC?",
+				"JOption",
+				JOptionPane.YES_NO_OPTION
+		);
+
 		int totalBail = player.getJailCounter() * 50;
 		if (yesOrNo == 0 && (totalBail <= player.getBalance())) {
 			player.setJailCounter(0);
@@ -433,7 +441,6 @@ public class ManageEvents {
 	 *
 	 */
 	private class SecretSleeper extends Thread {
-
 		private FortuneTeller tempCard;
 		private Player player;
 		private Clip clip;
@@ -461,7 +468,6 @@ public class ManageEvents {
 					fortune(tempCard, player);
 					Thread.sleep(3000);
 				}
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {

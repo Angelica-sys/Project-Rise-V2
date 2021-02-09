@@ -1,4 +1,4 @@
-package view.combinedPanels;
+package view;
 
 import java.awt.Color;
 
@@ -19,19 +19,17 @@ import javax.swing.border.MatteBorder;
 import view.board.Board;
 import view.dice.Dice;
 import view.eastSidePanels.EastSidePanel;
-import view.menu.Menu;
-import model.PlayerList;
+import view.Menu;
+import model.player.PlayerList;
 import view.WestSidePanel;
 
 /**
  * This class combines most of the panels in the game and adds appropriate
  * references.
- * 
  * @author Abdulkhuder Muhammad
  *
  */
 public class GamePanels extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 	private EastSidePanel tPanel = new EastSidePanel();
 	private WestSidePanel westPanel = new WestSidePanel();
@@ -101,12 +99,10 @@ public class GamePanels extends JPanel {
 	 * @param playerList
 	 */
 	public void addPlayer(PlayerList playerList) {
-
 		board.addPlayers(playerList);
 		board.setPlayers();
 		tPanel.addPlayerList(playerList);
 		dice.addPlayerList(playerList);
-
 	}
 
 	/**
@@ -115,5 +111,4 @@ public class GamePanels extends JPanel {
 	public void Dispose() {
 		frame.dispose();
 	}
-
 }

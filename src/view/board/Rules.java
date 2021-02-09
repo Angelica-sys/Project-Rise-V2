@@ -13,15 +13,12 @@ import javax.swing.JTabbedPane;
 /**
  * Simple tabs with different rules on each page.
  * @author AevanDino
- *
  */
 public class Rules extends JPanel {
-
 	private static final long serialVersionUID = 1L;
 
 	public Rules() {
 		new GridLayout(1, 1);
-
 		JTabbedPane tabbedPane = new JTabbedPane();
 
 		JComponent panel1 = makeTextPanel("images/Introduction.jpg");
@@ -86,5 +83,4 @@ public class Rules extends JPanel {
 	public void showRules() {
 		createAndShowFrame();
 	}
-
 }

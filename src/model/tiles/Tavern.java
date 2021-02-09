@@ -1,13 +1,12 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
-import model.Player;
+import model.player.Player;
 
-public class Tavern implements Tile{
-	
+public class Tavern implements Tile {
 	private final static String TAVERN = "Tavern";
 	private String info = "";
 	private boolean purchasable;
@@ -25,7 +24,6 @@ public class Tavern implements Tile{
 	}
 	public void onLanding() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public String getName() {
@@ -54,7 +52,7 @@ public class Tavern implements Tile{
 	
 	public String getTileInfo() {
 		String ownerName = "";
-		if(owner == null) {
+		if (owner == null) {
 			ownerName = "No Owner";
 		} else {
 			ownerName = owner.getName();
@@ -82,5 +80,4 @@ public class Tavern implements Tile{
 	public ImageIcon getPicture(){
 		return img;
 	}
-
 }

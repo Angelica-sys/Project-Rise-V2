@@ -1,4 +1,4 @@
-package view.tiles;
+package model.tiles;
 
 import java.awt.Color;
 
@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
  *
  */
 public class GoToJail implements Tile {
-
 	private ImageIcon img = new ImageIcon("tilePics/gojail.png");
 
 	/**
