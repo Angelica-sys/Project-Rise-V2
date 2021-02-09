@@ -142,37 +142,42 @@ public class ManageEvents {
 		Property tempProperty = (Property) tile;
 		int tempInt = 0;
 
-		if (tempProperty.getPurchaseable() == true) {
+		if (tempProperty.getPurchaseable()) {
 			if (player.getBalance() < tempProperty.getPrice()) {
 				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this property");
 			} else {
 				propertyDialog(tempProperty, player);
 			}
-		} else if (tempProperty.getPurchaseable() == false) {
+		} else {
+			if (player != tempProperty.getOwner()) {
+				if (tempProperty.getLevel() == 0) {
+					tempInt = tempProperty.getDefaultRent();
+					checkPlayerBalance(player, tempInt);
 
-			if (tempProperty.getLevel() == 0) {
-				tempInt = tempProperty.getDefaultRent();
+					if (player.isAlive()) {
+						JOptionPane.showMessageDialog(null, player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
+								+ tempProperty.getOwner().getName());
+						westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
+								+ tempProperty.getOwner().getName() + "\n");
+						player.decreaseBalace(tempInt);
+						player.decreaseNetWorth(tempInt);
+						tempProperty.getOwner().increaseBalance(tempInt);
+					}
+				} else {
+					tempInt = tempProperty.getTotalRent();
+					checkPlayerBalance(player, tempInt);
 
-				checkPlayerBalance(player, tempInt);
-				if (player.isAlive() == true) {
-					JOptionPane.showMessageDialog(null, player.getName() + " paid " + tempProperty.getTotalRent() + " GC to " 
-							+ tempProperty.getOwner().getName());
-					westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-							+ tempProperty.getOwner().getName() + "\n");
-					player.decreaseBalace(tempInt);
-					player.decreaseNetWorth(tempInt);
-					tempProperty.getOwner().increaseBalance(tempInt);
-				}
-			} else {
-				tempInt = tempProperty.getTotalRent();
-				checkPlayerBalance(player, tempInt);
-				if (player.isAlive() == true) {
-					JOptionPane.showMessageDialog(null, player.getName() + " paid " + tempProperty.getTotalRent() + " GC to " 
-							+ tempProperty.getOwner().getName());
-					westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-							+ tempProperty.getOwner().getName() + "\n");
-					player.decreaseBalace(tempInt);
-					tempProperty.getOwner().increaseBalance(tempInt);
+					if (player.isAlive()) {
+						JOptionPane.showMessageDialog(
+								null,
+								player.getName() + " paid " + tempProperty.getTotalRent() + " GC to " +
+										tempProperty.getOwner().getName()
+						);
+						westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
+								+ tempProperty.getOwner().getName() + "\n");
+						player.decreaseBalace(tempInt);
+						tempProperty.getOwner().increaseBalance(tempInt);
+					}
 				}
 			}
 		}
