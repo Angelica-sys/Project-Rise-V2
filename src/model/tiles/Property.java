@@ -11,14 +11,9 @@ import model.player.Player;
  * Class for property.
  * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder
  */
-public class Property implements Tile {
-	private String name, info;
-	private int price, rentPerLevel, defaultRent, levels;
-	private Boolean purchaseable;
+public class Property extends Purchasable {
+	private int price, rentPerLevel, defaultRent, levels, levelPrice;
 	private Color color;
-	private Player player ;
-	private ImageIcon img;
-	private int levelPrice;
 
 	/**
 	 * Construtor which sets values of property
@@ -30,15 +25,13 @@ public class Property implements Tile {
 	 * @param levelPrice, cost of upgrade 
 	 * @param img, image of tile
 	 */
-	public Property(String name, int price, int defaultRent, int rentPerLevel, Color color,int levelPrice , ImageIcon img) {
-		setName(name);
+	public Property(String name, int price, int defaultRent, int rentPerLevel, Color color, int levelPrice , ImageIcon img) {
+		super(name, "", null, img, true);
+		this.color = color;
+
 		setPrice(price);
 		setDefaultRent(defaultRent);
 		setRentPerLevel(rentPerLevel);
-		setColor(color);
-		purchaseable=true;
-		player = null;
-		this.img=img;
 		this.levelPrice= levelPrice;
 	}
 	
@@ -46,24 +39,28 @@ public class Property implements Tile {
 	 * Returns information about tile
 	 */
 	public String getTileInfo() {
-		String ownerName = "";
-		if (player == null) {
+		String ownerName;
+
+		if (this.owner == null) {
 			ownerName = "No Owner";
 		} else {
-			ownerName = player.getName();
+			ownerName = this.owner.getName();
 		}
-		info =    "\nOwner: \t         " + ownerName + "\n"
-				+ "Price:\t\t" + price + "\n"
-				+ "Default rent:\t" + defaultRent + "\n"
-				+ "Rent per level:\t" 	+ rentPerLevel + "\n"
-				+ "Total rent:\t" 		+ getTotalRent();
-		return info;
+
+		description =
+				"\nOwner: \t         " + ownerName +
+				"\nPrice:\t\t" + price +
+				"\nDefault rent:\t" + defaultRent +
+				"\nRent per level:\t" + rentPerLevel +
+				"\nTotal rent:\t" + getTotalRent();
+
+		return description;
 	}
-	
-	
+
 	public String getTitle() {
 		return name;
 	}
+
 	public Color getTitleColor() {
 		return color;
 	}
@@ -76,12 +73,12 @@ public class Property implements Tile {
 		return this.name;
 	}
 
-	public void setPurchaseable(Boolean canBeBought) {
-		this.purchaseable=canBeBought;
+	public void setPurchasable(Boolean canBeBought) {
+		this.purchasable =canBeBought;
 	}
 
-	public Boolean getPurchaseable() {
-		return this.purchaseable;
+	public Boolean getPurchasable() {
+		return this.purchasable;
 	}
 
 	public void setColor(Color colorOfTile) {
@@ -100,16 +97,14 @@ public class Property implements Tile {
 		return this.price;
 	}
 
-	
 	public void setOwner(Player newOwner) {
-		this.player = newOwner;
+		this.owner = newOwner;
 	}
 	
 	public Player getOwner() {
-		return player;
+		return this.owner;
 	}
-	
-	
+
 	public void setDefaultRent(int defRent) {
 		this.defaultRent = defRent;
 	}
@@ -143,21 +138,26 @@ public class Property implements Tile {
 	}
 	
 	public void increaseLevel() {
-		
-		int res = JOptionPane.showConfirmDialog(null, "Do you want to upgrade " + getName() + " for: " + getLevelPrice());
-		if (res == 0 && player.getPlayerRank().nbrOfLevels() > levels && player.getBalance()>= getLevelPrice()) {
-			this.levels+=1;
+		int res = JOptionPane.showConfirmDialog(
+				null,
+				"Do you want to upgrade " + getName() + " for: " + getLevelPrice()
+		);
 
-			player.decreaseBalace(getLevelPrice());
+		if (res == 0 && this.owner.getPlayerRank().nbrOfLevels() > levels && this.owner.getBalance() >= getLevelPrice()) {
+			this.levels+=1;
+			this.owner.decreaseBalace(getLevelPrice());
 		}
-		
 	}
 	
 	public void decreaseLevel() {
-		int res = JOptionPane.showConfirmDialog(null, "Do you really want to downgrade " + getName() + " for: " + getLevelPrice());
+		int res = JOptionPane.showConfirmDialog(
+				null,
+				"Do you really want to downgrade " + getName() + " for: " + getLevelPrice()
+		);
+
 		if (levels>0 && res == 0) {	
 			this.levels-=1;
-			player.increaseBalance(getLevelPrice());
+			this.owner.increaseBalance(getLevelPrice());
 		}
 	}
 		
@@ -165,16 +165,16 @@ public class Property implements Tile {
 		return this.levels;
 	}
 	
-	public void setPurchaseable(boolean b) {
-		this.purchaseable = b;
+	public void setPurchasable(boolean b) {
+		this.purchasable = b;
 	}	
 	
 	public void clearProperty() {
-		purchaseable = true; 
+		purchasable = true;
 		setLevel(0);
 	}
 	
 	public ImageIcon getPicture(){
-		return this.img;
+		return this.image;
 	}
 }

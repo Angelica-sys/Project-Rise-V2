@@ -20,7 +20,7 @@ public class SundayChurch implements Tile {
 		return "Sunday Church";
 	}
 
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return Boolean.FALSE;
 	}
 

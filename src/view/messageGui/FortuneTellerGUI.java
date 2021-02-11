@@ -15,7 +15,6 @@ import javax.swing.SwingConstants;
 /**
  * Gui to display messages
  * @author AevanDino, Sebastian Viro, Muhammad Abdulkhuder
- *
  */
 public class FortuneTellerGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -71,7 +70,7 @@ public class FortuneTellerGUI extends JPanel {
      * @param amount how much the model.player either has to pay or get paid.
      */
     public void newFortune(Boolean b, int amount) {
-    	if(b) {
+    	if (b) {
     		type.setText("Blessing");
     		 dis.setText("\n                     Fortune smiles upon you. \n"
     	                + "                         You recived " + amount + " GC");
@@ -84,6 +83,7 @@ public class FortuneTellerGUI extends JPanel {
     		dis.setBackground(new Color(209, 13, 10));
     		centerPanel.setBackground(new Color(209, 13, 10));
     	}
+
     	startGUI();
     }
     
@@ -104,7 +104,6 @@ public class FortuneTellerGUI extends JPanel {
      *Inner class that extends thread in order to automatically close the frame after 3 seconds.
      */
     private class Sleeper extends Thread {
-    	
     	public void run() {
     		try { 
     			Thread.sleep(3000);
@@ -115,5 +114,4 @@ public class FortuneTellerGUI extends JPanel {
 			}
     	}
     }
-    
 }

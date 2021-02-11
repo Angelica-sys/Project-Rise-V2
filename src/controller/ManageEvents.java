@@ -1,11 +1,6 @@
 package controller;
 
-import java.io.File;
 import java.util.Random;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 
 import view.board.Board;
@@ -13,7 +8,6 @@ import view.dice.Dice;
 import view.eastSidePanels.EastSidePanel;
 import view.messageGui.DeathGUI;
 import view.messageGui.FortuneTellerGUI;
-import view.messageGui.SecretGui;
 import view.messageGui.WinGui;
 import model.player.Player;
 import model.player.PlayerList;
@@ -30,10 +24,9 @@ import model.tiles.Work;
 import view.WestSidePanel;
 
 /**
- * The class handles all the controller.events that occur when a model.player lands on a tile.
- * @author Seth Oberg, Rohan Samandari,Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino.
- */
-
+* The class handles all the controller.events that occur when a model.player lands on a tile.
+* @author Seth Oberg, Rohan Samandari,Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino.
+*/
 public class ManageEvents {
 	private PlayerList playerList;
 	private Board board;
@@ -109,8 +102,9 @@ public class ManageEvents {
 		}
 
 		if (tile instanceof FortuneTeller) {
-			fortuneTellerEvent(tile, player);
+			fortuneTellerEvent((FortuneTeller)tile, player);
 		}
+
 		eastPanel.addPlayerList(playerList);
 	}
 
@@ -142,7 +136,7 @@ public class ManageEvents {
 		Property tempProperty = (Property) tile;
 		int tempInt = 0;
 
-		if (tempProperty.getPurchaseable()) {
+		if (tempProperty.getPurchasable()) {
 			if (player.getBalance() < tempProperty.getPrice()) {
 				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this property");
 			} else {
@@ -155,10 +149,17 @@ public class ManageEvents {
 					checkPlayerBalance(player, tempInt);
 
 					if (player.isAlive()) {
-						JOptionPane.showMessageDialog(null, player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-								+ tempProperty.getOwner().getName());
-						westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-								+ tempProperty.getOwner().getName() + "\n");
+						JOptionPane.showMessageDialog(
+						        null,
+                                player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
+								+ tempProperty.getOwner().getName()
+                        );
+
+						westPanel.append(
+						        player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
+								+ tempProperty.getOwner().getName() + "\n"
+                        );
+
 						player.decreaseBalace(tempInt);
 						player.decreaseNetWorth(tempInt);
 						tempProperty.getOwner().increaseBalance(tempInt);
@@ -208,10 +209,9 @@ public class ManageEvents {
 	public void taxEvent(Tile tile, Player player) {
 		Tax tempTaxObject = (Tax) tile;
 		int chargePlayer = tempTaxObject.getTax();
-
 		checkPlayerBalance(player, chargePlayer);
 
-		if (player.isAlive() == true) {
+		if (player.isAlive()) {
 			westPanel.append(player.getName() + " paid 200 GC in tax\n");
 			player.decreaseBalace(chargePlayer);
 			player.decreaseNetWorth(chargePlayer);
@@ -236,7 +236,7 @@ public class ManageEvents {
 	public void tavernEvent(Tile tile, Player player) {
 		Tavern tempTavernObj = (Tavern) tile;
 
-		if (tempTavernObj.getPurchaseable()) {
+		if (tempTavernObj.getPurchasable()) {
 			if (player.getBalance() < tempTavernObj.getPrice()) {
 				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this tavern");
 			} else {
@@ -268,7 +268,7 @@ public class ManageEvents {
 	 * @param player in jail
 	 */
 	public void jailEvent(Tile tile, Player player) {
-		if (player.isPlayerInJail() == true && (player.getJailCounter()) < 2) {
+		if (player.isPlayerInJail() && (player.getJailCounter()) < 2) {
 			westPanel.append(player.getName() + " is in jail for " + (2 - player.getJailCounter()) + " more turns\n");
 			player.increaseJailCounter();
 			if (player.getBalance() > (player.getJailCounter() * 50)) {
@@ -323,7 +323,7 @@ public class ManageEvents {
 		if (yesOrNo == 0 && (property.getPrice() <= player.getBalance())) {
 			property.setOwner(player);
 			player.addNewProperty(property);
-			property.setPurchaseable(false);
+			property.setPurchasable(false);
 			player.decreaseBalace(property.getPrice());
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
 		} else {
@@ -347,7 +347,7 @@ public class ManageEvents {
 		if (yesOrNo == 0 && (tavern.getPrice() <= player.getBalance())) {
 			tavern.setOwner(player);
 			player.addNewTavern(tavern);
-			tavern.setPurchaseable(false);
+			tavern.setPurchasable(false);
 			player.decreaseBalace(tavern.getPrice());
 			westPanel.append(player.getName() + " purchased " + tavern.getName() + "\n");
 		} else {
@@ -396,88 +396,31 @@ public class ManageEvents {
 	
 	/**
 	 * Method for FortuneTeller, small chance for a secret event to trigger.
-	 * @param tile, tile the model.player landed on.
+	 * @param fortune, tile the model.player landed on.
 	 * @param player, model.player in question.
 	 */
-	private void fortuneTellerEvent(Tile tile, Player player) {
-		FortuneTeller tempCard = (FortuneTeller) tile;
-		if (rand.nextInt(10) == 0) {
-			new SecretGui();
-			new Thread(new SecretSleeper(tempCard, player));
-			eastPanel.addPlayerList(playerList);
+	private void fortuneTellerEvent(FortuneTeller fortune, Player player) {
+        fortune.setAmount(rand.nextInt(600) - 300);
 
-		} else {
-			fortune(tempCard, player);
-		}
-	}
+        if (fortune.getAmount() < 0) {
+            int pay = (fortune.getAmount() * -1);
+            fortune.setIsBlessing(false);
+            fortune.setFortune("CURSE");
+            checkPlayerBalance(player, pay);
 
-	/**
-	 * Method that either withdraws or adds gold coins to a model.player depending on the type of fortune.
-	 * @param tempCard, instance of FortuneTeller 
-	 * @param player, model.player who landed on the tile
-	 */
-	public void fortune(FortuneTeller tempCard, Player player) {
-		tempCard.setAmount(rand.nextInt(600) - 300);
-		if (tempCard.getAmount() < 0) {
-			int pay = (tempCard.getAmount() * -1);
-			tempCard.setIsBlessing(false);
-			tempCard.setFortune("CURSE");
-			checkPlayerBalance(player, pay);
-			if (player.isAlive() == true) {
-				westPanel.append(player.getName() + " paid " + pay + " GC\n");
-				player.decreaseBalace(pay);
-				player.decreaseNetWorth(pay);
-				msgGUI.newFortune(false, pay);
-			}
-
-		} else {
-			tempCard.setIsBlessing(true);
-			tempCard.setFortune("BLESSING");
-			player.increaseBalance(tempCard.getAmount());
-			player.increaseNetWorth(tempCard.getAmount());
-			westPanel.append(player.getName() + " received " + tempCard.getAmount() + " CG\n");
-			msgGUI.newFortune(true, tempCard.getAmount());
-		}
-	}	
-	
-	/**
-	 * This class is an easter egg. That gives the model.player 5 fortunes.
-	 * @author Sebastian viro ,Muhammad Abdulkhuder
-	 *
-	 */
-	private class SecretSleeper extends Thread {
-		private FortuneTeller tempCard;
-		private Player player;
-		private Clip clip;
-			
-		/**
-		 * @param tempCard
-		 * @param player
-		 * Starts the sleeper
-		 */
-		public SecretSleeper(FortuneTeller tempCard, Player player) {
-			this.tempCard = tempCard;
-			this.player = player;
-			start();
-
-		}
-		
-		public void run() {
-			try {
-				for (int i = 0; i < 5; i++) {
-					File musicPath = new File("music/duraw.wav");				
-					AudioInputStream ais = AudioSystem.getAudioInputStream(musicPath);
-					clip = AudioSystem.getClip();
-					clip.open(ais);
-					clip.start();
-					fortune(tempCard, player);
-					Thread.sleep(3000);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-
-			}
-		}
+            if (player.isAlive()) {
+                westPanel.append(player.getName() + " paid " + pay + " GC\n");
+                player.decreaseBalace(pay);
+                player.decreaseNetWorth(pay);
+                msgGUI.newFortune(false, pay);
+            }
+        } else {
+            fortune.setIsBlessing(true);
+            fortune.setFortune("BLESSING");
+            player.increaseBalance(fortune.getAmount());
+            player.increaseNetWorth(fortune.getAmount());
+            westPanel.append(player.getName() + " received " + fortune.getAmount() + " CG\n");
+            msgGUI.newFortune(true, fortune.getAmount());
+        }
 	}
 }

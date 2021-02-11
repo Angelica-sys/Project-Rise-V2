@@ -8,16 +8,13 @@ import javax.swing.ImageIcon;
  * Fortune teller class, either returns a fortune where the model.player
  * gains money or has to pay.
  * @author SebastianViro, AevanDino, MuhammadAbdulkhuder
- *
  */
 public class FortuneTeller implements Tile {
 	private Color color = Color.WHITE;
 	private static final String NAME = "Fortune Teller";
-	
 	private static final Boolean PURCHASEABLE = false;
 	private String fortune = "";
 	private Boolean isBlessing = false;
-
 	private String description = "";
 	private int amount; 
 	
@@ -113,7 +110,7 @@ public class FortuneTeller implements Tile {
 	/**
 	 * REturns whether or not its purchasable
 	 */
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return PURCHASEABLE;
 	}
 	

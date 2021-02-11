@@ -3,6 +3,7 @@ package model.tiles;
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
+
 /**
  * All view.westSidePanel.tiles will implement this interface. Methods listed are
  * common methods for all types of view.westSidePanel.tiles.
@@ -18,8 +19,7 @@ public interface Tile {
 	/**
 	 * @return if tile can be bought.
 	 */
-	public Boolean getPurchaseable(); 
-
+	public Boolean getPurchasable();
 
 	/**
 	 * @return color, returns a color-object representing color of tile.
@@ -40,5 +40,4 @@ public interface Tile {
 	 * @return picture of the tile.
 	 */
 	public ImageIcon getPicture();
-
 }

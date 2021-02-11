@@ -21,7 +21,7 @@ public class Jail implements Tile {
 	/**
 	 * returns false, because it is not purchasable
 	 */
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return Boolean.FALSE;
 	}
 	

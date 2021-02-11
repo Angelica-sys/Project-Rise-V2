@@ -31,7 +31,7 @@ public class Go implements Tile {
 	/**
 	 * Returns false, because go cant be purchased
 	 */
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return Boolean.FALSE;
 	}
 	

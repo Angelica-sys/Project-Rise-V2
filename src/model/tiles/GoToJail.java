@@ -22,7 +22,7 @@ public class GoToJail implements Tile {
 	/**
 	 * returns null
 	 */
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,21 +6,13 @@ import javax.swing.ImageIcon;
 
 import model.player.Player;
 
-public class Tavern implements Tile {
-	private final static String TAVERN = "Tavern";
-	private String info = "";
-	private boolean purchasable;
-	private Player owner;
-	private Color color; 
+public class Tavern extends Purchasable {
 	private int price;
-	private String name;
-	private ImageIcon img = new ImageIcon("tilePics/tavern.png");
 
-	public Tavern( String namn, int price) {
-		this.name = namn;
+	public Tavern(String name, int price) {
+		super(name, "", null, new ImageIcon("tilePics/tavern.png"), true);
 		this.price = price;
-		this.purchasable = true;
-		this.owner = null;
+		getTileInfo();
 	}
 	public void onLanding() {
 		// TODO Auto-generated method stub
@@ -30,7 +22,7 @@ public class Tavern implements Tile {
 		return this.name;
 	}
 
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return this.purchasable;
 	}
 
@@ -43,29 +35,33 @@ public class Tavern implements Tile {
 	}
 	
 	public Player getOwner() {
-		return owner;
+		return this.owner;
 	}
 	
 	public int getPrice() {
-		return price;
+		return this.price;
 	}
 	
 	public String getTileInfo() {
-		String ownerName = "";
-		if (owner == null) {
+		String ownerName;
+
+		if (this.owner == null) {
 			ownerName = "No Owner";
 		} else {
-			ownerName = owner.getName();
+			ownerName = this.owner.getName();
 		}
-		info =    "\nOwner: \t         " + ownerName + "\n"
-				+ "Price:\t\t" + price + "\n"
-				+ "Default rent:    Read Rules\n"
-				+ "Rent with Levels:\t" 	+ 0 + "\n"
-				+ "Total rent:        Read Rules";
-		return info;
+
+		this.description =
+				"\nOwner: \t         " + ownerName +
+				"\nPrice:\t\t" + this.price +
+				"\nDefault rent:    Read Rules" +
+				"\nRent with Levels:\t" 	+ 0 +
+				"\nTotal rent:        Read Rules";
+
+		return this.description;
 	}
 	
-	public void setPurchaseable(boolean b) {
+	public void setPurchasable(boolean b) {
 		this.purchasable = b;
 	}
 	
@@ -78,6 +74,6 @@ public class Tavern implements Tile {
 	}
 	
 	public ImageIcon getPicture(){
-		return img;
+		return this.image;
 	}
 }

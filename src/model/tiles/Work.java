@@ -19,9 +19,9 @@ public class Work implements Tile {
 		this.player = player;
 	}
 
-	public Work() {
+    public Work() {
 
-	}
+    }
 
 	public void payPlayer(int nbrOfDots) {
 		setRoll(nbrOfDots);
@@ -37,7 +37,7 @@ public class Work implements Tile {
 		return null;
 	}
 
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return null;
 	}
 
@@ -60,11 +60,6 @@ public class Work implements Tile {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Color getTitleColor() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,7 +13,7 @@ import view.dice.Dice;
 
 /**
  * @author Sebastian Viro, Muhammad Abdulkhuder
- *         This class is used for testing purposes only.
+ * This class is used for testing purposes only.
  */
 public class CheatGui extends JPanel implements ActionListener {
 	private JTextField inputTF = new JTextField("");
@@ -23,9 +23,7 @@ public class CheatGui extends JPanel implements ActionListener {
 
 	/**
 	 * @param dice
-	 * 
-	 *                   Calls the method that starts the gui and gets a reference
-	 *                   from view.dice
+	 * Calls the method that starts the gui and gets a reference from view.dice
 	 */
 	public CheatGui(Dice dice) {
 		this.betterDice = dice;
@@ -49,7 +47,6 @@ public class CheatGui extends JPanel implements ActionListener {
 	 * This is what happens when a button is pressed
 	 */
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource() == btnTeleport) {
 			try {
 				setIndex(Integer.parseInt(inputTF.getText()));

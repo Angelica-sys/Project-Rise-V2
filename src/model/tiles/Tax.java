@@ -31,7 +31,7 @@ public class Tax implements Tile {
 		return this.NAME;
 	}
 
-	public Boolean getPurchaseable() {
+	public Boolean getPurchasable() {
 		return this.PURCHASABLE;
 	}
 
