@@ -8,21 +8,16 @@ import javax.swing.ImageIcon;
  * @author Sebastian Viro, Aevan Dino, MUHAMMAD ABDULKHUDER
  *
  */
-public class GoToJail implements Tile {
-	private ImageIcon img = new ImageIcon("tilePics/gojail.png");
-
-	/**
-	 * returns null
-	 */
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+public class GoToJail extends Tile {
+	public GoToJail() {
+		super("Go to jail", "", new ImageIcon("tilePics/gojail.png"));
+		getTileInfo();
 	}
 
 	/**
 	 * returns null
 	 */
-	public Boolean getPurchasable() {
+	public String getName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -41,20 +36,5 @@ public class GoToJail implements Tile {
 	public String getTileInfo() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/**
-	 * returns null
-	 */
-	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * returns image
-	 */
-	public ImageIcon getPicture() {
-		return img;
 	}
 }

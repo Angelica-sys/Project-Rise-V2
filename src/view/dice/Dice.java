@@ -183,6 +183,7 @@ public class Dice extends JPanel implements ActionListener {
 				setRoll(((faceValueDiceOne + faceValueDiceTwo)));
 				westSidePnl.append(playerList.getActivePlayer().getName() + " Rolled a: " + getRoll() + "\n");
 			}
+
 			resizedImage = faceToShow.getImage().getScaledInstance(diceWidth, diceHeight, Image.SCALE_SMOOTH);
 			showDice = new ImageIcon(resizedImage);
 			lblDice2.setIcon(showDice);
@@ -199,7 +200,7 @@ public class Dice extends JPanel implements ActionListener {
 			btnRollDice.setEnabled(false);
 		}
 
-		/**
+		/*
 		 * When a model.player ends their turn
 		 * If the next model.player is in jail they will not have the ability to roll the
 		 * view.dice and will only have the ability to end their turn if they have not paid the bail
@@ -211,14 +212,12 @@ public class Dice extends JPanel implements ActionListener {
 			showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(),
 					playerList.getActivePlayer().getPlayerColor());
 			
-			if (playerList.getActivePlayer().isPlayerInJail() == true) {
+			if (playerList.getActivePlayer().isPlayerInJail()) {
 				btnRollDice.setEnabled(false);
 				btnEndTurn.setEnabled(true);
 				manageEvents.newEvent(board.getDestinationTile(playerList.getActivePlayer().getPosition()),
 						playerList.getActivePlayer());
-			} 
-			
-			else if (playerList.getActivePlayer().isPlayerInJail() == false) {
+			} else {
 				btnRollDice.setEnabled(true);
 				btnEndTurn.setEnabled(false);
 			}
@@ -229,7 +228,7 @@ public class Dice extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * @param Cheat method used for Testing
+	 * @param i method used for Testing
 	 * it moves the model.player to a specific index
 	 */
 	public void moveWCheat(int i) {
@@ -277,7 +276,7 @@ public class Dice extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * @param  sets number of total roll
+	 * @param roll sets number of total roll
 	 */
 	public void setRoll(int roll) {
 		this.roll = roll;
@@ -304,7 +303,6 @@ public class Dice extends JPanel implements ActionListener {
 							playerList.getActivePlayer());
 					eastSidePnl.addPlayerList(playerList);
 					btnEndTurn.setEnabled(true);
-
 				}
 
 				try {
@@ -312,7 +310,6 @@ public class Dice extends JPanel implements ActionListener {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}
 	}
@@ -322,7 +319,6 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	private void goEvent() {
 		if (playerList.getActivePlayer().passedGo()) {
-
 			playerList.getActivePlayer().increaseBalance(200);
 			playerList.getActivePlayer().increaseNetWorth(200);
 

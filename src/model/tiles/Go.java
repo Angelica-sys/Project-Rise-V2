@@ -8,31 +8,10 @@ import javax.swing.ImageIcon;
  * Simple Go tile class. 
  * @author AevanDino, SebastianViro
  */
-public class Go implements Tile {
-	private String info;
-	private String name = "GO";
-	private ImageIcon img = new ImageIcon("tilePics/Go.png");
-	
-	/**
-	 * Constructor with name
-	 * @param str
-	 */
-	public Go(String str) {
-		this.name = str;
-	}
-	
-	/**
-	 * returns name of go
-	 */
-	public String getName() {
-		return this.name;
-	}
-	
-	/**
-	 * Returns false, because go cant be purchased
-	 */
-	public Boolean getPurchasable() {
-		return Boolean.FALSE;
+public class Go extends Tile {
+	public Go() {
+		super("Go", "", new ImageIcon("tilePics/Go.png"));
+		getTileInfo();
 	}
 	
 	/**
@@ -46,8 +25,9 @@ public class Go implements Tile {
 	 * Returns info about tile
 	 */
 	public String getTileInfo() {
-		info = name + "\n" + "Every time a model.player passes by, he or she \nis rewarded 200 gold coins";
-		return info;
+		String description = getName() + "\nEvery time a player passes by, they \nare rewarded with 200 gold coins";
+		setDescription(description);
+		return description;
 	}
 	
 	/**
@@ -55,12 +35,5 @@ public class Go implements Tile {
 	 */
 	public String getTitle() {
 		return null;
-	}
-	
-	/**
-	 * returns icon 
-	 */
-	public ImageIcon getPicture() {
-		return img;
 	}
 }

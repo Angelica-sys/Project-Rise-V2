@@ -124,7 +124,7 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File(
-					playerList.getPlayerFromIndex(playerAtI).getProperty(propertyAtI).getPicture().toString()));
+					playerList.getPlayerFromIndex(playerAtI).getProperty(propertyAtI).getImage().toString()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

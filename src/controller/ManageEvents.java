@@ -3,6 +3,7 @@ package controller;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
+import model.tiles.*;
 import view.board.Board;
 import view.dice.Dice;
 import view.eastSidePanels.EastSidePanel;
@@ -12,15 +13,6 @@ import view.messageGui.WinGui;
 import model.player.Player;
 import model.player.PlayerList;
 import model.player.PlayerRanks;
-import model.tiles.FortuneTeller;
-import model.tiles.GoToJail;
-import model.tiles.Jail;
-import model.tiles.Property;
-import model.tiles.SundayChurch;
-import model.tiles.Tavern;
-import model.tiles.Tax;
-import model.tiles.Tile;
-import model.tiles.Work;
 import view.WestSidePanel;
 
 /**
@@ -98,7 +90,7 @@ public class ManageEvents {
 		}
 
 		if (tile instanceof Work) {
-			workEvent(tile, player);
+			workEvent(player);
 		}
 
 		if (tile instanceof FortuneTeller) {
@@ -134,9 +126,8 @@ public class ManageEvents {
 	 */
 	public void propertyEvent(Tile tile, Player player) {
 		Property tempProperty = (Property) tile;
-		int tempInt = 0;
 
-		if (tempProperty.getPurchasable()) {
+		if (tempProperty.isPurchasable()) {
 			if (player.getBalance() < tempProperty.getPrice()) {
 				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this property");
 			} else {
@@ -144,41 +135,29 @@ public class ManageEvents {
 			}
 		} else {
 			if (player != tempProperty.getOwner()) {
+				int tempInt;
+
 				if (tempProperty.getLevel() == 0) {
 					tempInt = tempProperty.getDefaultRent();
-					checkPlayerBalance(player, tempInt);
-
-					if (player.isAlive()) {
-						JOptionPane.showMessageDialog(
-						        null,
-                                player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-								+ tempProperty.getOwner().getName()
-                        );
-
-						westPanel.append(
-						        player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-								+ tempProperty.getOwner().getName() + "\n"
-                        );
-
-						player.decreaseBalace(tempInt);
-						player.decreaseNetWorth(tempInt);
-						tempProperty.getOwner().increaseBalance(tempInt);
-					}
 				} else {
 					tempInt = tempProperty.getTotalRent();
-					checkPlayerBalance(player, tempInt);
+				}
 
-					if (player.isAlive()) {
-						JOptionPane.showMessageDialog(
-								null,
-								player.getName() + " paid " + tempProperty.getTotalRent() + " GC to " +
-										tempProperty.getOwner().getName()
-						);
-						westPanel.append(player.getName() + " paid " + tempProperty.getTotalRent() + " GC to "
-								+ tempProperty.getOwner().getName() + "\n");
-						player.decreaseBalace(tempInt);
-						tempProperty.getOwner().increaseBalance(tempInt);
+				checkPlayerBalance(player, tempInt);
+
+				if (player.isAlive()) {
+					String effect = player.getName() + " paid " + tempProperty.getTotalRent() +
+							" GC to " + tempProperty.getOwner().getName();
+
+					JOptionPane.showMessageDialog(null, effect);
+					westPanel.append(effect);
+					westPanel.append("\n");
+
+					player.decreaseBalace(tempInt);
+					if (tempProperty.getLevel() == 0) {
+						player.decreaseNetWorth(tempInt);
 					}
+					tempProperty.getOwner().increaseBalance(tempInt);
 				}
 			}
 		}
@@ -186,18 +165,19 @@ public class ManageEvents {
 
 	/**
 	 * Method called when the model.player lands on a work tile.
-	 * @param tile
 	 * @param player
 	 */
-	public void workEvent(Tile tile, Player player) {
-		Work tempWorkObject = (Work) tile;
-		tempWorkObject.setPlayer(player);
-		tempWorkObject.payPlayer(getRoll());
+	public void workEvent(Player player) {
+		int roll = getRoll();
+		int salary = player.getPlayerRank().getSalary(roll);
 
-		westPanel.append(player.getName() + " Got " + tempWorkObject.getPay() + " GC\n");
+		player.increaseBalance(player.getPlayerRank().getSalary(roll));
+		player.increaseNetWorth(salary);
+
+		westPanel.append(player.getName() + " Got " + salary + " GC\n");
 		JOptionPane.showMessageDialog(
 				null,
-				"The roll is " + roll + "\n" + "You got: " + tempWorkObject.getPay() + " GC for your hard work"
+				"The roll is " + roll + "\n" + "You got: " + salary + " GC for your hard work"
 		);
 	}
 
@@ -236,7 +216,7 @@ public class ManageEvents {
 	public void tavernEvent(Tile tile, Player player) {
 		Tavern tempTavernObj = (Tavern) tile;
 
-		if (tempTavernObj.getPurchasable()) {
+		if (tempTavernObj.isPurchasable()) {
 			if (player.getBalance() < tempTavernObj.getPrice()) {
 				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this tavern");
 			} else {
@@ -314,16 +294,22 @@ public class ManageEvents {
 	 * @param player in question.
 	 */
 	public void propertyDialog(Property property, Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(
-				null,
-				property.getName() + "\n" + "Do you want to purchase this property for " +
-						property.getPrice() + " GC", "Decide your fate!", JOptionPane.YES_NO_OPTION
-		);
+		String question = property.getName() + "\n" + "Do you want to purchase this property for " +
+				property.getPrice() + " GC";
 
-		if (yesOrNo == 0 && (property.getPrice() <= player.getBalance())) {
+		boolean purchase = (JOptionPane.showConfirmDialog(
+				null,
+				question,
+				"Decide your fate!",
+				JOptionPane.YES_NO_OPTION
+		) == 0);
+
+		if (purchase && (property.getPrice() <= player.getBalance())) {
 			property.setOwner(player);
-			player.addNewProperty(property);
 			property.setPurchasable(false);
+			property.getTileInfo();
+
+			player.addNewProperty(property);
 			player.decreaseBalace(property.getPrice());
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
 		} else {

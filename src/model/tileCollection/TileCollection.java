@@ -1,32 +1,20 @@
 package model.tileCollection;
 
 import java.awt.Color;
-
 import javax.swing.ImageIcon;
 
-import model.tiles.Jail;
-import model.tiles.Tavern;
-import model.tiles.Work;
-import model.tiles.FortuneTeller;
-import model.tiles.Go;
-import model.tiles.GoToJail;
-import model.tiles.Property;
-import model.tiles.SundayChurch;
-import model.tiles.Tax;
-import model.tiles.Tile;
-
+import model.tiles.*;
 
 /** 
  * Informtion about each view.westSidePanel.tiles.
  * Price, Title, 
  * @author Rohan, Sebastian, Muhammad Abdulkhuder
  */
-
 public class TileCollection {
 	private Tile[] tileArray = new Tile[40];
 
 	public TileCollection() {
-		tileArray[0] = new Go("GO");
+		tileArray[0] = new Go();
 		tileArray[1] = new Property("Wood Cutter Camp", 60, 2, 30, new Color(58,20,56,255), 50,new ImageIcon("tilePics/Wood.png"));
 		tileArray[2] = new FortuneTeller();
 		tileArray[3] = new Property("Stone Mason Camp", 60, 4, 30, new Color(58,20,56,255),50 ,new ImageIcon("tilePics/stone.png"));

@@ -12,9 +12,8 @@ import javax.swing.JPanel;
 
 import model.player.Player;
 import model.player.PlayerList;
-import model.tiles.Tile;
+import model.tiles.*;
 import model.tileCollection.TileCollection;
-import model.tiles.TileInfo;
 import view.WestSidePanel;
 
 /**
@@ -419,14 +418,27 @@ public class Board extends JPanel {
 							i == 33 ||i == 35 || i == 36 || i == 38){
 							pnlWest.setTitleText(info.getInfo(i), info.getTitle(i), Color.DARK_GRAY, Color.white);
 					} else if(i==26 || i==27 || i==29) {
-						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(),
-								tileCollection.getTileAtIndex(i).getTitle(), new Color(254,231,11, 255), Color.black);
+						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getDescription(),
+								tileCollection.getTileAtIndex(i).getName(), new Color(254,231,11, 255), Color.black);
 					} else if(i == 12 || i == 28) {
-						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(), 
+						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getDescription(),
 								tileCollection.getTileAtIndex(i).getName(), Color.DARK_GRAY, Color.white);
 					} else {
-						pnlWest.setTitleText(tileCollection.getTileAtIndex(i).getTileInfo(),
-							tileCollection.getTileAtIndex(i).getTitle(), tileCollection.getTileAtIndex(i).getColor(), Color.white );
+						if (tileCollection.getTileAtIndex(i) instanceof Property) {
+							pnlWest.setTitleText(
+									tileCollection.getTileAtIndex(i).getDescription(),
+									tileCollection.getTileAtIndex(i).getName(),
+									((Property)tileCollection.getTileAtIndex(i)).getColor(),
+									Color.white
+							);
+						} else {
+							pnlWest.setTitleText(
+									tileCollection.getTileAtIndex(i).getDescription(),
+									tileCollection.getTileAtIndex(i).getName(),
+									null,
+									Color.white
+							);
+						}
 					}
 				}
 			}

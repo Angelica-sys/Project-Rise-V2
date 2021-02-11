@@ -42,8 +42,7 @@ public class PropertyWindow extends JPanel {
 	}
 
 	/**
-	 * this method loops the amount of players and adds tabs according to the number of 
-	 * properties
+	 * this method loops the amount of players and adds tabs according to the number of properties
 	 */
 	public void addtabs() {
 		tab.removeAll();

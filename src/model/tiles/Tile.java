@@ -1,43 +1,32 @@
 package model.tiles;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.ImageIcon;
+public abstract class Tile {
+    private String name;
+    private String description;
+    private ImageIcon image;
 
-/**
- * All view.westSidePanel.tiles will implement this interface. Methods listed are
- * common methods for all types of view.westSidePanel.tiles.
- * @author AevanDino, SebastianViro
- */
-public interface Tile {
+    public Tile(String name, String description, ImageIcon image) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
 
-	/**
-	 * @return tileName, name of current tile.
-	 */
-	public String getName();
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * @return if tile can be bought.
-	 */
-	public Boolean getPurchasable();
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return color, returns a color-object representing color of tile.
-	 */
-	public Color getColor();
+    public ImageIcon getImage() {
+        return image;
+    }
 
-	/**
-	 * @return info, information about tile. (Price, owner, stuff).
-	 */
-	public String getTileInfo();
-	
-	/**
-	 * @return the tile title.
-	 */
-	public String getTitle();
-		
-	/**
-	 * @return picture of the tile.
-	 */
-	public ImageIcon getPicture();
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

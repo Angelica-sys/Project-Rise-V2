@@ -8,9 +8,12 @@ import javax.swing.ImageIcon;
  * Class for jail tile. 
  * @author Sebastian Viro, Aevan Dino	
  */
-public class Jail implements Tile {
-	private ImageIcon img = new ImageIcon("tilePics/jail.png");
-	
+public class Jail extends Tile {
+	public Jail() {
+		super("Jail", "", new ImageIcon("tilePics/jail.png"));
+		getTileInfo();
+	}
+
 	/**
 	 * Returns name of tile
 	 */
@@ -36,10 +39,11 @@ public class Jail implements Tile {
 	 * returns information about tile
 	 */
 	public String getTileInfo() {
-		return "JAIL + \nPlayer can choose to spend three rounds here"
-				+ "\nor pay the bail.\nFirst day costs 50 gold coins"
-				+ "\nSecond time costs 100 gold coins"
-				+ "\nThird time model.player has to pay 200 and is set free";
+		return
+				"JAIL + \nPlayer can choose to spend three rounds here" +
+				"\nor pay the bail.\nFirst day costs 50 gold coins" +
+				"\nSecond time costs 100 gold coins" +
+				"\nThird time model.player has to pay 200 and is set free";
 	}
 
 	/**
@@ -47,12 +51,5 @@ public class Jail implements Tile {
 	 */
 	public String getTitle() {
 		return null;
-	}
-	
-	/**
-	 * returns image
-	 */
-	public ImageIcon getPicture(){
-		return img;
 	}
 }

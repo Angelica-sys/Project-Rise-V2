@@ -8,11 +8,9 @@ import javax.swing.JOptionPane;
 
 import model.tiles.Property;
 import model.tiles.Tavern;
-import model.tiles.Tile;
 
 /**
  * Player class deals with everything that has to do with a model.player.
- * 
  * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro
  */
 public class Player {
@@ -33,7 +31,6 @@ public class Player {
 	private boolean playerPassedgo = false;
 
 	private ArrayList<Property> propertiesOwned;
-	private ArrayList<Tile> tilesOwned;
 
 	private ArrayList<Tavern> tavernsOwned;
 
@@ -371,7 +368,7 @@ public class Player {
 	 * @param pos
 	 * @return
 	 */
-	public Tile getProperty(int pos) {
+	public Property getProperty(int pos) {
 		return this.propertiesOwned.get(pos);
 	}
 
