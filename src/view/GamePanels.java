@@ -80,6 +80,9 @@ public class GamePanels extends JPanel {
 		lblPic.setIcon(new ImageIcon(bimg));
 		add(lblPic);
 
+
+		// TODO: remove on release.
+		CheatGui cheatGui = new CheatGui(dice);
 	}
 
 	/**
