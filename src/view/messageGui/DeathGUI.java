@@ -16,32 +16,33 @@ import javax.swing.JPanel;
  * @author Sebastian Viro, Muhammad Abdulkhuder
  */
 public class DeathGUI extends JPanel implements ActionListener {
-	private JLabel lblPic = new JLabel("");
-	private JButton btnExit = new JButton("The plague has taken you, you lost");
-	private Font font = new Font("Gabriola", Font.BOLD, 32);
+	private JButton btnExit;
 	private JFrame frame;
 	
 	/**
 	 * Draws the gui
 	 */
-	public void addGui() {
-		setPreferredSize(new Dimension(1200, 675));
-		setLayout(null);
+	public DeathGUI() {
+		this.setPreferredSize(new Dimension(1200, 675));
+		this.setLayout(null);
 
+		JLabel lblPic = new JLabel();
 		lblPic.setBounds(0, 0, 1200, 675);
-		lblPic.setIcon(new ImageIcon("images/plague_doctors_1200.jpg"));
-		btnExit.setBounds(300, 575, 600, 100);
-		add(lblPic);
-		btnExit.setFont(font);
-		btnExit.addActionListener(this);
-		add(btnExit);
-		getFrame();
+		lblPic.setIcon(new ImageIcon("images/death.png"));
+		this.add(lblPic);
+
+		this.btnExit = new JButton("OK");
+		this.btnExit.setBounds(400, 625, 400, 50);
+		this.btnExit.setFont(new Font("Gabriola", Font.BOLD, 32));
+		this.btnExit.addActionListener(this);
+
+		this.add(btnExit);
 	}
 
 	/**
 	 * Creates the frame
 	 */
-	public void getFrame() {
+	public void showGUI() {
 		frame = new JFrame();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,9 +51,9 @@ public class DeathGUI extends JPanel implements ActionListener {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 	}
-	
+
 	/**
-	 * Adds action the the btnExit, disposes the frame. 
+	 * Adds action the the btnExit, disposes the frame.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

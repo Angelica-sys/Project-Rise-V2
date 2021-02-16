@@ -47,6 +47,7 @@ public class ManageEvents {
 		this.eastPanel = eastPanel;
 		deathGUI = new DeathGUI();
 		msgGUI = new FortuneTellerGUI();
+		deathGUI = new DeathGUI();
 	}
 
 	/**
@@ -114,7 +115,9 @@ public class ManageEvents {
 			eastPanel.addPlayerList(playerList.getList());
 			dice.setPlayerList(playerList.getList());
 			board.removePlayer(player);
-			deathGUI.addGui();
+
+			System.out.println("Removing player");
+			deathGUI.showGUI();
 		} 
 	}
 
