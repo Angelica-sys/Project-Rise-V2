@@ -8,16 +8,22 @@ public abstract class Purchasable extends Tile {
     private Player owner;
     private ImageIcon image;
     private boolean purchasable;
+    private int rent;
 
-    public Purchasable(String name, String description, Player owner, ImageIcon image, boolean purchasable) {
+    public Purchasable(String name, String description, Player owner, int rent, ImageIcon image, boolean purchasable) {
         super(name, description, image);
         this.owner = owner;
+        this.rent = rent;
         this.image = image;
         this.purchasable = purchasable;
     }
 
     public Player getOwner() {
         return this.owner;
+    }
+
+    public int getRent() {
+        return rent;
     }
 
     public ImageIcon getImage() {
@@ -30,6 +36,10 @@ public abstract class Purchasable extends Tile {
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public void setRent(int rent) {
+        this.rent = rent;
     }
 
     public void setPurchasable(boolean purchasable) {

@@ -83,7 +83,7 @@ public class ManageEvents {
 		}
 
 		if (tile instanceof Tavern) {
-			tavernEvent(tile, player);
+			tavernEvent((Tavern)tile, player);
 		}
 
 		if (tile instanceof SundayChurch) {
@@ -131,25 +131,18 @@ public class ManageEvents {
 		Property tempProperty = (Property) tile;
 
 		if (tempProperty.isPurchasable()) {
-			if (player.getBalance() < tempProperty.getPrice()) {
-				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this property");
-			} else {
+			if (player.getBalance() >= tempProperty.getPrice()) {
 				propertyDialog(tempProperty, player);
+			} else {
+				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this property");
 			}
 		} else {
 			if (player != tempProperty.getOwner()) {
-				int tempInt;
-
-				if (tempProperty.getLevel() == 0) {
-					tempInt = tempProperty.getDefaultRent();
-				} else {
-					tempInt = tempProperty.getTotalRent();
-				}
-
+				int tempInt = tempProperty.getRent();
 				checkPlayerBalance(player, tempInt);
 
 				if (player.isAlive()) {
-					String effect = player.getName() + " paid " + tempProperty.getTotalRent() +
+					String effect = player.getName() + " paid " + tempProperty.getRent() +
 							" GC to " + tempProperty.getOwner().getName();
 
 					JOptionPane.showMessageDialog(null, effect);
@@ -213,32 +206,31 @@ public class ManageEvents {
 
 	/**
 	 * Method called when players lands on a tavern tile, checks it's availability. 
-	 * @param tile
+	 * @param tavern
 	 * @param player
 	 */
-	public void tavernEvent(Tile tile, Player player) {
-		Tavern tempTavernObj = (Tavern) tile;
-
-		if (tempTavernObj.isPurchasable()) {
-			if (player.getBalance() < tempTavernObj.getPrice()) {
-				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this tavern");
+	public void tavernEvent(Tavern tavern, Player player) {
+		if (tavern.isPurchasable()) {
+			if (player.getBalance() >= tavern.getPrice()) {
+				tavernDialog(tavern, player);
 			} else {
-				tavernDialog(tempTavernObj, player);
+				JOptionPane.showMessageDialog(null, "Not enough funds to purchase this tavern");
 			}
 		} else {
-			if (player != tempTavernObj.getOwner()) {
+			if (player != tavern.getOwner()) {
 				int randomValue = getRoll();
-				randomValue *= 10 * tempTavernObj.getOwner().getAmountOfTaverns();
+				randomValue *= tavern.getRent();
+
 				checkPlayerBalance(player, randomValue);
 
 				if (player.isAlive()) {
 					JOptionPane.showMessageDialog(null, player.getName() + " paid " +
-							randomValue + " GC to " + tempTavernObj.getOwner().getName());
+							randomValue + " GC to " + tavern.getOwner().getName());
 					westPanel.append(player.getName() + " paid " + randomValue + " GC to "
-							+ tempTavernObj.getOwner().getName() + "\n");
+							+ tavern.getOwner().getName() + "\n");
 
-					tempTavernObj.getOwner().increaseBalance(randomValue);
-					tempTavernObj.getOwner().increaseNetWorth(randomValue);
+					tavern.getOwner().increaseBalance(randomValue);
+					tavern.getOwner().increaseNetWorth(randomValue);
 					player.decreaseBalace(randomValue);
 				}
 			}
@@ -308,12 +300,10 @@ public class ManageEvents {
 		) == 0);
 
 		if (purchase && (property.getPrice() <= player.getBalance())) {
-			property.setOwner(player);
-			property.setPurchasable(false);
-			property.getTileInfo();
-
-			player.addNewProperty(property);
+			property.purchase(player);
+			player.addCapital(property);
 			player.decreaseBalace(property.getPrice());
+
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
 		} else {
 			westPanel.append(player.getName() + " did not purchase " + property.getName() + "\n");
@@ -326,18 +316,19 @@ public class ManageEvents {
 	 * @param player, model.player who landed on the tavern.
 	 */
 	public void tavernDialog(Tavern tavern, Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(
+		int playerResponse = JOptionPane.showConfirmDialog(
 				null,
 				"Do you want to purchase this property?",
 				"JOption",
 				JOptionPane.YES_NO_OPTION
 		);
 
-		if (yesOrNo == 0 && (tavern.getPrice() <= player.getBalance())) {
-			tavern.setOwner(player);
-			player.addNewTavern(tavern);
-			tavern.setPurchasable(false);
+		if (playerResponse == 0 && (player.getBalance() >=tavern.getPrice())) {
+			tavern.purchase(player);
+			player.addCapital(tavern);
+
 			player.decreaseBalace(tavern.getPrice());
+
 			westPanel.append(player.getName() + " purchased " + tavern.getName() + "\n");
 		} else {
 			westPanel.append(player.getName() + " did not purchase " + tavern.getName() + "\n");

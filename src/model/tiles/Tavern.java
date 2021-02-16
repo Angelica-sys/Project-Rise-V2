@@ -1,17 +1,22 @@
 package model.tiles;
 
+import model.player.Player;
+
 import javax.swing.ImageIcon;
 
 public class Tavern extends Purchasable {
 	private int price;
 
-	public Tavern(String name, int price) {
-		super(name, "", null, new ImageIcon("tilePics/tavern.png"), true);
-		this.price = price;
+	public Tavern(String name, int rent) {
+		super(name, "", null, rent, new ImageIcon("tilePics/tavern.png"), true);
+		this.price = 150;
 		getTileInfo();
 	}
-	public void onLanding() {
-		// TODO Auto-generated method stub
+
+	public void purchase(Player player) {
+		this.setOwner(player);
+		this.setPurchasable(false);
+		this.getTileInfo();
 	}
 	
 	public int getPrice() {
@@ -40,9 +45,5 @@ public class Tavern extends Purchasable {
 	
 	public void clearTavern() {
 		setPurchasable(true);
-	}
-
-	public String getTitle() {
-		return null;
 	}
 }

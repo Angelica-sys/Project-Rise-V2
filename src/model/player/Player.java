@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import model.tiles.Property;
+import model.tiles.Purchasable;
 import model.tiles.Tavern;
 
 /**
@@ -16,23 +17,19 @@ import model.tiles.Tavern;
 public class Player {
 	private String name;
 	private Boolean isAlive;
-
 	private ImageIcon playerIcon;
 	private int counter;
 	private int playerIndex;
 	private int playerJailCounter = 0;
 	private boolean playerIsInJail = false;
 	private Color playerColor;
-
 	private PlayerRanks playerRank;
-
 	private int balance;
 	private int netWorth;
 	private boolean playerPassedgo = false;
-
-	private ArrayList<Property> propertiesOwned;
-
-	private ArrayList<Tavern> tavernsOwned;
+	private ArrayList<Purchasable> capital;
+	private int nProperties, nTaverns;
+	//private ArrayList<Tavern> tavernsOwned;
 
 	/**
 	 * Constructor for adding a new model.player, new players are created by the
@@ -44,7 +41,6 @@ public class Player {
 	 * @param playerIndex  index of model.player (for example if second model.player the
 	 *                     playerIndex is 1)
 	 */
-
 	public Player(String inPlayerName, ImageIcon playerIcon, int playerIndex) {
 		setName(inPlayerName);
 		this.playerIcon = playerIcon;
@@ -55,8 +51,11 @@ public class Player {
 		setNetWorth(1500);
 		setPlayerRank(playerRank.PEASANT);
 		this.playerIndex = playerIndex;
-		this.tavernsOwned = new ArrayList<>();
-		this.propertiesOwned = new ArrayList<>();
+		//this.tavernsOwned = new ArrayList<>();
+		this.capital = new ArrayList<>();
+
+		this.nProperties = 0;
+		this.nTaverns = 0;
 
 		counter = 0;
 	}
@@ -72,8 +71,11 @@ public class Player {
 		setNetWorth(1500);
 		setPlayerRank(playerRank.PEASANT);
 		this.playerIndex = playerIndex;
-		this.tavernsOwned = new ArrayList<>();
-		this.propertiesOwned = new ArrayList<>();
+		//this.tavernsOwned = new ArrayList<>();
+		this.capital = new ArrayList<>();
+
+		this.nProperties = 0;
+		this.nTaverns = 0;
 
 		counter = 0;
 	}
@@ -175,9 +177,7 @@ public class Player {
 	 * @param amountOfStepsToMove
 	 */
 	public void setPosition(int amountOfStepsToMove) {
-
 		for (int i = 0; i < amountOfStepsToMove; i++) {
-
 			if (counter < 39) {
 				counter++;
 			} else {
@@ -251,8 +251,7 @@ public class Player {
 	}
 
 	public String isAliveString() {
-
-		if (isAlive == true) {
+		if (isAlive) {
 			return "This model.player is alive and well";
 		} else
 			return "The plauge has taken another soul";
@@ -300,31 +299,73 @@ public class Player {
 		this.netWorth += income;
 	}
 
+	public void addCapital(Purchasable capital) {
+		this.capital.add(capital);
+
+		if (capital instanceof Property) {
+			this.nProperties++;
+		} else {
+			this.nTaverns++;
+
+			if (this.nTaverns > 1) {
+				this.capital.forEach(e -> {
+					if (e instanceof Tavern) {
+						e.setRent(10*this.nTaverns);
+					}
+				});
+			}
+		}
+	}
+
 	/**
 	 * Adds newly purchased property to ownedProperties array
 	 * 
 	 * @param newProperty, the newly bought property.
 	 */
 	public void addNewProperty(Property newProperty) {
-		this.propertiesOwned.add(newProperty);
+		this.capital.add(newProperty);
+		this.nProperties++;
 	}
 
-	public void removeProperty(Property property) {
+	public void removeCapital(Purchasable capital) {
+		this.capital.remove(capital);
 
-		this.propertiesOwned.remove(property);
-		property.setOwner(null);
+		if (capital instanceof Property) {
+			this.nProperties--;
+		} else {
+			this.nTaverns--;
 
+			if (this.nTaverns != 0) {
+				this.capital.forEach(e -> {
+					if (e instanceof Tavern) {
+						e.setRent(10*this.nTaverns);
+					}
+				});
+			}
+		}
+
+		capital.setOwner(null); //TODO: null pointer after selling?
 	}
 
-	public void sellProperty(Property property) {
-		int total = (property.getPrice() + (property.getLevel() * property.getLevelPrice()));
-		int res = JOptionPane.showConfirmDialog(null,
-				"Do you really want to sell " + property.getName() + " for: " + total);
+	public void sellCapital(Purchasable capital) {
+		int total;
+
+		if (capital instanceof Property) {
+			total = ((Property) capital).getPrice();
+			total += ((Property) capital).getLevel();
+			total *= ((Property) capital).getLevelPrice();
+		} else {
+			total = ((Tavern) capital).getPrice();
+		}
+
+		int res = JOptionPane.showConfirmDialog(
+				null,
+				"Do you really want to sell " + capital.getName() + " for: " + total
+		);
 
 		if (res == 0) {
 			increaseBalance(total);
-			this.propertiesOwned.remove(property);
-			property.setOwner(null);
+			removeCapital(capital);
 		}
 	}
 
@@ -332,7 +373,10 @@ public class Player {
 	 * @param newTavern add a new Tavern to a user
 	 */
 	public void addNewTavern(Tavern newTavern) {
-		this.tavernsOwned.add(newTavern);
+		this.capital.add(newTavern);
+		this.nTaverns++;
+
+		newTavern.setRent(10*nTaverns);
 	}
 
 	/**
@@ -341,7 +385,7 @@ public class Player {
 	 * @return amount of taverns
 	 */
 	public int getAmountOfTaverns() {
-		return tavernsOwned.size();
+		return this.nTaverns;
 	}
 
 	/**
@@ -349,27 +393,37 @@ public class Player {
 	 * amount of houses to 0 and remove the owner
 	 */
 	public void clearPlayer() {
-		for (int i = 0; i < propertiesOwned.size(); i++) {
-			propertiesOwned.get(i).clearProperty();
+		this.capital.forEach(e -> {
+			if (e instanceof Property) {
+				((Property) e).clearProperty();
+			} else {
+				((Tavern)e).clearTavern();
+			}
+		});
+
+		/* TODO
+		for (int i = 0; i < capital.size(); i++) {
+			capital.get(i).clearProperty();
 		}
 
 		for (int i = 0; i < tavernsOwned.size(); i++) {
 			tavernsOwned.get(i).clearTavern();
 		}
-	}
-
-	public Property getPropertyAt(int pos)   {
-		return this.propertiesOwned.get(pos);
+		*/
 	}
 
 	/**
 	 * Gets property at specified position
-	 * 
 	 * @param pos
 	 * @return
 	 */
-	public Property getProperty(int pos) {
-		return this.propertiesOwned.get(pos);
+	public Purchasable getCapital(int pos) {
+		System.out.println("Getting capital. Empty: " + this.capital.isEmpty());
+		System.out.println("Getting capital at pos: " + pos);
+		System.out.println("Number of capital: " + this.capital.size());
+		System.out.println(this.capital.get(pos).getDescription());
+		System.out.println("Returning capital " + this.capital.get(pos).getName());
+		return this.capital.get(pos);
 	}
 
 	public void checkPlayerRank() {
@@ -380,6 +434,7 @@ public class Player {
 		if (getNetWorth() >= 4000) {
 			setPlayerRank(PlayerRanks.LORD);
 		}
+
 		if (getNetWorth() >= 7500) {
 			setPlayerRank(PlayerRanks.KINGS);
 		}
@@ -388,16 +443,18 @@ public class Player {
 	/**
 	 * @return propertiesOwned, returns entire ArrayList of properties owned.
 	 */
-	public ArrayList<Property> getProperties() {
-		return this.propertiesOwned;
+	public ArrayList<Purchasable> getCapital() {
+		return this.capital;
 	}
 
 	/**
 	 * @return all taverns owned by model.player
 	 */
+	/* TODO
 	public ArrayList<Tavern> getTaverns() {
 		return this.tavernsOwned;
 	}
+	 */
 
 	/**
 	 * Returns the players color

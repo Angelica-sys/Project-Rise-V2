@@ -26,7 +26,7 @@ public class TileCollection {
 		tileArray[9] = new Property("Bakery Stand", 120, 8, 60, new Color(131, 166, 219, 255),50, new ImageIcon("tilePics/bakerStall.png"));
 		tileArray[10] = new Jail();
 		tileArray[11] = new Property("Tannery", 140, 10, 70, new Color(163,61,125,255), 100,new ImageIcon("tilePics/tanner.png"));
-		tileArray[12] = new Tavern("Western Tavern", 150);
+		tileArray[12] = new Tavern("Western Tavern", 10);
 		tileArray[13] = new Property("Mill", 140, 10, 80, new Color(163,61,125,255), 100,new ImageIcon("tilePics/mill.png"));
 		tileArray[14] = new Property("Smith", 160, 12, 80, new Color(163,61,125,255),100, new ImageIcon("tilePics/smith.png"));
 		tileArray[15] = new Work();
@@ -42,7 +42,7 @@ public class TileCollection {
 		tileArray[25] = new Work();
 		tileArray[26] = new Property("Cobbler", 260, 22, 160,  new Color(254,231,11, 255),150, new ImageIcon("tilePics/cobbler.png"));
 		tileArray[27] = new Property("General Store", 260, 22 , 170,  new Color(254,231,11, 55),150, new ImageIcon("tilePics/general.png"));
-		tileArray[28] = new Tavern("Northern Tavern", 150);
+		tileArray[28] = new Tavern("Northern Tavern", 10);
 		tileArray[29] = new Property("Silver Smith", 280, 24, 180,  new Color(254,231,11, 255),150, new ImageIcon("tilePics/silver.png"));
 		tileArray[30] = new GoToJail();
 		tileArray[31] = new Property("Armorer", 300, 26, 190, new Color(95,178,77, 255),200, new ImageIcon("tilePics/armor.png"));

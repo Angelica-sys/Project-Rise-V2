@@ -7,6 +7,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 import model.player.PlayerList;
+import model.tiles.Property;
+import model.tiles.Purchasable;
 
 /**
  * @author Muhammad Abdulkhuder, Aevan Dino.
@@ -15,7 +17,6 @@ public class PropertyWindow extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private PlayerList playerList;
 	private JTabbedPane tab;
-	private PlayerProperties playerProperties;
 	private int playerAt;
 	private int[] size;
 
@@ -47,13 +48,19 @@ public class PropertyWindow extends JPanel {
 	public void addtabs() {
 		tab.removeAll();
 		tab.setForeground(Color.white);
-		size = new int[playerList.getPlayerFromIndex(getPlayerAt()).getProperties().size()];
+		int nCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital().size();
 
-		for (int i = 0; i < size.length; i++) {
+		for (int i = 0; i < nCapital; i++) {
 			new PropertyWindow();
-			playerProperties = new PlayerProperties(playerList, getPlayerAt(), i);
-			tab.addTab("Property" + (i + 1), playerProperties);
-			tab.setBackgroundAt(i, playerList.getPlayerFromIndex(getPlayerAt()).getProperty(i).getColor());
+			PlayerProperties playerProperties = new PlayerProperties(playerList, getPlayerAt(), i);
+			tab.addTab("Capital " + (i+1), playerProperties);
+
+			Purchasable playerCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital(i);
+			if (playerCapital instanceof Property) {
+				tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
+			} else {
+				tab.setBackgroundAt(i, Color.GRAY);
+			}
 		}
 	}
 

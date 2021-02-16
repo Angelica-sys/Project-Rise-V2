@@ -54,7 +54,7 @@ public class EastSidePanel extends JPanel {
 	public void addtabs() {
 		tab.removeAll();
 
-		for (int i = 0; i < playerList.getLength(); i++) {
+		for (int i=0; i<playerList.getLength(); i++) {
 			new EastSidePanel();
 			playerInfoPnl = new PlayerInfoPanel(playerList, i);
 			playerInfoPnl.setOpaque(false);
