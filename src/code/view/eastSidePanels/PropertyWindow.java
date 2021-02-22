@@ -15,11 +15,10 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder, Aevan Dino.
  */
 public class PropertyWindow extends JPanel {
-	private static final long serialVersionUID = 12L;
+	//private static final long serialVersionUID = 12L;
 
-	private PlayerList playerList;
 	private JTabbedPane tab;
-	private int playerAt;
+	private int currentPlayer;
 	private int nCapital;
 
 	/**
@@ -32,58 +31,47 @@ public class PropertyWindow extends JPanel {
 		UIManager.put("TabbedPane.contentOpaque", false);
 		UIManager.put("TabbedPane.selected", Color.cyan);
 
-		tab = new JTabbedPane();
-		tab.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		tab.setBorder(null);
-		tab.setBounds(0, 0, 330, 600);
-		add(tab);
+		this.tab = new JTabbedPane();
+		this.tab.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		this.tab.setBorder(null);
+		this.tab.setBounds(0, 0, 330, 600);
+		add(this.tab);
 	}
 
 	/**
 	 * TODO: no need to rewrite every time? Just if a new property has been added?
-	 * this method loops the amount of players and adds tabs according to the number of properties
+	 * this method loops through each Purchasable a Player owns and adds them to their JTabbedPane to the east.
 	 */
 	public void addPlayerList(PlayerList playerList) {
-		this.playerList = playerList;
-		Player p = this.playerList.getPlayerFromIndex(getPlayerAt());
+		Player p = playerList.getPlayerFromIndex(this.currentPlayer);
 		int nCapital = p.getCapital().size();
 
-		System.out.println("Player: " + p.getName());
-		System.out.println("nCapital: " + nCapital);
-		System.out.println("last: " + this.nCapital);
-
+		// If the number of Purchasables a Player owns has changed.
 		if (nCapital != this.nCapital) {
 			this.nCapital = nCapital;
 			this.tab.removeAll();
 			this.tab.setForeground(Color.white);
 
+			// For every Purchasable a Player owns.
 			for (int i=0; i<nCapital; i++) {
-				System.out.println("I'm in me mums car.");
 				new PropertyWindow();
-				PlayerProperties playerProperties = new PlayerProperties(playerList, getPlayerAt(), i);
-				tab.addTab("Capital " + (i+1), playerProperties);
+				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i);
+				this.tab.addTab("Capital " + (i+1), playerPropertyPanel);
 
-				Purchasable playerCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital(i);
+				Purchasable playerCapital = p.getCapital(i);
 				if (playerCapital instanceof Property) {
-					tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
+					this.tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
 				} else {
-					tab.setBackgroundAt(i, Color.GRAY);
+					this.tab.setBackgroundAt(i, Color.GRAY);
 				}
 			}
 		}
 	}
 
 	/**
-	 * @return playerAT
+	 * @param currentPlayer
 	 */
-	public int getPlayerAt() {
-		return playerAt;
-	} 
-
-	/**
-	 * @param playerAt
-	 */
-	public void setPlayerAt(int playerAt) {
-		this.playerAt = playerAt;
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
 	}
 }

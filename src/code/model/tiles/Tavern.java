@@ -8,7 +8,7 @@ public class Tavern extends Purchasable {
 	private int price;
 
 	public Tavern(String name, int rent) {
-		super(name, "", null, rent, new ImageIcon("tilePics/tavern.png"), true);
+		super(name, "", null, rent, new ImageIcon("src/resources/images/tiles/tavern.png"), true);
 		this.price = 150;
 		getTileInfo();
 	}

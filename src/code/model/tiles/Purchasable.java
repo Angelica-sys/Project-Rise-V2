@@ -6,7 +6,6 @@ import javax.swing.*;
 
 public abstract class Purchasable extends Tile {
     private Player owner;
-    private ImageIcon image;
     private boolean purchasable;
     private int rent;
 
@@ -14,7 +13,6 @@ public abstract class Purchasable extends Tile {
         super(name, description, image);
         this.owner = owner;
         this.rent = rent;
-        this.image = image;
         this.purchasable = purchasable;
     }
 
@@ -24,10 +22,6 @@ public abstract class Purchasable extends Tile {
 
     public int getRent() {
         return rent;
-    }
-
-    public ImageIcon getImage() {
-        return this.image;
     }
 
     public boolean isPurchasable() {

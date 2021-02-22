@@ -337,6 +337,10 @@ public class Player {
 		}
 	}
 
+	public void sellCapital(int capitalNumber) {
+		sellCapital(this.getCapital(capitalNumber));
+	}
+
 	/**
 	 * If user is eliminated reset all users properties and taverns by setting the
 	 * amount of houses to 0 and remove the owner

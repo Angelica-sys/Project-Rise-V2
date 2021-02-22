@@ -1,6 +1,7 @@
 package code.model.tiles;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class Tile {
     private String name;
@@ -21,8 +22,8 @@ public abstract class Tile {
         return description;
     }
 
-    public ImageIcon getImage() {
-        return image;
+    public Image getImage() {
+        return image.getImage();
     }
 
     public void setDescription(String description) {
