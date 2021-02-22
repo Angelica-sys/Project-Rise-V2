@@ -130,15 +130,21 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		btnUpgrade.setFont(font);
 		btnTrade.setFont(font);
 
+		/*
 		BufferedImage img = null;
+
 		try {
 			Purchasable currentCapital = playerList.getPlayerFromIndex(playerAtI).getCapital(propertyAtI);
 			img = ImageIO.read(new File(currentCapital.getImage().toString()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 
-		Image resizedImg = img.getScaledInstance(lblPicture.getWidth(), lblPicture.getHeight(), Image.SCALE_SMOOTH);
+		//Image resizedImg = img.getScaledInstance(lblPicture.getWidth(), lblPicture.getHeight(), Image.SCALE_SMOOTH);
+
+		Image resizedImg = playerList.getPlayerFromIndex(playerAtI).getCapital(propertyAtI).getImage().getImage();
+		resizedImg = resizedImg.getScaledInstance(lblPicture.getWidth(), lblPicture.getHeight(), Image.SCALE_SMOOTH);
 
 		lblPicture.setIcon(new ImageIcon(resizedImg));
 		btnUpgrade.addActionListener(this);
