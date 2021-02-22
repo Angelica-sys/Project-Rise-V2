@@ -1,4 +1,4 @@
-package code.model.tileCollection;
+package code.model.tiles;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;

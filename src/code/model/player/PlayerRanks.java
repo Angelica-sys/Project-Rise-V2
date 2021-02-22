@@ -3,7 +3,6 @@ package code.model.player;
 /** 
  * Enum class used to deal with the players rank. That is, different things happen
  * when the same method is called for different ranks
- * 
  * @author AevanDino
  */
 public enum PlayerRanks {
@@ -114,6 +113,4 @@ public enum PlayerRanks {
 	public abstract int getSalary(int dots);
 	public abstract int nbrOfLevels();
 	public abstract int calculateTax();
-	
-	
 }

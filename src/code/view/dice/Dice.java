@@ -284,8 +284,7 @@ public class Dice extends JPanel implements ActionListener {
 
 	/**
 	 * @author Seth �berg, Muhammad Abdulkhuder
-	 * Moves the code.model.player with a thread.
-	 *
+	 * Moves the player with a thread.
 	 */
 	private class LoopThread implements Runnable {
 		public LoopThread(int index) {
@@ -299,8 +298,10 @@ public class Dice extends JPanel implements ActionListener {
 				board.setPlayer(playerList.getActivePlayer());
 
 				if (i == (getRoll() - 1)) {
-					manageEvents.newEvent(board.getDestinationTile(playerList.getActivePlayer().getPosition()),
-							playerList.getActivePlayer());
+					manageEvents.newEvent(
+							board.getDestinationTile(playerList.getActivePlayer().getPosition()),
+							playerList.getActivePlayer()
+					);
 					eastSidePnl.addPlayerList(playerList);
 					btnEndTurn.setEnabled(true);
 				}
@@ -315,7 +316,7 @@ public class Dice extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * If a code.model.player passes go.
+	 * If a player passes go.
 	 */
 	private void goEvent() {
 		if (playerList.getActivePlayer().passedGo()) {

@@ -13,12 +13,11 @@ import javax.swing.JPanel;
 import code.model.player.Player;
 import code.model.player.PlayerList;
 import code.model.tiles.*;
-import code.model.tileCollection.TileCollection;
+import code.model.tiles.TileCollection;
 import code.view.WestSidePanel;
 
 /**
  * @author Muhammad Abdulkhuder, Seth �berg, Rohan Samandari
- *
  */
 public class Board extends JPanel {
 	private WestSidePanel pnlWest;
@@ -77,7 +76,6 @@ public class Board extends JPanel {
 	JLabel lblNewLabel = new JLabel();
 
 	/**
-	 * 
 	 * @param wp, WestSidePanel
 	 */
 	public Board(WestSidePanel wp) {
@@ -87,7 +85,6 @@ public class Board extends JPanel {
 	}
 	
 	/**
-	 * 
 	 * @param playerList, list of players
 	 */
 	public Board(PlayerList playerList) {
@@ -118,7 +115,6 @@ public class Board extends JPanel {
 	 * Sets players
 	 */
 	public void setPlayers() {
-		
 		for(int i = 0; i < playerList.getLength(); i++) {
 			setPlayer(playerList.getPlayerFromIndex(i));
 		}
@@ -312,7 +308,7 @@ public class Board extends JPanel {
 	 */
 	public void initializeGUI() {
 		addEmptyGridPanels();
-		paintNewBoard(guiTiles); //Requires a array with all 40 code.view.westSidePanel.tiles to be sent to paintNewBoard.
+		paintNewBoard(guiTiles); //Requires a array with all 40 tiles to be sent to paintNewBoard.
 	}
 	
 	/**
@@ -324,35 +320,27 @@ public class Board extends JPanel {
 	}
 
 	/**
-	 * Tile objects are created with an int depending on their position on the code.view.board.
+	 * Tile objects are created with an int depending on their position on the board.
 	 */
 	public void addEmptyGridPanels() {
 		for (int i = 0; i < guiTiles.length; i++) {
 			
-			/*
-			 * If index is between 0-10 then labels are placed in north.
-			 */
+			// If index is between 0-10 then labels are placed in north.
 			if(i < 11) {
 				guiTiles[i] = new GUITile(1); 
 			}
 			
-			/*
-			 * If index is between 11-20 then labels are placed in east.
-			 */
+			// If index is between 11-20 then labels are placed in east.
 			else if(i < 20) {
 				guiTiles[i] = new GUITile(2); 
 			}
 
-			/*
-			 * If index is between 20 and 30 then labels are placed in south.
-			 */
+			// If index is between 20 and 30 then labels are placed in south.
 			else if(i < 31) {
 				guiTiles[i] = new GUITile(3); 
 			}
 			
-			/*
-			 * If index is between 31-39 then labels are placed in west.
-			 */
+			// If index is between 31-39 then labels are placed in west.
 			else if(i < 40) {
 				guiTiles[i] = new GUITile(4); 
 			}	
@@ -360,7 +348,7 @@ public class Board extends JPanel {
 	}
 		
 	/**
-	 * Sets a code.model.player on a certain position.
+	 * Sets a player on a certain position.
 	 * @param player
 	 */
 	public void setPlayer(Player player) {
@@ -368,7 +356,7 @@ public class Board extends JPanel {
 	}
 	
 	/**
-	 * Removes a code.model.player from a certain position.
+	 * Removes a player from a certain position.
 	 * @param player
 	 */
 	public void removePlayer(Player player) {
@@ -385,7 +373,7 @@ public class Board extends JPanel {
 	}
 	 
 	/**
-	 * Used to initilize all the code.view.westSidePanel.tiles.
+	 * Used to initilize all the tiles.
 	 * @param spaces, receives a array with all 40 tile objects.
 	 */
 	public void paintNewBoard(GUITile[] spaces) {
@@ -395,7 +383,7 @@ public class Board extends JPanel {
 	}
 	
 	/**
-	 * Listener class for interactive code.view.westSidePanel.tiles
+	 * Listener class for interactive tiles
 	 */
 	public class Listener implements MouseListener {
 
@@ -403,11 +391,10 @@ public class Board extends JPanel {
 		 * Nothing happens when clicking
 		 */
 		public void mouseClicked(MouseEvent e) {
-
 		}
 
 		/**
-		 * Method for when hovering over code.view.westSidePanel.tiles.
+		 * Method for when hovering over tiles.
 		 */
 		public void mouseEntered(MouseEvent e) {
 			for (int i=0; i<panelarray.length; i++) {
@@ -455,14 +442,12 @@ public class Board extends JPanel {
 		 * Nothing happens when mouse is pressed.
 		 */
 		public void mousePressed(MouseEvent e) {
-
 		}
 
 		/**
 		 * Nothing happens by releasing mouse.
 		 */
 		public void mouseReleased(MouseEvent e) {
-
 		}
 	}
 }

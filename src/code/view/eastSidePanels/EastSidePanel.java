@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
+import code.model.player.Player;
 import code.model.player.PlayerList;
 
 /**
@@ -14,7 +15,8 @@ import code.model.player.PlayerList;
  * @author Abdulkhuder Muhammad, Sebastian Viro.
  */
 public class EastSidePanel extends JPanel {
-	private static final long serialVersionUID = 3397908521882247649L;
+	private static final long serialVersionUID = 15L;
+	//private static final long serialVersionUID = 3397908521882247649L;
 	private PlayerList playerList;
 	private JTabbedPane tab;
 	private PlayerInfoPanel playerInfoPnl;
@@ -23,10 +25,25 @@ public class EastSidePanel extends JPanel {
 	/**
 	 * @param playerList
 	 * this method is also used to update the information displayed
+	 * this method adds tabs according to the amount of players
 	 */
 	public void addPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
-		addtabs();
+
+		this.tab.removeAll();
+
+		for (int i=0; i<playerList.getLength(); i++) {
+			new EastSidePanel();
+			this.playerInfoPnl = new PlayerInfoPanel(playerList, i);
+			this.playerInfoPnl.setOpaque(false);
+			this.tab.addTab("Player " + (i + 1), this.playerInfoPnl);
+			this.tab.setOpaque(false);
+		}
+
+		this.tab.setSelectedIndex(this.currentPlayer);
+		this.tab.setForeground(Color.white);
+		this.tab.setBackground(new Color(157, 0, 0));
+		this.tab.setBackgroundAt(this.currentPlayer, new Color(0, 157, 0));
 	}
 
 	/**
@@ -44,26 +61,6 @@ public class EastSidePanel extends JPanel {
 		tab.setBounds(0, 0, 355, 860);
 		tab.setBackground(new Color(0, 0, 0));
 		add(tab);
-	}
-
-	/**
-	 * this method adds tabs according to the amount of players
-	 */
-	public void addtabs() {
-		tab.removeAll();
-
-		for (int i=0; i<playerList.getLength(); i++) {
-			new EastSidePanel();
-			playerInfoPnl = new PlayerInfoPanel(playerList, i);
-			playerInfoPnl.setOpaque(false);
-			tab.addTab("Player " + (i + 1), playerInfoPnl);
-			tab.setOpaque(false);
-		}
-
-		tab.setSelectedIndex(currentPlayer);
-		tab.setForeground(Color.white);
-		tab.setBackground(new Color(157, 0, 0));
-		tab.setBackgroundAt(currentPlayer, new Color(0, 157, 0));
 	}
 
 	/**

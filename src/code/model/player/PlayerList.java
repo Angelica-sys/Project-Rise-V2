@@ -11,10 +11,9 @@ import code.view.eastSidePanels.EastSidePanel;
 /**
  * A class that holds all active players 
  * @author Seth Oberg
- *
  */
 public class PlayerList {
-	private LinkedList<Player> activePlayers = new LinkedList<Player>();
+	private LinkedList<Player> activePlayers = new LinkedList<>();
 	private ColorIconMap colorIcons = new ColorIconMap();
 	private StringColorMap colorMap = new StringColorMap();
 	
@@ -23,7 +22,7 @@ public class PlayerList {
 	private int playerListLength = 0;
 
 	/**
-	 * Constructor that sets the active code.model.player to 0 immediately at the start of a game
+	 * Constructor that sets the active player to 0 immediately at the start of a game
 	 * @param p
 	 */
 	public PlayerList(EastSidePanel p) {
@@ -31,7 +30,7 @@ public class PlayerList {
 	}
 	
 	/**
-	 * Constructor that sets the active code.model.player to 0 immediately at the start of a game
+	 * Constructor that sets the active player to 0 immediately at the start of a game
 	 */
 	public PlayerList() {
 		currentPlayer = 0; 
@@ -39,8 +38,8 @@ public class PlayerList {
 	
 	/**
 	 * Add new code.model.player
-	 * @param name the chosen name for a code.model.player
-	 * @param icon the chosen image for a code.model.player
+	 * @param name the chosen name for a player
+	 * @param icon the chosen image for a player
 	 */
 	public void addNewPlayer(String name, ImageIcon icon) {
 		activePlayers.add(new Player(name, icon, playerListLength)); 
@@ -64,17 +63,25 @@ public class PlayerList {
 	public PlayerList getList() {
 		return this;
 	}
+
+	/**
+	 * Used for returning all active players.
+	 * @return a LinkedList containing Player objects representing the active players.
+	 */
+	public LinkedList<Player> getPlayers() {
+		return this.activePlayers;
+	}
 	
 	/**
-	 * @param index get specific code.model.player
-	 * @return code.model.player at chosen index
+	 * @param index get specific player
+	 * @return player at chosen index
 	 */
 	public Player getPlayerFromIndex(int index) {
 		return activePlayers.get(index);
 	}
 	
 	/**
-	 * @return the current code.model.player
+	 * @return the current player
 	 */
 	public Player getActivePlayer() {
 		return activePlayers.get(currentPlayer); 
@@ -96,7 +103,7 @@ public class PlayerList {
 	}
 		
 	/**
-	 * Update amount of players after a code.model.player has been removed
+	 * Update amount of players after a player has been removed
 	 */
 	public void updatePlayerList() {
 		
@@ -106,7 +113,7 @@ public class PlayerList {
 	}
 	
 	/**
-	 * Used to switch to the current code.model.player to the next one
+	 * Used to switch to the current player to the next one
 	 */
 	public void switchToNextPlayer() {
 		if(currentPlayer < (activePlayers.size() - 1) ) {

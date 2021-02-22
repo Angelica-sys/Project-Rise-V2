@@ -14,10 +14,8 @@ import javax.swing.border.Border;
 import code.model.player.Player;
 
 /**
- * 
- * Every tile is a guiTile object they are used to display the players. It could
- * also be used to show the level on the properties.
- * 
+ * Every tile is a guiTile object they are used to display the players.
+ * It could also be used to show the level on the properties.
  * @author sethoberg
  */
 public class GUITile extends JLabel {

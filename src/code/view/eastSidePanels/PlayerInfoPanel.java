@@ -17,7 +17,7 @@ import code.model.player.PlayerList;
  * @author Abdulkhuder Muhammad, Sebastian Viro.
  */
 public class PlayerInfoPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 13L;
 	private JLabel lblName = new JLabel("");
 	private JLabel lblRank = new JLabel("");
 	private JLabel lblGold = new JLabel("");
@@ -32,8 +32,7 @@ public class PlayerInfoPanel extends JPanel {
 	/**
 	 * @param playerList
 	 * @param playernbr
-	 * code.model.player list is used to get the players to display correct information
-	 * playernbr is to specify what code.model.player
+	 * player list is used to get the players to display correct information playernbr is to specify what player
 	 */
 	public PlayerInfoPanel(PlayerList playerList, int playernbr) {
 		setPreferredSize(new Dimension(345, 860));

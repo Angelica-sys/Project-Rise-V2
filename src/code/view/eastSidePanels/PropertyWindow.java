@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
+import code.model.player.Player;
 import code.model.player.PlayerList;
 import code.model.tiles.Property;
 import code.model.tiles.Purchasable;
@@ -14,10 +15,12 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder, Aevan Dino.
  */
 public class PropertyWindow extends JPanel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 12L;
+
 	private PlayerList playerList;
 	private JTabbedPane tab;
 	private int playerAt;
+	private int nCapital;
 
 	/**
 	 *this method is used to update the panel
@@ -35,30 +38,37 @@ public class PropertyWindow extends JPanel {
 		tab.setBounds(0, 0, 330, 600);
 		add(tab);
 	}
-	
-	public void addPlayerList(PlayerList playerList) {
-		this.playerList = playerList;
-		addtabs();
-	}
 
 	/**
+	 * TODO: no need to rewrite every time? Just if a new property has been added?
 	 * this method loops the amount of players and adds tabs according to the number of properties
 	 */
-	public void addtabs() {
-		tab.removeAll();
-		tab.setForeground(Color.white);
-		int nCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital().size();
+	public void addPlayerList(PlayerList playerList) {
+		this.playerList = playerList;
+		Player p = this.playerList.getPlayerFromIndex(getPlayerAt());
+		int nCapital = p.getCapital().size();
 
-		for (int i = 0; i < nCapital; i++) {
-			new PropertyWindow();
-			PlayerProperties playerProperties = new PlayerProperties(playerList, getPlayerAt(), i);
-			tab.addTab("Capital " + (i+1), playerProperties);
+		System.out.println("Player: " + p.getName());
+		System.out.println("nCapital: " + nCapital);
+		System.out.println("last: " + this.nCapital);
 
-			Purchasable playerCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital(i);
-			if (playerCapital instanceof Property) {
-				tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
-			} else {
-				tab.setBackgroundAt(i, Color.GRAY);
+		if (nCapital != this.nCapital) {
+			this.nCapital = nCapital;
+			this.tab.removeAll();
+			this.tab.setForeground(Color.white);
+
+			for (int i=0; i<nCapital; i++) {
+				System.out.println("I'm in me mums car.");
+				new PropertyWindow();
+				PlayerProperties playerProperties = new PlayerProperties(playerList, getPlayerAt(), i);
+				tab.addTab("Capital " + (i+1), playerProperties);
+
+				Purchasable playerCapital = playerList.getPlayerFromIndex(getPlayerAt()).getCapital(i);
+				if (playerCapital instanceof Property) {
+					tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
+				} else {
+					tab.setBackgroundAt(i, Color.GRAY);
+				}
 			}
 		}
 	}

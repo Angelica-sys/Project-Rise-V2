@@ -29,7 +29,8 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
  */
 public class PlayerProperties extends JPanel implements ActionListener {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 14L;
+
 	private JLabel lblName = new JLabel("Name");
 	private JLabel lblPicture = new JLabel("");
 	private JLabel lblRent = new JLabel("Rent");
@@ -105,9 +106,7 @@ public class PlayerProperties extends JPanel implements ActionListener {
 		taLevel.setFont(fontLevel);
 		taLevel.setForeground(Color.white);
 
-		System.out.println("Updating levels");
 		updateLevels();
-		System.out.println("Levels updated");
 
 		add(taLevel);
 
@@ -133,8 +132,8 @@ public class PlayerProperties extends JPanel implements ActionListener {
 
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File(
-					playerList.getPlayerFromIndex(playerAtI).getCapital(propertyAtI).getImage().toString()));
+			Purchasable currentCapital = playerList.getPlayerFromIndex(playerAtI).getCapital(propertyAtI);
+			img = ImageIO.read(new File(currentCapital.getImage().toString()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -319,11 +318,8 @@ public class PlayerProperties extends JPanel implements ActionListener {
 	 * updates levels shown adds a plus to the picture
 	 */
 	public void updateLevels() {
-		// TODO: out of bounds for this.playerAtI
 		Player p = this.playerList.getPlayerFromIndex(this.playerAtI);
 		Purchasable capital = p.getCapital(this.propertyAtI);
-
-		System.out.println("Capital " + capital + " attained.");
 
 		if (capital instanceof Property) {
 			int level = ((Property) capital).getLevel();

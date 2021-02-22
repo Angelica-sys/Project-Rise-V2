@@ -29,17 +29,13 @@ public class Player {
 	private boolean playerPassedgo = false;
 	private ArrayList<Purchasable> capital;
 	private int nProperties, nTaverns;
-	//private ArrayList<Tavern> tavernsOwned;
 
 	/**
-	 * Constructor for adding a new code.model.player, new players are created by the
-	 * playerList class and are automatically set at index 0 on the code.view.board with the
-	 * counter variable set to 0
-	 * 
+	 * Constructor for adding a new player, new players are created by the playerList class and
+	 * are automatically set at index 0 on the board with the counter variable set to 0
 	 * @param inPlayerName chosen Name
 	 * @param playerIcon   imageIcon from ColorIconMap
-	 * @param playerIndex  index of code.model.player (for example if second code.model.player the
-	 *                     playerIndex is 1)
+	 * @param playerIndex  index of code.model.player (for example if second player the playerIndex is 1)
 	 */
 	public Player(String inPlayerName, ImageIcon playerIcon, int playerIndex) {
 		setName(inPlayerName);
@@ -51,7 +47,6 @@ public class Player {
 		setNetWorth(1500);
 		setPlayerRank(playerRank.PEASANT);
 		this.playerIndex = playerIndex;
-		//this.tavernsOwned = new ArrayList<>();
 		this.capital = new ArrayList<>();
 
 		this.nProperties = 0;
@@ -71,7 +66,6 @@ public class Player {
 		setNetWorth(1500);
 		setPlayerRank(playerRank.PEASANT);
 		this.playerIndex = playerIndex;
-		//this.tavernsOwned = new ArrayList<>();
 		this.capital = new ArrayList<>();
 
 		this.nProperties = 0;
@@ -81,10 +75,8 @@ public class Player {
 	}
 
 	/**
-	 * Keep track of how many turns a user has been in jail, if 3 the code.model.player gets
-	 * out of jail if less than 3 the "roll code.view.dice" button is to be inactivated and
-	 * the end turn activated
-	 * 
+	 * Keep track of how many turns a user has been in jail, if 3 the player gets out of jail
+	 * if less than 3 the "roll dice" button is to be inactivated and the end turn activated
 	 * @return playerJailCounter
 	 */
 	public int getJailCounter() {
@@ -92,8 +84,7 @@ public class Player {
 	}
 
 	/**
-	 * method used for increasing or resetting the jailCounter of a code.model.player
-	 * 
+	 * method used for increasing or resetting the jailCounter of a player
 	 * @param amount
 	 */
 	public void setJailCounter(int amount) {
@@ -108,15 +99,14 @@ public class Player {
 	}
 
 	/**
-	 * @param isInJail if code.model.player is sent to jail send true, if code.model.player is not in jail
-	 *                 anymore set to false
+	 * @param isInJail if player is sent to jail send true, if player is not in jail anymore set to false
 	 */
 	public void setPlayerIsInJail(boolean isInJail) {
 		this.playerIsInJail = isInJail;
 	}
 
 	/**
-	 * @return Return either true or false if code.model.player in in jail or not
+	 * @return Return either true or false if player in in jail or not
 	 */
 	public Boolean isPlayerInJail() {
 		return this.playerIsInJail;
@@ -130,16 +120,14 @@ public class Player {
 	}
 
 	/**
-	 * @param playerName, the code.model.player name to set
+	 * @param playerName, the player name to set
 	 */
 	public void setName(String playerName) {
 		this.name = playerName;
 	}
 
 	/**
-	 * Set the playerIndex of the code.model.player (the index the user has in the playerList
-	 * array)
-	 * 
+	 * Set the playerIndex of the player (the index the user has in the playerList array)
 	 * @param index
 	 */
 	public void setPlayerIndex(int index) {
@@ -155,7 +143,6 @@ public class Player {
 
 	/**
 	 * Get the position a code.model.player has on the code.view.board from 0-39
-	 * 
 	 * @return counter
 	 */
 	public int getPosition() {
@@ -164,7 +151,6 @@ public class Player {
 
 	/**
 	 * Move code.model.player to a specific index on the code.view.board
-	 * 
 	 * @param newPosition
 	 */
 	public void setPositionInSpecificIndex(int newPosition) {
@@ -172,8 +158,7 @@ public class Player {
 	}
 
 	/**
-	 * method used to move the code.model.player by either one or many steps
-	 * 
+	 * method used to move the player by either one or many steps
 	 * @param amountOfStepsToMove
 	 */
 	public void setPosition(int amountOfStepsToMove) {
@@ -188,7 +173,7 @@ public class Player {
 	}
 
 	/**
-	 * @return playerPassedgo, boolean to keep track if user has passed go
+	 * @return playerPassedgo boolean to keep track if user has passed go
 	 */
 	public boolean passedGo() {
 		return playerPassedgo;
@@ -202,14 +187,14 @@ public class Player {
 	}
 
 	/**
-	 * @return balance, the code.model.player balance
+	 * @return balance, the player balance
 	 */
 	public int getBalance() {
 		return this.balance;
 	}
 
 	/**
-	 * @return playerIcon, the image of a code.model.player
+	 * @return playerIcon, the image of a player
 	 */
 	public ImageIcon getImage() {
 		return playerIcon;
@@ -250,22 +235,15 @@ public class Player {
 		this.isAlive = playerIsAlive;
 	}
 
-	public String isAliveString() {
-		if (isAlive) {
-			return "This code.model.player is alive and well";
-		} else
-			return "The plauge has taken another soul";
-	}
-
 	/**
-	 * @return playerRank the rank of the code.model.player
+	 * @return playerRank the rank of the player
 	 */
 	public PlayerRanks getPlayerRank() {
 		return this.playerRank;
 	}
 
 	/**
-	 * @param playerRank set the rank of this code.model.player
+	 * @param playerRank set the rank of this player
 	 */
 	public void setPlayerRank(PlayerRanks playerRank) {
 		this.playerRank = playerRank;
@@ -317,16 +295,6 @@ public class Player {
 		}
 	}
 
-	/**
-	 * Adds newly purchased property to ownedProperties array
-	 * 
-	 * @param newProperty, the newly bought property.
-	 */
-	public void addNewProperty(Property newProperty) {
-		this.capital.add(newProperty);
-		this.nProperties++;
-	}
-
 	public void removeCapital(Purchasable capital) {
 		this.capital.remove(capital);
 
@@ -370,25 +338,6 @@ public class Player {
 	}
 
 	/**
-	 * @param newTavern add a new Tavern to a user
-	 */
-	public void addNewTavern(Tavern newTavern) {
-		this.capital.add(newTavern);
-		this.nTaverns++;
-
-		newTavern.setRent(10*nTaverns);
-	}
-
-	/**
-	 * If user has two taverns the event will differ
-	 * 
-	 * @return amount of taverns
-	 */
-	public int getAmountOfTaverns() {
-		return this.nTaverns;
-	}
-
-	/**
 	 * If user is eliminated reset all users properties and taverns by setting the
 	 * amount of houses to 0 and remove the owner
 	 */
@@ -400,16 +349,6 @@ public class Player {
 				((Tavern)e).clearTavern();
 			}
 		});
-
-		/* TODO
-		for (int i = 0; i < capital.size(); i++) {
-			capital.get(i).clearProperty();
-		}
-
-		for (int i = 0; i < tavernsOwned.size(); i++) {
-			tavernsOwned.get(i).clearTavern();
-		}
-		*/
 	}
 
 	/**
@@ -418,12 +357,14 @@ public class Player {
 	 * @return
 	 */
 	public Purchasable getCapital(int pos) {
-		System.out.println("Getting capital. Empty: " + this.capital.isEmpty());
-		System.out.println("Getting capital at pos: " + pos);
-		System.out.println("Number of capital: " + this.capital.size());
-		System.out.println(this.capital.get(pos).getDescription());
-		System.out.println("Returning capital " + this.capital.get(pos).getName());
 		return this.capital.get(pos);
+	}
+
+	/**
+	 * @return propertiesOwned, returns entire ArrayList of properties owned.
+	 */
+	public ArrayList<Purchasable> getCapital() {
+		return this.capital;
 	}
 
 	public void checkPlayerRank() {
@@ -441,24 +382,7 @@ public class Player {
 	}
 
 	/**
-	 * @return propertiesOwned, returns entire ArrayList of properties owned.
-	 */
-	public ArrayList<Purchasable> getCapital() {
-		return this.capital;
-	}
-
-	/**
-	 * @return all taverns owned by code.model.player
-	 */
-	/* TODO
-	public ArrayList<Tavern> getTaverns() {
-		return this.tavernsOwned;
-	}
-	 */
-
-	/**
 	 * Returns the players color
-	 * 
 	 * @return playerColor
 	 */
 	public Color getPlayerColor() {

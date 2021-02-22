@@ -115,8 +115,6 @@ public class ManageEvents {
 			eastPanel.addPlayerList(playerList.getList());
 			dice.setPlayerList(playerList.getList());
 			board.removePlayer(player);
-
-			System.out.println("Removing player");
 			deathGUI.showGUI();
 		} 
 	}
