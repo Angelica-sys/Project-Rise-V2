@@ -56,12 +56,6 @@ public class ManageEvents {
 	 * @param player, code.model.player who landed on a tile.
 	 */
 	public void newEvent(Tile tile, Player player) {
-		player.checkPlayerRank();
-
-		if (player.getPlayerRank() == PlayerRanks.KINGS) {
-			new WinGui();
-		}
-
 		if (playerList.getLength() == 1) {
 			new WinGui();
 		}
@@ -98,6 +92,12 @@ public class ManageEvents {
 			fortuneTellerEvent((FortuneTeller)tile, player);
 		}
 
+		checkPlayerUpgrade(player);
+
+		if (player.getPlayerRank() == PlayerRanks.KINGS) {
+			new WinGui();
+		}
+
 		eastPanel.addPlayerList(playerList);
 	}
 
@@ -116,7 +116,34 @@ public class ManageEvents {
 			dice.setPlayerList(playerList.getList());
 			board.removePlayer(player);
 			deathGUI.showGUI();
-		} 
+		}
+	}
+
+	public void checkPlayerUpgrade(Player player){
+		String levelUpMsg = "Congratulations!\nYou have leveled up to ";
+		String levelDownMsg = "Oh no!\nYou have leveled down to ";
+
+		if (player.getPlayerRank() == PlayerRanks.PEASANT) {
+			if (player.getNetWorth() >= 2000) {
+				player.checkPlayerRank();
+				JOptionPane.showMessageDialog(null, levelUpMsg + player.getPlayerRank());
+			}
+		}else if (player.getPlayerRank() == PlayerRanks.KNIGHT){
+			if (player.getNetWorth() >= 4000){
+				player.checkPlayerRank();
+				JOptionPane.showMessageDialog(null, levelUpMsg + player.getPlayerRank());
+			} else if (player.getNetWorth() < 2000){
+				player.checkPlayerRank();
+				JOptionPane.showMessageDialog(null, levelDownMsg + player.getPlayerRank());
+			}
+		}else if (player.getPlayerRank() == PlayerRanks.LORD){
+			if (player.getNetWorth() >= 7500){
+				player.checkPlayerRank();
+			} else if (player.getNetWorth() < 4000){
+				player.checkPlayerRank();
+				JOptionPane.showMessageDialog(null, levelDownMsg + player.getPlayerRank());
+			}
+		}
 	}
 
 	/**
