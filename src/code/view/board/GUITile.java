@@ -131,6 +131,7 @@ public class GUITile extends JLabel {
 	}
 
 	public void removePlayer(Player player) {
+		//System.out.println("player index: " + player.getPlayerIndex());
 		labels[player.getPlayerIndex()].setIcon(null);
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
 	}

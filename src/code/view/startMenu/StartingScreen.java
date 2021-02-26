@@ -104,7 +104,7 @@ public class StartingScreen extends JFrame {
 	 * Method to initilize the GUI.
 	 */
 	public void initializeGUI() {
-		bgm.startMusic();
+		//bgm.startMusic();
 		createFrame();
 		bgm.startMusic();
 

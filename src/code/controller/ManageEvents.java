@@ -45,7 +45,6 @@ public class ManageEvents {
 		this.board = board;
 		this.playerList = playerList;
 		this.eastPanel = eastPanel;
-		deathGUI = new DeathGUI();
 		msgGUI = new FortuneTellerGUI();
 		deathGUI = new DeathGUI();
 	}
@@ -109,13 +108,18 @@ public class ManageEvents {
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
 			player.setIsAlive(false);
-			playerList.switchToNextPlayer();
 			playerList.eliminatePlayer(player);
-			playerList.updatePlayerList();
-			eastPanel.addPlayerList(playerList.getList());
-			dice.setPlayerList(playerList.getList());
 			board.removePlayer(player);
-			deathGUI.showGUI();
+
+			if (playerList.getLength() == 1) {
+				new WinGui();
+			}else {
+				deathGUI.showGUI();
+				playerList.updatePlayerList();
+				playerList.switchToNextPlayer();
+				eastPanel.addPlayerList(playerList.getList());
+				dice.setPlayerList(playerList.getList());
+			}
 		}
 	}
 
