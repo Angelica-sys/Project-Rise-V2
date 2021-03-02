@@ -15,16 +15,17 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder, Aevan Dino.
  */
 public class PropertyWindow extends JPanel {
-	//private static final long serialVersionUID = 12L;
-
 	private JTabbedPane tab;
 	private int currentPlayer;
 	private int nCapital;
+	private EastSidePanel eastSidePanel;
 
 	/**
 	 *this method is used to update the panel
 	 */
-	public PropertyWindow() {
+	public PropertyWindow(EastSidePanel eastSidePanel) {
+		this.eastSidePanel = eastSidePanel;
+
 		setPreferredSize(new Dimension(330, 600));
 		setOpaque(false);
 		setLayout(null);
@@ -54,8 +55,8 @@ public class PropertyWindow extends JPanel {
 
 			// For every Purchasable a Player owns.
 			for (int i=0; i<nCapital; i++) {
-				new PropertyWindow();
-				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i);
+				new PropertyWindow(eastSidePanel);
+				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i, eastSidePanel);
 				this.tab.addTab("Capital " + (i+1), playerPropertyPanel);
 
 				Purchasable playerCapital = p.getCapital(i);

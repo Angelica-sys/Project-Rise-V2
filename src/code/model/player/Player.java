@@ -317,11 +317,16 @@ public class Player {
 
 	public void sellCapital(Purchasable capital) {
 		int total;
+		int amountOfLevels;
 
 		if (capital instanceof Property) {
+			amountOfLevels = ((Property) capital).getLevel();
 			total = ((Property) capital).getPrice();
-			total += ((Property) capital).getLevel();
-			total *= ((Property) capital).getLevelPrice();
+
+			for(int i = 0; i < amountOfLevels; i++){
+				total += ((Property) capital).getLevelPrice();
+			}
+
 		} else {
 			total = ((Tavern) capital).getPrice();
 		}

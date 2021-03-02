@@ -26,8 +26,6 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
  */
 public class PlayerPropertyPanel extends JPanel implements ActionListener {
-	//private static final long serialVersionUID = 14L;
-
 	private JTextArea taLevel = new JTextArea("");
 	private JButton btnUpgrade = new JButton("Upgrade");
 	private JButton btnDowngrade = new JButton("Downgrade");
@@ -35,6 +33,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 	private JButton btnSell = new JButton("Sell");
 	private PlayerList playerList;
 	private int playerNumber, capitalNumber;
+	private EastSidePanel eastSidePanel;
 
 	/**
 	 * Constructs a new instance of PlayerProperties, containing objects representing each capital a player owns.
@@ -42,10 +41,11 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 	 * @param playerNumber an int representing a specific player.
 	 * @param capitalNumber an int representing a specific property.
 	 */
-	public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber) {
+	public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber, EastSidePanel eastSidePanel) {
 		Player p = players.getPlayerFromIndex(playerNumber);
 		Purchasable capital = p.getCapital(capitalNumber);
 
+		this.eastSidePanel = eastSidePanel;
 		this.playerList = players;
 		this.playerNumber = playerNumber;
 		this.capitalNumber = capitalNumber;
@@ -163,6 +163,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == this.btnTrade) {
 			tradeCapital();
 		}
+		eastSidePanel.addPlayerList(playerList);
 	}
 
 	private void sellCapital() {

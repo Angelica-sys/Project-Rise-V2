@@ -11,12 +11,11 @@ import code.model.player.Player;
 import code.model.player.PlayerList;
 
 /**
- * this class add tabs that displays informations about the players in tabs
+ * this class add tabs that displays information about the players in tabs
  * @author Abdulkhuder Muhammad, Sebastian Viro.
  */
 public class EastSidePanel extends JPanel {
 	private static final long serialVersionUID = 15L;
-	//private static final long serialVersionUID = 3397908521882247649L;
 	private PlayerList playerList;
 	private JTabbedPane tab;
 	private PlayerInfoPanel playerInfoPnl;
@@ -34,7 +33,7 @@ public class EastSidePanel extends JPanel {
 
 		for (int i=0; i<playerList.getLength(); i++) {
 			new EastSidePanel();
-			this.playerInfoPnl = new PlayerInfoPanel(playerList, i);
+			this.playerInfoPnl = new PlayerInfoPanel(playerList, i, this);
 			this.playerInfoPnl.setOpaque(false);
 			this.tab.addTab("Player " + (i + 1), this.playerInfoPnl);
 			this.tab.setOpaque(false);

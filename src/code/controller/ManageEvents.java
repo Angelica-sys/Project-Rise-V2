@@ -108,7 +108,9 @@ public class ManageEvents {
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
 			player.setIsAlive(false);
+			System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
+			System.out.println("eliminated player: " + player.getPlayerIndex());
 			board.removePlayer(player);
 
 			if (playerList.getLength() == 1) {
@@ -119,6 +121,7 @@ public class ManageEvents {
 				playerList.switchToNextPlayer();
 				eastPanel.addPlayerList(playerList.getList());
 				dice.setPlayerList(playerList.getList());
+				System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}
 	}

@@ -104,7 +104,7 @@ public class Property extends Purchasable {
 	public void increaseLevel() {
 		int res = JOptionPane.showConfirmDialog(
 				null,
-				"Do you want to upgrade " + getName() + " for: " + getLevelPrice()
+				"Do you want to upgrade " + getName() + " for: " + getLevelPrice(), "Upgrade", JOptionPane.YES_NO_OPTION
 		);
 
 		if (res == 0 && getOwner().getPlayerRank().nbrOfLevels() > levels && getOwner().getBalance() >= getLevelPrice()) {
@@ -117,7 +117,7 @@ public class Property extends Purchasable {
 	public void decreaseLevel() {
 		int res = JOptionPane.showConfirmDialog(
 				null,
-				"Do you really want to downgrade " + getName() + " for: " + getLevelPrice()
+				"Do you really want to downgrade " + getName() + " for: " + getLevelPrice(), "Downgrade", JOptionPane.YES_NO_OPTION
 		);
 
 		if (levels>0 && res == 0) {
