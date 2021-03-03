@@ -110,7 +110,7 @@ public class Property extends Purchasable {
 		if (res == 0 && getOwner().getPlayerRank().nbrOfLevels() > levels && getOwner().getBalance() >= getLevelPrice()) {
 			this.levels+=1;
 			this.setRent(this.baseRent + this.rentPerLevel*this.levels);
-			getOwner().decreaseBalace(getLevelPrice());
+			getOwner().decreaseBalance(getLevelPrice());
 		}
 	}
 	

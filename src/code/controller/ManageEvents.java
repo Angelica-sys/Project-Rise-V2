@@ -181,7 +181,7 @@ public class ManageEvents {
 					westPanel.append(effect);
 					westPanel.append("\n");
 
-					player.decreaseBalace(tempInt);
+					player.decreaseBalance(tempInt);
 					if (tempProperty.getLevel() == 0) {
 						player.decreaseNetWorth(tempInt);
 					}
@@ -221,7 +221,7 @@ public class ManageEvents {
 
 		if (player.isAlive()) {
 			westPanel.append(player.getName() + " paid 200 GC in tax\n");
-			player.decreaseBalace(chargePlayer);
+			player.decreaseBalance(chargePlayer);
 			player.decreaseNetWorth(chargePlayer);
 			taxCounter++;
 		}
@@ -263,7 +263,7 @@ public class ManageEvents {
 
 					tavern.getOwner().increaseBalance(randomValue);
 					tavern.getOwner().increaseNetWorth(randomValue);
-					player.decreaseBalace(randomValue);
+					player.decreaseBalance(randomValue);
 				}
 			}
 		}
@@ -334,7 +334,7 @@ public class ManageEvents {
 		if (purchase && (property.getPrice() <= player.getBalance())) {
 			property.purchase(player);
 			player.addCapital(property);
-			player.decreaseBalace(property.getPrice());
+			player.decreaseBalance(property.getPrice());
 
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
 		} else {
@@ -359,7 +359,7 @@ public class ManageEvents {
 			tavern.purchase(player);
 			player.addCapital(tavern);
 
-			player.decreaseBalace(tavern.getPrice());
+			player.decreaseBalance(tavern.getPrice());
 
 			westPanel.append(player.getName() + " purchased " + tavern.getName() + "\n");
 		} else {
@@ -422,7 +422,7 @@ public class ManageEvents {
 
             if (player.isAlive()) {
                 westPanel.append(player.getName() + " paid " + pay + " GC\n");
-                player.decreaseBalace(pay);
+                player.decreaseBalance(pay);
                 player.decreaseNetWorth(pay);
                 msgGUI.newFortune(false, pay);
             }

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,310 +15,386 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants; 
+import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import code.model.player.Player;
 import code.model.player.PlayerList;
 import code.model.tiles.Property;
 import code.model.tiles.Purchasable;
+import code.model.tiles.TradeType;
 
 /**
  * A class representing each Purchasable a Player owns.
+ *
  * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
  */
 public class PlayerPropertyPanel extends JPanel implements ActionListener {
-	private JTextArea taLevel = new JTextArea("");
-	private JButton btnUpgrade = new JButton("Upgrade");
-	private JButton btnDowngrade = new JButton("Downgrade");
-	private JButton btnTrade = new JButton("Trade");
-	private JButton btnSell = new JButton("Sell");
-	private PlayerList playerList;
-	private int playerNumber, capitalNumber;
-	private EastSidePanel eastSidePanel;
+    private JTextArea taLevel = new JTextArea("");
+    private JButton btnUpgrade = new JButton("Upgrade");
+    private JButton btnDowngrade = new JButton("Downgrade");
+    private JButton btnTrade = new JButton("Trade");
+    private JButton btnSell = new JButton("Sell");
+    private PlayerList playerList;
+    private int playerNumber, capitalNumber;
+    private EastSidePanel eastSidePanel;
 
-	/**
-	 * Constructs a new instance of PlayerProperties, containing objects representing each capital a player owns.
-	 * @param players a PlayerList object representing all active players.
-	 * @param playerNumber an int representing a specific player.
-	 * @param capitalNumber an int representing a specific property.
-	 */
-	public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber, EastSidePanel eastSidePanel) {
-		Player p = players.getPlayerFromIndex(playerNumber);
-		Purchasable capital = p.getCapital(capitalNumber);
+    /**
+     * Constructs a new instance of PlayerProperties, containing objects representing each capital a player owns.
+     *
+     * @param players       a PlayerList object representing all active players.
+     * @param playerNumber  an int representing a specific player.
+     * @param capitalNumber an int representing a specific property.
+     */
+    public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber, EastSidePanel eastSidePanel) {
+        Player p = players.getPlayerFromIndex(playerNumber);
+        Purchasable capital = p.getCapitals(capitalNumber);
 
-		this.eastSidePanel = eastSidePanel;
-		this.playerList = players;
-		this.playerNumber = playerNumber;
-		this.capitalNumber = capitalNumber;
+        this.eastSidePanel = eastSidePanel;
+        this.playerList = players;
+        this.playerNumber = playerNumber;
+        this.capitalNumber = capitalNumber;
 
-		this.setBorder(null);
-		this.setOpaque(false);
-		this.setBackground(Color.DARK_GRAY);
-		this.setPreferredSize(new Dimension(330, 607));
-		this.setLayout(null);
+        this.setBorder(null);
+        this.setOpaque(false);
+        this.setBackground(Color.DARK_GRAY);
+        this.setPreferredSize(new Dimension(330, 607));
+        this.setLayout(null);
 
-		JLabel lblRent = new JLabel("Rent");
-		lblRent.setForeground(Color.white);
-		JLabel lblRentPerLevel = new JLabel("Rent Per Level");
-		lblRentPerLevel.setForeground(Color.white);
+        JLabel lblRent = new JLabel("Rent");
+        lblRent.setForeground(Color.white);
+        JLabel lblRentPerLevel = new JLabel("Rent Per Level");
+        lblRentPerLevel.setForeground(Color.white);
 
-		lblRent.setText("The rent is: " + capital.getRent());
+        lblRent.setText("The rent is: " + capital.getRent());
 
-		if (capital instanceof Property) {
-			lblRentPerLevel.setText("The rent per level : " + ((Property) capital).getRentPerLevel());
-		} else {
-			lblRentPerLevel.setText("Taverns cannot rank up.");
-		}
+        if (capital instanceof Property) {
+            lblRentPerLevel.setText("The rent per level : " + ((Property) capital).getRentPerLevel());
+        } else {
+            lblRentPerLevel.setText("Taverns cannot rank up.");
+        }
 
-		Font font = new Font("ALGERIAN", Font.BOLD, 22);
-		lblRent.setFont(font);
-		lblRentPerLevel.setFont(font);
+        Font font = new Font("ALGERIAN", Font.BOLD, 22);
+        lblRent.setFont(font);
+        lblRentPerLevel.setFont(font);
 
-		lblRent.setBounds(0, 92, 330, 64);
-		add(lblRent);
-		lblRentPerLevel.setBounds(0, 140, 330, 64);
-		add(lblRentPerLevel);
+        lblRent.setBounds(0, 92, 330, 64);
+        add(lblRent);
+        lblRentPerLevel.setBounds(0, 140, 330, 64);
+        add(lblRentPerLevel);
 
-		this.btnDowngrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
-		this.btnDowngrade.setBounds(163, 481, 167, 53);
-		this.add(this.btnDowngrade);
+        this.btnDowngrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
+        this.btnDowngrade.setBounds(163, 481, 167, 53);
+        this.add(this.btnDowngrade);
 
-		this.btnUpgrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
-		this.btnUpgrade.setBounds(0, 481, 167, 53);
-		add(this.btnUpgrade);
+        this.btnUpgrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
+        this.btnUpgrade.setBounds(0, 481, 167, 53);
+        add(this.btnUpgrade);
 
-		this.btnTrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
-		this.btnTrade.setBounds(163, 532, 167, 46);
-		add(this.btnTrade);
+        this.btnTrade.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
+        this.btnTrade.setBounds(163, 532, 167, 46);
+        add(this.btnTrade);
 
-		this.btnSell.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
-		this.btnSell.setBounds(0, 532, 167, 46);
-		this.btnSell.setForeground(Color.red);
-		add(this.btnSell);
-		this.btnSell.setFont(font);
+        this.btnSell.setBorder(new MatteBorder(2, 2, 2, 2, new Color(0, 0, 0)));
+        this.btnSell.setBounds(0, 532, 167, 46);
+        this.btnSell.setForeground(Color.red);
+        add(this.btnSell);
+        this.btnSell.setFont(font);
 
-		this.taLevel.setEditable(false);
-		this.taLevel.setBounds(46, 38, 263, 53);
-		this.taLevel.setOpaque(false);
-		Font fontLevel = new Font("ALGERIAN", Font.BOLD, 50);
-		this.taLevel.setFont(fontLevel);
-		this.taLevel.setForeground(Color.white);
+        this.taLevel.setEditable(false);
+        this.taLevel.setBounds(46, 38, 263, 53);
+        this.taLevel.setOpaque(false);
+        Font fontLevel = new Font("ALGERIAN", Font.BOLD, 50);
+        this.taLevel.setFont(fontLevel);
+        this.taLevel.setForeground(Color.white);
 
-		if (capital instanceof Property) {
-			int level = ((Property) capital).getLevel();
+        if (capital instanceof Property) {
+            int level = ((Property) capital).getLevel();
 
-			for (int i=0; i<level; i++) {
-				String plus = "+";
-				this.taLevel.append(plus);
-			}
-		}
+            for (int i = 0; i < level; i++) {
+                String plus = "+";
+                this.taLevel.append(plus);
+            }
+        }
 
-		add(this.taLevel);
+        add(this.taLevel);
 
-		JLabel lblName = new JLabel("Name");
-		lblName.setForeground(Color.white);
-		lblName.setOpaque(false);
-		lblName.setText(capital.getName());
+        JLabel lblName = new JLabel("Name");
+        lblName.setForeground(Color.white);
+        lblName.setOpaque(false);
+        lblName.setText(capital.getName());
 
-		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setBounds(0, 11, 330, 46);
-		add(lblName);
-		lblName.setFont(font);
-		JLabel lblPicture = new JLabel("");
-		lblPicture.setForeground(Color.WHITE);
+        lblName.setHorizontalAlignment(SwingConstants.CENTER);
+        lblName.setBounds(0, 11, 330, 46);
+        add(lblName);
+        lblName.setFont(font);
+        JLabel lblPicture = new JLabel("");
+        lblPicture.setForeground(Color.WHITE);
 
-		lblPicture.setBorder(null);
-		lblPicture.setBounds(0, 0, 330, 480);
-		add(lblPicture);
+        lblPicture.setBorder(null);
+        lblPicture.setBounds(0, 0, 330, 480);
+        add(lblPicture);
 
-		lblPicture.setFont(font);
-		lblPicture.setOpaque(true);
-		this.btnDowngrade.setFont(font);
-		this.btnUpgrade.setFont(font);
-		this.btnTrade.setFont(font);
+        lblPicture.setFont(font);
+        lblPicture.setOpaque(true);
+        this.btnDowngrade.setFont(font);
+        this.btnUpgrade.setFont(font);
+        this.btnTrade.setFont(font);
 
-		int imageWidth = lblPicture.getWidth();
-		int imageHeight = lblPicture.getHeight();
+        int imageWidth = lblPicture.getWidth();
+        int imageHeight = lblPicture.getHeight();
 
-		Image capitalImage = capital.getImage();
-		capitalImage = capitalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-		ImageIcon capitalIcon = new ImageIcon(capitalImage);
+        Image capitalImage = capital.getImage();
+        capitalImage = capitalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+        ImageIcon capitalIcon = new ImageIcon(capitalImage);
 
-		lblPicture.setIcon(capitalIcon);
-		this.btnUpgrade.addActionListener(this);
-		this.btnDowngrade.addActionListener(this);
-		this.btnSell.addActionListener(this);
-		this.btnTrade.addActionListener(this);
-	}
+        lblPicture.setIcon(capitalIcon);
+        this.btnUpgrade.addActionListener(this);
+        this.btnDowngrade.addActionListener(this);
+        this.btnSell.addActionListener(this);
+        this.btnTrade.addActionListener(this);
+    }
 
-	/**
-	 * What happens when a button is pressed
-	 */
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.btnSell) {
-			sellCapital();
-		} else if (e.getSource() == this.btnUpgrade) {
-			upgradeProperty();
-		} else if (e.getSource() == this.btnDowngrade) {
-			downgradeProperty();
-		} else if (e.getSource() == this.btnTrade) {
-			tradeCapital();
-		}
-		eastSidePanel.addPlayerList(playerList);
-	}
+    /**
+     * What happens when a button is pressed
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnSell) {
+            sellCapital();
+        } else if (e.getSource() == this.btnUpgrade) {
+            upgradeProperty();
+        } else if (e.getSource() == this.btnDowngrade) {
+            downgradeProperty();
+        } else if (e.getSource() == this.btnTrade) {
+            tradeCapital();
+        }
+        eastSidePanel.addPlayerList(playerList);
+    }
 
-	private void sellCapital() {
-		Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
-		p.sellCapital(this.capitalNumber);
-	}
+    private void sellCapital() {
+        Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
+        p.sellCapital(this.capitalNumber);
+    }
 
-	private void upgradeProperty() {
-		Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
-		Purchasable capital = p.getCapital(this.capitalNumber);
+    private void upgradeProperty() {
+        Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
+        Purchasable capital = p.getCapitals(this.capitalNumber);
 
-		if (capital instanceof Property) {
-			((Property) capital).increaseLevel();
-			String tempRes = taLevel.getText();
+        if (capital instanceof Property) {
+            ((Property) capital).increaseLevel();
+            String tempRes = taLevel.getText();
 
-			if (tempRes.length() < ((Property) capital).getLevel()) {
-				taLevel.append("+");
-			}
-		}
-	}
+            if (tempRes.length() < ((Property) capital).getLevel()) {
+                taLevel.append("+");
+            }
+        }
+    }
 
-	private void downgradeProperty() {
-		Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
-		Purchasable capital = p.getCapital(this.playerNumber);
+    private void downgradeProperty() {
+        Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
+        Purchasable capital = p.getCapitals(this.playerNumber);
 
-		if (capital instanceof Property) {
-			((Property) capital).decreaseLevel();
-			String tempRes = this.taLevel.getText();
+        if (capital instanceof Property) {
+            ((Property) capital).decreaseLevel();
+            String tempRes = this.taLevel.getText();
 
-			if (tempRes.length() > ((Property) capital).getLevel()) {
-				tempRes = tempRes.substring(0, tempRes.length() - 1);
-				this.taLevel.setText(tempRes);
-			}
-		}
-	}
+            if (tempRes.length() > ((Property) capital).getLevel()) {
+                tempRes = tempRes.substring(0, tempRes.length() - 1);
+                this.taLevel.setText(tempRes);
+            }
+        }
+    }
 
-	private void tradeCapital() {
-		int otherPlayerInt = 0;
-		int whichPropertyToGive = 0;
-		int whichPropertyYouWant = 0;
-		int offer = 0;
-		int choice = 0;
-		int confirm;
+    private void tradeCapital() {
+        Player activePlayer = playerList.getActivePlayer();
+        Player chosenPlayer = choosePlayer();
+        int offer = 0;
+        int giveAwayProperty = 0;
+        int wantedProperty;
 
-		Player activePlayer = this.playerList.getActivePlayer();
-		Player otherPlayer = this.playerList.getPlayerFromIndex(otherPlayerInt);
 
-		do {
-			String otherPlayerChoice = JOptionPane.showInputDialog(
-					null,
-					"Which code.model.player do you want to trade with?\n " +
-							"1 for code.model.player 1 \n " +
-							"2 for code.model.player 2 and so on..."
-			);
-			otherPlayerInt = (Integer.parseInt(otherPlayerChoice) - 1);
+        if (chosenPlayer.getCapitals().size() > 0) {
+            TradeType tradeType = tradeType();
+            if (tradeType == TradeType.Property || tradeType == TradeType.Both) {
+                giveAwayProperty = chooseProperty(activePlayer);
+            }
 
-		} while (
-				otherPlayerInt == this.playerList.getActivePlayer().getPlayerIndex() ||
-				otherPlayerInt > this.playerList.getLength()-1
-		);
+            if (tradeType == TradeType.Money || tradeType == TradeType.Both) {
+                do {
+                    offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
+                            "How much do you offer " + chosenPlayer.getName() + "?")));
+                } while (offer > activePlayer.getBalance());
+            }
 
-		if (otherPlayer.getCapital().size() > 0) {
-			do {
-				choice = (Integer.parseInt(JOptionPane.showInputDialog(
-						null,
-						"Pick a trade type\n 1 = Property for property \n" +
-								"2 = Money for property\n" +
-								"3 = Both"))
-				);
-			} while (choice<0 || choice >3);
+            do {
+                wantedProperty = chooseProperty(chosenPlayer);
+            } while (wantedProperty > chosenPlayer.getCapitals().size());
 
-			if (choice == 1 || choice == 3) {
-				do {
-					whichPropertyToGive = (Integer.parseInt(JOptionPane.showInputDialog(
-							null,
-							"Which property do you want to give away \n" +
-									"1 for property 1 \n" +
-									"2 for property 2 and so on...")) - 1
-					);
-				} while (whichPropertyToGive > activePlayer.getCapital().size());
-			}
+            Purchasable activePlayerCapital = activePlayer.getCapitals(giveAwayProperty);
+            Purchasable chosenPlayerCapital = chosenPlayer.getCapitals(wantedProperty);
 
-			if (choice == 2 || choice == 3) {
-				do {
-					offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
-							"How much do you offer " + otherPlayer.getName() + "?")));
-				} while (offer > activePlayer.getBalance());
+            if (tradeType == TradeType.Money) {
+                if (!confirmMoneyTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			}
+            if (tradeType == TradeType.Property) {
+                if (!confirmPropertyTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			do {
-				whichPropertyYouWant = (Integer.parseInt(JOptionPane.showInputDialog(
-						null,
-						"Which property do you want \n 1 for property 1 \n 2 for property 2 and so on...")) - 1
-				);
-			} while (whichPropertyYouWant > otherPlayer.getCapital().size());
+            if (tradeType == TradeType.Both) {
+                if(!confirmBothTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			Purchasable activePlayerCapital = activePlayer.getCapital(whichPropertyToGive);
-			Purchasable otherPlayerCapital = otherPlayer.getCapital(whichPropertyYouWant);
+        } else {
+            JOptionPane.showMessageDialog(null, "Trade can not be done! The player you picked does not own any properties!");
+        }
+    }
 
-			if (choice == 1 || choice == 3) {
-				confirm = JOptionPane.showConfirmDialog(
-						null,
-						otherPlayer.getName() + " Are you okay with this trade?" + "\n You are getting " +
-								offer + "Gold coins" + "\n and are trading away " + otherPlayerCapital.getName() +
-								"\n for " + activePlayerCapital.getName()
-				);
+    public Player choosePlayer() {
+        Player activePlayer = playerList.getActivePlayer();
+        LinkedList<Player> players = playerList.getPlayers();
+        String[] playerNames = new String[playerList.getLength()];
+        Player choice = null;
 
-				if (confirm == 0) {
-					activePlayer.removeCapital(activePlayerCapital);
-					otherPlayer.removeCapital(otherPlayerCapital);
+        for (int i = 0; i < playerList.getLength(); i++) {
+            if (!activePlayer.getName().equals(players.get(i).getName())) {
+                playerNames[i] = players.get(i).getName();
+            }
+        }
 
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
+        String chosenPlayer = (String) JOptionPane.showInputDialog(null, "Choose a player to trade with...",
+                "Trade", JOptionPane.QUESTION_MESSAGE, null, playerNames, // Array of choices
+                playerNames[playerNames.length - 1]);
 
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
+        for (int i = 0; i < playerList.getLength(); i++) {
+            if (chosenPlayer.equals(players.get(i).getName())) {
+                choice = players.get(i);
+            }
+        }
 
-					activePlayerCapital.setOwner(otherPlayer);
-					activePlayer.addCapital(otherPlayerCapital);
+        return choice;
+    }
 
-					otherPlayerCapital.setOwner(activePlayer);
-					otherPlayer.addCapital(activePlayerCapital);
+    public TradeType tradeType() {
+        TradeType tradeType = TradeType.Money;
+        int choice = JOptionPane.showOptionDialog(null, "Choose a trade type", "Trade",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, TradeType.values(), tradeType);
 
-					JOptionPane.showMessageDialog(
-							null,
-							"Trade Complete!"
-					);
-				}
-			}
+        switch (choice){
+            case 0:
+                tradeType = TradeType.Money;
+                break;
+            case 1:
+                tradeType = TradeType.Property;
+                break;
+            case 2:
+                tradeType = TradeType.Both;
+                break;
+        }
+        return tradeType;
+    }
 
-			if (choice == 2) {
-				confirm = JOptionPane.showConfirmDialog(null, otherPlayer.getName() +
-						" Are you okay with this trade?"
-						+ "\n You are getting " + offer + "Gold coins for " + otherPlayerCapital.getName());
-				if (confirm == 0) {
-					otherPlayer.removeCapital(otherPlayerCapital);
-					activePlayerCapital.setOwner(otherPlayer);
-					activePlayer.removeCapital(otherPlayerCapital);
+    public int chooseProperty(Player player){
+        ArrayList<Purchasable> ownedProperties = player.getCapitals();
+        String[] propertyNames = new String[ownedProperties.size()];
 
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
+        for (int i = 0; i < ownedProperties.size(); i++) {
+            propertyNames[i] = ownedProperties.get(i).getName();
+        }
 
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
-					JOptionPane.showMessageDialog(null, "Trade Complete!");
-				}
-			}
-		} else {
-			JOptionPane.showMessageDialog(
-					null,
-					"Trade can not be done! The player you picked does not own any properties!"
-			);
-		}
-	}
+        int choice = JOptionPane.showOptionDialog(null, player.getName() + ", choose a property to trade with", "Property",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, propertyNames, propertyNames[0]);
+
+        return choice;
+    }
+
+    public boolean confirmBothTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital){
+        int confirm = JOptionPane.showConfirmDialog(
+                null,
+                chosenPlayer.getName() + ", are you okay with this trade?" + "\n You are getting " +
+                        offer + "gold coins" + "\n and are trading away " + chosenPlayerCapital.getName() +
+                        "\n for " + activePlayerCapital.getName()
+        );
+
+        if (confirm == 0) {
+            activePlayer.decreaseBalance(offer);
+            activePlayer.decreaseNetWorth(offer);
+
+            chosenPlayer.increaseBalance(offer);
+            chosenPlayer.increaseNetWorth(offer);
+
+            activePlayerCapital.setOwner(chosenPlayer);
+            activePlayer.addCapital(chosenPlayerCapital);
+
+            chosenPlayerCapital.setOwner(activePlayer);
+            chosenPlayer.addCapital(activePlayerCapital);
+
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Trade Complete!"
+            );
+            return true;
+        }
+        return false;
+    }
+
+    public boolean confirmMoneyTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital){
+        int confirm = JOptionPane.showConfirmDialog(null, chosenPlayer.getName() +
+                " Are you okay with this trade?"
+                + "\n You are getting " + offer + "gold coins for " + chosenPlayerCapital.getName());
+        if (confirm == 0) {
+            activePlayer.decreaseBalance(offer);
+            activePlayer.decreaseNetWorth(offer);
+
+            chosenPlayer.increaseBalance(offer);
+            chosenPlayer.increaseNetWorth(offer);
+
+            activePlayerCapital.setOwner(chosenPlayer);
+
+            activePlayer.addCapital(chosenPlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            JOptionPane.showMessageDialog(null, "Trade Complete!");
+
+            return true;
+        }
+        return false;
+    }
+
+    private boolean confirmPropertyTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
+        int confirm = JOptionPane.showConfirmDialog(
+                null,
+                chosenPlayer.getName() + ", are you okay with this trade?" + "\n You are trading away " + chosenPlayerCapital.getName() +
+                        "\n for " + activePlayerCapital.getName()
+        );
+
+        if (confirm == 0) {
+            activePlayerCapital.setOwner(chosenPlayer);
+            activePlayer.addCapital(chosenPlayerCapital);
+
+            chosenPlayerCapital.setOwner(activePlayer);
+            chosenPlayer.addCapital(activePlayerCapital);
+
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Trade Complete!"
+            );
+            return true;
+        }
+        return false;
+    }
 }
