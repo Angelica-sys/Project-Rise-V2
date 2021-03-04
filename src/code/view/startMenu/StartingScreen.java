@@ -106,7 +106,6 @@ public class StartingScreen extends JFrame {
      * Method to initilize the GUI.
      */
     public void initializeGUI() {
-        //bgm.startMusic();
         createFrame();
         bgm.startMusic();
 
@@ -279,12 +278,29 @@ public class StartingScreen extends JFrame {
             }
         }
 
+        /**
+         * Checks if the player names are unique
+         *
+         * @author Chanon Borgström, Lanna Maslo
+         * @return false if invalid name, true if valid name
+         */
         public boolean checkUniqueName() {
             String[] playerNames = new String[4];
             playerNames[0] = tfPlayer1.getText();
             playerNames[1] = tfPlayer2.getText();
             playerNames[2] = tfPlayer3.getText();
             playerNames[3] = tfPlayer4.getText();
+
+            if (
+                    tfPlayer1.getText().length() == 0 ||
+                    tfPlayer2.getText().length() == 0 ||
+                    tfPlayer3.getText().length() == 0 ||
+                    tfPlayer4.getText().length() == 0
+            ) {
+                JOptionPane.showMessageDialog(null, "All players must have a name");
+                return false;
+            }
+
             for (int i = 0; i < playerNames.length - 1; i++) {
                 for (int j = i + 1; j < playerNames.length; j++) {
                     if (playerNames[i].equals(playerNames[j])) {
@@ -299,54 +315,55 @@ public class StartingScreen extends JFrame {
             return true;
         }
 
+        /**
+         * Checks if the name is more than three characters long and has no blank spaces in the beginning or end
+         *
+         * @author Chanon Borgström, Lanna Maslo
+         * @return false if invalid name, true if valid name (according to regex)
+         */
         public boolean validateName(String inputName){
             return inputName.matches("^[^\\s].+[^\\s]${3,10}");
         }
 
+        /**
+         * Checks if the users have chosen unique colors
+         *
+         * @author Chanon Borgström, Lanna Maslo
+         * @return false if invalid name, true if valid name
+         */
         public void checkUniqueColors() {
-            if (
-                    tfPlayer1.getText().length() == 0 ||
-                    tfPlayer2.getText().length() == 0 ||
-                    tfPlayer3.getText().length() == 0 ||
-                    tfPlayer4.getText().length() == 0
-            ) {
-                JOptionPane.showMessageDialog(null, "All players must have a name");
-            } else {
+            switch (amountOfPlayers) {
+                case 2:
+                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())) {
+                        JOptionPane.showMessageDialog(null, "Two players are not allowed to have the same color");
+                    } else {
+                        startUpGame();
+                    }
+                    break;
 
-                switch (amountOfPlayers) {
+                case 3:
+                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
+                            || playerColors[2].getSelectedItem().equals(playerColors[0].getSelectedItem())) {
+                        JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
+                    } else {
+                        startUpGame();
+                    }
+                    break;
 
-                    case 2:
-                        if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())) {
-                            JOptionPane.showMessageDialog(null, "Two players are not allowed to have the same color");
-                        } else {
-                            startUpGame();
-                        }
-                        break;
-
-                    case 3:
-                        if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
-                                || playerColors[2].getSelectedItem().equals(playerColors[0].getSelectedItem())) {
-                            JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-                        } else {
-                            startUpGame();
-                        }
-                        break;
-
-                    case 4:
-                        if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
-                                || playerColors[2].getSelectedItem().equals(playerColors[3].getSelectedItem())
-                                || playerColors[0].getSelectedItem().equals(playerColors[3].getSelectedItem())) {
-                            JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-                        } else {
-                            startUpGame();
-                        }
-                        break;
-                }
+                case 4:
+                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
+                            || playerColors[2].getSelectedItem().equals(playerColors[3].getSelectedItem())
+                            || playerColors[0].getSelectedItem().equals(playerColors[3].getSelectedItem())) {
+                        JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
+                    } else {
+                        startUpGame();
+                    }
+                    break;
             }
         }
 
         /**
-         * Method called when code.model.player clicks start game
+         * Method called when player clicks start game
          */
         public void startUpGame() {
             createNewUsers();
@@ -369,7 +386,7 @@ public class StartingScreen extends JFrame {
         }
 
         /**
-         * Whenever code.model.player chooses to reset the start screen
+         * Whenever player chooses to reset the start screen
          *
          * @param amountOfPlayers, how many players to draw
          * @param bool,            boolean indicating whether or not components should be visible.
@@ -387,7 +404,7 @@ public class StartingScreen extends JFrame {
     }
 
     /**
-     * MouseClickedListener for the name inserting so the text disappear when the code.model.player clicks.
+     * MouseClickedListener for the name inserting so the text disappear when the player clicks.
      */
     private class MouseAction implements MouseListener {
         int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;

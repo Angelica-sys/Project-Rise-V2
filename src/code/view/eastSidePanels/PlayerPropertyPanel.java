@@ -205,6 +205,12 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Makes it possible for a player to trade a property for money, a property for property or
+     * both a property and money for property
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     */
     private void tradeCapital() {
         Player activePlayer = playerList.getActivePlayer();
         Player chosenPlayer = choosePlayer();
@@ -240,7 +246,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
             }
 
             if (tradeType == TradeType.Property) {
-                if (!confirmPropertyTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                if (!confirmPropertyTrade(activePlayer, chosenPlayer, activePlayerCapital, chosenPlayerCapital)){
                     JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
                 }
             }
@@ -256,6 +262,12 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Makes it possible for an active player to choose another player to trade with
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @return the chosen player to trade with
+     */
     public Player choosePlayer() {
         Player activePlayer = playerList.getActivePlayer();
         LinkedList<Player> players = playerList.getPlayers();
@@ -281,6 +293,12 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         return choice;
     }
 
+    /**
+     * Allows the active player to choose a type of trade
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @return the chosen type of trade as an Enum
+     */
     public TradeType tradeType() {
         TradeType tradeType = TradeType.Money;
         int choice = JOptionPane.showOptionDialog(null, "Choose a trade type", "Trade",
@@ -301,6 +319,13 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         return tradeType;
     }
 
+    /**
+     * Makes it possible for the active player to choose which properties should be involved in the trade
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @param player
+     * @return The chosen property to trade with
+     */
     public int chooseProperty(Player player){
         ArrayList<Purchasable> ownedProperties = player.getCapitals();
         String[] propertyNames = new String[ownedProperties.size()];
@@ -316,6 +341,17 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         return choice;
     }
 
+    /**
+     * Confirms the trade between the active player and the chosen player
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param offer the amount of gold coins that the active player has offered the chosen player for their property
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
     public boolean confirmBothTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital){
         int confirm = JOptionPane.showConfirmDialog(
                 null,
@@ -349,6 +385,17 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         return false;
     }
 
+    /**
+     * Confirms the trade between the active player and the chosen player
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param offer the amount of gold coins that the active player has offered the chosen player for their property
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
     public boolean confirmMoneyTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital){
         int confirm = JOptionPane.showConfirmDialog(null, chosenPlayer.getName() +
                 " Are you okay with this trade?"
@@ -372,7 +419,17 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         return false;
     }
 
-    private boolean confirmPropertyTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
+    /**
+     * Confirms the trade between the active player and the chosen player
+     *
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
+    private boolean confirmPropertyTrade(Player activePlayer, Player chosenPlayer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
         int confirm = JOptionPane.showConfirmDialog(
                 null,
                 chosenPlayer.getName() + ", are you okay with this trade?" + "\n You are trading away " + chosenPlayerCapital.getName() +

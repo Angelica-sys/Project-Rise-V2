@@ -51,8 +51,8 @@ public class ManageEvents {
 
 	/**
 	 * Method checks what type of tile the code.model.player has landed on.
-	 * @param tile the code.model.player landed on.
-	 * @param player, code.model.player who landed on a tile.
+	 * @param tile the player landed on.
+	 * @param player, player who landed on a tile.
 	 */
 	public void newEvent(Tile tile, Player player) {
 		if (playerList.getLength() == 1) {
@@ -102,15 +102,15 @@ public class ManageEvents {
 
 	/**
 	 * This method is supposed to be called from any class that requires the current
-	 * code.model.player to pay any amount, if the user does not have the amount required they
+	 * player to pay any amount, if the user does not have the amount required they
 	 * should be removed from the game
 	 */
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
 			player.setIsAlive(false);
-			System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
+			//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
-			System.out.println("eliminated player: " + player.getPlayerIndex());
+			//System.out.println("eliminated player: " + player.getPlayerIndex());
 			board.removePlayer(player);
 
 			if (playerList.getLength() == 1) {
@@ -121,11 +121,16 @@ public class ManageEvents {
 				playerList.switchToNextPlayer();
 				eastPanel.addPlayerList(playerList.getList());
 				dice.setPlayerList(playerList.getList());
-				System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
+				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}
 	}
 
+	/**
+	 * @author Chanon Borgström, Lanna Maslo
+	 * Method that checks if a player has upgraded/downgraded and informs them about the event in a pop up message
+	 * @param player active player
+	 */
 	public void checkPlayerUpgrade(Player player){
 		String levelUpMsg = "Congratulations!\nYou have leveled up to ";
 		String levelDownMsg = "Oh no!\nYou have leveled down to ";
