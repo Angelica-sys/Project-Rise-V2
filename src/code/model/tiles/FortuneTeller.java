@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 /**
  * Fortune teller class, either returns a fortune where the player
  * gains money or has to pay.
- * @author SebastianViro, AevanDino, MuhammadAbdulkhuder, Tor Stenfeldt
+ * @author SebastianViro, AevanDino, MuhammadAbdulkhuder, Tor Stenfeldt, Angelica Asplund
  */
 public class FortuneTeller extends Tile {
 	private int amount;

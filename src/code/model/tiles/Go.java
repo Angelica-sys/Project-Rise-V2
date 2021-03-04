@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Simple Go tile class. 
- * @author AevanDino, SebastianViro, Tor Stenfeldt
+ * @author AevanDino, SebastianViro, Tor Stenfeldt, Angelica Asplund
  */
 public class Go extends Tile {
 	public Go() {
