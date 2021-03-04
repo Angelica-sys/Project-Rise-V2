@@ -3,8 +3,8 @@ package code.model.tiles;
 import javax.swing.ImageIcon;
 
 /**
- * Player does not have to pay anything and doesn't get paid for it. // But the code.model.player gets all the collected church taxes.
- * @author AevanDino, SebastianViro
+ * Whoever lands here gets the sum of all the church tax allocated since the last time someone landed here.
+ * @author AevanDino, SebastianViro, Tor Stenfeldt
  */
 public class SundayChurch extends Tile {
 	public SundayChurch() {

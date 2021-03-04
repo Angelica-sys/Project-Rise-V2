@@ -37,7 +37,7 @@ public class PlayerList {
 	}
 	
 	/**
-	 * Add new code.model.player
+	 * Add new player
 	 * @param name the chosen name for a player
 	 * @param icon the chosen image for a player
 	 */
@@ -47,7 +47,7 @@ public class PlayerList {
 	} 
 		
 	/**
-	 * Adds new code.model.player with the use of the ColorIconMap
+	 * Adds new player with the use of the ColorIconMap
 	 * @param name chosen name
 	 * @param icon string containing a color used to get a color from the ColorIconMap
 	 */
@@ -106,7 +106,6 @@ public class PlayerList {
 	 * Update amount of players after a player has been removed
 	 */
 	public void updatePlayerList() {
-		
 		for(int i = 0; i < activePlayers.size(); i++) {
 			activePlayers.get(i).setPlayerIndex(i);
 		}	

@@ -4,6 +4,11 @@ import code.model.player.Player;
 
 import javax.swing.ImageIcon;
 
+/**
+ * A subclass of Purchasable, functioning like its sibling the Property with the main difference being
+ * an increase to the land cost if the owner owns both Tavern tiles.
+ * @author Tor Stenfeldt
+ */
 public class Tavern extends Purchasable {
 	private int price;
 

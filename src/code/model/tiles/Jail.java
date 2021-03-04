@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Class for jail tile. 
- * @author Sebastian Viro, Aevan Dino	
+ * @author Sebastian Viro, Aevan Dino, Tor Stenfeldt
  */
 public class Jail extends Tile {
 	public Jail() {

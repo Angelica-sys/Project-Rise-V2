@@ -16,7 +16,7 @@ public class ShowPlayersTurn extends JPanel {
 	private String playerName;
 	
 	/**
-	 * @param player The current code.model.player name in which the label displays.
+	 * @param player The current player name in which the label displays.
 	 */
 	public ShowPlayersTurn(String player) {
 		this.playerName = player;

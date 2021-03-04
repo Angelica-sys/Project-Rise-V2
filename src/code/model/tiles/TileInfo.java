@@ -1,9 +1,8 @@
 package code.model.tiles;
 
 /**
- * Information about each code.view.westSidePanel.tiles.
+ * Information about each tiles.
  * @author Rohan Samandari
- *
  */
 public class TileInfo {
 	private String[] info;

@@ -3,6 +3,11 @@ package code.model.tiles;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * An abstract class which all other tiles inherit from.
+ * Contains the tile name, description and image.
+ * @author Tor Stenfeldt
+ */
 public abstract class Tile {
     private String name;
     private String description;

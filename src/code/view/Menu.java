@@ -65,7 +65,7 @@ public class Menu extends JPanel {
 	 * @author Rohan Samandari
 	 *
 	 */
-	public class ButtonListener implements ActionListener{
+	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource()==jmOptions) {
 				JOptionPane.showInputDialog("Hello");

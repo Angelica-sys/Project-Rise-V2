@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 /**
  * 
- * @author Sebastian Viro, Aevan Dino, MUHAMMAD ABDULKHUDER
+ * @author Sebastian Viro, Aevan Dino, MUHAMMAD ABDULKHUDER, Tor Stenfeldt
  *
  */
 public class GoToJail extends Tile {

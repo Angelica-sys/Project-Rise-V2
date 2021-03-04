@@ -13,16 +13,17 @@ import code.model.player.Player;
 import code.model.player.PlayerList;
 
 /**
- * This class is used to show information about the players and the current properties in tabs from property window
- * @author Abdulkhuder Muhammad, Sebastian Viro.
+ * This class is used to show information about the players and
+ * the current properties in tabs from property window
+ * @author Abdulkhuder Muhammad, Sebastian Viro, Tor Stenfeldt
  */
 public class PlayerInfoPanel extends JPanel {
 	//private static final long serialVersionUID = 13L;
 
 	/**
-	 * player list is used to get the players to display correct information playernbr is to specify what player
-	 * @param playerList
-	 * @param playerNumber
+	 * player list is used to get the players to display correct information
+	 * @param playerList a PlayerList containing all active players.
+	 * @param playerNumber an integer specifying which character the information is regarding.
 	 */
 	public PlayerInfoPanel(PlayerList playerList, int playerNumber) {
 		Player p = playerList.getPlayerFromIndex(playerNumber);

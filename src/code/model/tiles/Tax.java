@@ -4,6 +4,10 @@ import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
+/**
+ * A tile which forces the player that lands on it to pay tax to the church.
+ * @author Tor Stenfeldt
+ */
 public class Tax extends Tile {
 	private int taxToPay = 200;
 

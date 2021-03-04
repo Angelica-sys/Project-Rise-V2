@@ -11,8 +11,8 @@ import code.model.tiles.Purchasable;
 import code.model.tiles.Tavern;
 
 /**
- * Player class deals with everything that has to do with a code.model.player.
- * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro
+ * Player class deals with everything that has to do with a player.
+ * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro, Tor Stenfeldt
  */
 public class Player {
 	private String name;
@@ -135,14 +135,14 @@ public class Player {
 	}
 
 	/**
-	 * @return the playerIndex of a code.model.player
+	 * @return the playerIndex of a player
 	 */
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
 
 	/**
-	 * Get the position a code.model.player has on the code.view.board from 0-39
+	 * Get the position a code.model.player has on the board from 0-39
 	 * @return counter
 	 */
 	public int getPosition() {
@@ -150,7 +150,7 @@ public class Player {
 	}
 
 	/**
-	 * Move code.model.player to a specific index on the code.view.board
+	 * Move player to a specific index on the board
 	 * @param newPosition
 	 */
 	public void setPositionInSpecificIndex(int newPosition) {

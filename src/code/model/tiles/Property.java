@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Class for property.
- * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder
+ * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder, Tor Stenfeldt
  */
 public class Property extends Purchasable {
 	private int price, baseRent, rentPerLevel, levels, levelPrice;
@@ -100,7 +100,10 @@ public class Property extends Purchasable {
 	public void setLevelPrice(int levelPrice) {
 		this.levelPrice = levelPrice;
 	}
-	
+
+	/**
+	 * Increases the level of the property.
+	 */
 	public void increaseLevel() {
 		int res = JOptionPane.showConfirmDialog(
 				null,
@@ -113,7 +116,10 @@ public class Property extends Purchasable {
 			getOwner().decreaseBalace(getLevelPrice());
 		}
 	}
-	
+
+	/**
+	 * Decreases the level of the property.
+	 */
 	public void decreaseLevel() {
 		int res = JOptionPane.showConfirmDialog(
 				null,
@@ -130,7 +136,10 @@ public class Property extends Purchasable {
 	public int getLevel() {
 		return this.levels;
 	}
-	
+
+	/**
+	 * Removes any levels of the property and sets it to purchasable.
+	 */
 	public void clearProperty() {
 		setPurchasable(true);
 		setLevel(0);

@@ -12,7 +12,7 @@ import code.model.tiles.Property;
 import code.model.tiles.Purchasable;
 
 /**
- * @author Muhammad Abdulkhuder, Aevan Dino.
+ * @author Muhammad Abdulkhuder, Aevan Dino, Tor Stenfeldt
  */
 public class PropertyWindow extends JPanel {
 	//private static final long serialVersionUID = 12L;

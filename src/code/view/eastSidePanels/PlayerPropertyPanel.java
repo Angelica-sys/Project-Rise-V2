@@ -23,7 +23,7 @@ import code.model.tiles.Purchasable;
 
 /**
  * A class representing each Purchasable a Player owns.
- * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
+ * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro, Tor Stenfeldt
  */
 public class PlayerPropertyPanel extends JPanel implements ActionListener {
 	//private static final long serialVersionUID = 14L;

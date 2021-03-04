@@ -60,7 +60,7 @@ public class Dice extends JPanel implements ActionListener {
 	/**
 	 * @param board The code.view.board object
 	 * @param playerList a list containing all the players in the game
-	 * @param westSidePanel panel containing all the information about the code.view.westSidePanel.tiles and the history of all the code.controller.events
+	 * @param westSidePanel panel containing all the information about the tiles and the history of all the events
 	 * @param eastSidePnl panel containing all the information about the players and their properties 
 	 */
 	public Dice(Board board, PlayerList playerList, WestSidePanel westSidePanel, EastSidePanel eastSidePnl) {
@@ -201,10 +201,9 @@ public class Dice extends JPanel implements ActionListener {
 		}
 
 		/*
-		 * When a code.model.player ends their turn
-		 * If the next code.model.player is in jail they will not have the ability to roll the
-		 * code.view.dice and will only have the ability to end their turn if they have not paid the bail
-		 * If the code.model.player is not in jail they can roll the code.view.dice
+		 * When a player ends their turn If the next player is in jail they will not have the ability
+		 * to roll the dice and will only have the ability to end their turn if they have not paid
+		 * the bail If the player is not in jail they can roll the dice
 		 */
 		if (e.getSource() == btnEndTurn) {
 			playerList.switchToNextPlayer();
@@ -229,7 +228,7 @@ public class Dice extends JPanel implements ActionListener {
 
 	/**
 	 * @param i method used for Testing
-	 * it moves the code.model.player to a specific index
+	 * it moves the player to a specific index
 	 */
 	public void moveWCheat(int i) {
 		setRoll(i);
@@ -254,7 +253,7 @@ public class Dice extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Ends the turn if code.model.player is eliminated
+	 * Ends the turn if player is eliminated
 	 */
 	public void endTurnIfPlayerEliminated() {
 		btnRollDice.setEnabled(true);

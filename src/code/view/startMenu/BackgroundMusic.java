@@ -37,7 +37,7 @@ public class BackgroundMusic extends Thread {
 	}    
 
 	/**
-	 * Pauses music, music continues where it stopped when code.model.player asks for music again.
+	 * Pauses music, music continues where it stopped when player asks for music again.
 	 */
 	public void pauseMusic() {
 		if (clip!=null) {

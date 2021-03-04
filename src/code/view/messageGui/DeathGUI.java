@@ -12,8 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Class to draw a GUI when players are eliminated
- * @author Sebastian Viro, Muhammad Abdulkhuder
+ * This class will create a JPanel that pops up whenever a player is eliminated.
+ * @author Sebastian Viro, Muhammad Abdulkhuder, Tor Stenfeldt
  */
 public class DeathGUI extends JPanel implements ActionListener {
 	private JButton btnExit;

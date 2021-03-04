@@ -16,8 +16,8 @@ import code.model.player.PlayerRanks;
 import code.view.WestSidePanel;
 
 /**
-* The class handles all the code.controller.events that occur when a code.model.player lands on a tile.
-* @author Seth Oberg, Rohan Samandari,Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino.
+* The class handles all the events that occur when a code.model.player lands on a tile.
+* @author Seth Oberg, Rohan Samandari, Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino, Tor Stenfeldt
 */
 public class ManageEvents {
 	private PlayerList playerList;
@@ -51,9 +51,9 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method checks what type of tile the code.model.player has landed on.
-	 * @param tile the code.model.player landed on.
-	 * @param player, code.model.player who landed on a tile.
+	 * Method checks what type of tile the player has landed on.
+	 * @param tile the player landed on.
+	 * @param player, player who landed on a tile.
 	 */
 	public void newEvent(Tile tile, Player player) {
 		if (playerList.getLength() == 1) {
@@ -147,8 +147,8 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called when code.model.player lands on a property. Checks if it's availability and if the code.model.player has to pay rent or
-	 * can purchase the property.
+	 * Method called when player lands on a property. Checks if it's availability and
+	 * if the player has to pay rent or can purchase the property.
 	 * @param tile
 	 * @param player
 	 */
@@ -185,7 +185,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called when the code.model.player lands on a work tile.
+	 * Method called when the player lands on a work tile.
 	 * @param player
 	 */
 	public void workEvent(Player player) {
@@ -203,7 +203,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called when the code.model.player lands on a tax tile.
+	 * Method called when the player lands on a tax tile.
 	 * @param tile
 	 * @param player
 	 */
@@ -284,7 +284,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method to jail a code.model.player.
+	 * Method to jail player.
 	 * @param tile
 	 * @param player
 	 */
@@ -298,7 +298,8 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called if the code.model.player lands on sunday church. Pays out all the collected tax then resets the counter.
+	 * Method called if the player lands on sunday church.
+	 * Pays out all the collected tax then resets the counter.
 	 * @param player
 	 */
 	public void churchEvent(Player player) {
@@ -309,7 +310,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method for a dialog if the code.model.player is able to purchase a property.
+	 * Method for a dialog if the player is able to purchase a property.
 	 * @param property in question.
 	 * @param player in question.
 	 */
@@ -336,7 +337,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method for a dialog if the code.model.player wants to purchase a tavern.
+	 * Method for a dialog if the player wants to purchase a tavern.
 	 * @param tavern, the to buy.
 	 * @param player, code.model.player who landed on the tavern.
 	 */
@@ -361,7 +362,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * @return roll of the code.view.dice.
+	 * @return roll of the dice.
 	 */
 	public int getRoll() {
 		return dice.getRoll();
@@ -376,7 +377,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Message for the prisoner to choose if the code.model.player wants to pay the bail and
+	 * Message for the prisoner to choose if the player wants to pay the bail and
 	 * get free
 	 * @param player in jail.
 	 */
@@ -401,8 +402,8 @@ public class ManageEvents {
 	
 	/**
 	 * Method for FortuneTeller, small chance for a secret event to trigger.
-	 * @param fortune, tile the code.model.player landed on.
-	 * @param player, code.model.player in question.
+	 * @param fortune, tile the player landed on.
+	 * @param player, player in question.
 	 */
 	private void fortuneTellerEvent(FortuneTeller fortune, Player player) {
         fortune.setAmount(rand.nextInt(600) - 300);

@@ -52,7 +52,6 @@ public class FortuneTellerGUI extends JPanel {
         dis.setForeground(Color.WHITE);
         dis.setEditable(false);
 
-
         centerPanel.add(type,BorderLayout.NORTH);
         centerPanel.add(dis,BorderLayout.CENTER);
 
@@ -65,9 +64,10 @@ public class FortuneTellerGUI extends JPanel {
     }
     
     /**
-     * Method checks if the fortune is a blessing or a curse and changes the GUI accordingly before it calls the method startGUI().
+     * Method checks if the fortune is a blessing or a curse and changes the GUI
+     * accordingly before it calls the method startGUI().
      * @param b boolean for the fortune.
-     * @param amount how much the code.model.player either has to pay or get paid.
+     * @param amount how much the player either has to pay or get paid.
      */
     public void newFortune(Boolean b, int amount) {
     	if (b) {

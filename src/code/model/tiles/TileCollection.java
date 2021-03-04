@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import code.model.tiles.*;
 
 /** 
- * Informtion about each code.view.westSidePanel.tiles.
+ * Informtion about each tiles.
  * Price, Title, 
  * @author Rohan, Sebastian, Muhammad Abdulkhuder
  */

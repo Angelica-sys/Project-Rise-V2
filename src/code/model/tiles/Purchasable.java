@@ -4,6 +4,10 @@ import code.model.player.Player;
 
 import javax.swing.*;
 
+/**
+ * An abstract subclass of Tile, adding functionality for purchasing it.
+ * @author Tor Stenfeldt
+ */
 public abstract class Purchasable extends Tile {
     private Player owner;
     private boolean purchasable;

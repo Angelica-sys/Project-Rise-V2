@@ -3,7 +3,8 @@ package code.model.tiles;
 import javax.swing.ImageIcon;
 
 /**
- * @author Muhammad abdulkhuder, AevanDino, Sebastian Viro, .
+ * Any player that lands on this tile will get some spending money depending on how the dice roll.
+ * @author Muhammad abdulkhuder, AevanDino, Sebastian Viro, Tor Stenfeldt
  */
 public class Work extends Tile {
 	public Work() {

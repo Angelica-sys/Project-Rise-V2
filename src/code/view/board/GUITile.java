@@ -93,7 +93,7 @@ public class GUITile extends JLabel {
 	}
 
 	/**
-	 * Varje grid ruta läggs till, 4st
+	 * Adds all four grid panels.
 	 */
 	public void addLabelsToArray() {
 		labels[0] = label1;
@@ -122,7 +122,7 @@ public class GUITile extends JLabel {
 	}
 
 	/**
-	 * Each gui tile has 4 places where a code.model.player can be placed
+	 * Each gui tile has 4 places where a player can be placed
 	 * @param player
 	 */
 	public void setPlayer(Player player) {

@@ -10,8 +10,9 @@ import javax.swing.*;
 import code.view.dice.Dice;
 
 /**
- * @author Sebastian Viro, Muhammad Abdulkhuder
- * This class is used for testing purposes only.
+ * This class is used for testing purposes only. To use this, initiate it
+ * somewhere in the GUI, preferably while starting the application.
+ * @author Sebastian Viro, Muhammad Abdulkhuder, Tor Stenfeldt
  */
 public class CheatGui extends JFrame implements ActionListener {
 	private JTextField inputTF;
@@ -20,8 +21,8 @@ public class CheatGui extends JFrame implements ActionListener {
 	private int index;
 
 	/**
+	 * Calls the method that starts the gui and gets a reference from dice
 	 * @param dice
-	 * Calls the method that starts the gui and gets a reference from code.view.dice
 	 */
 	public CheatGui(Dice dice) {
 		this.setMinimumSize(new Dimension(200, 200));
@@ -45,7 +46,7 @@ public class CheatGui extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * This is what happens when a button is pressed
+	 * This method is called when a player clicks the 'teleport' button.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnTeleport) {
