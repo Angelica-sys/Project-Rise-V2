@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Class for property.
- * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder, Tor Stenfeldt
+ * @author Sebastian Viro, Aevan Dino, Muhammad Abdulkhuder, Tor Stenfeldt, Angelica Asplund
  */
 public class Property extends Purchasable {
 	private int price, baseRent, rentPerLevel, levels, levelPrice;
