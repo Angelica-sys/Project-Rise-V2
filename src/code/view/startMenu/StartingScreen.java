@@ -370,7 +370,7 @@ public class StartingScreen extends JFrame {
             mainWindow.addPlayer(playerList);
             mainWindow.startboard();
             dispose();
-            Introduction intro = new Introduction();
+            Introduction intro = new Introduction(playerList);
         }
 
         /**

@@ -159,7 +159,7 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called when code.model.player lands on a property. Checks if it's availability and if the code.model.player has to pay rent or
+	 * Method called when player lands on a property. Checks if it's availability and if the player has to pay rent or
 	 * can purchase the property.
 	 * @param tile
 	 * @param player
@@ -197,8 +197,8 @@ public class ManageEvents {
 	}
 
 	/**
-	 * Method called when the code.model.player lands on a work tile.
-	 * @param player
+	 * Method called when the player lands on a work tile.
+	 * @param player active player
 	 */
 	public void workEvent(Player player) {
 		int roll = getRoll();
