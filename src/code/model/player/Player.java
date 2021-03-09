@@ -312,7 +312,7 @@ public class Player {
 			}
 		}
 
-		capital.setOwner(null); //TODO: null pointer after selling?
+
 	}
 
 	public void sellCapital(Purchasable capital) {
@@ -339,6 +339,8 @@ public class Player {
 		if (res == 0) {
 			increaseBalance(total);
 			removeCapital(capital);
+			capital.setOwner(null);
+			capital.setPurchasable(true);
 		}
 	}
 

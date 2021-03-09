@@ -361,6 +361,9 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         );
 
         if (confirm == 0) {
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
             activePlayer.decreaseBalance(offer);
             activePlayer.decreaseNetWorth(offer);
 
@@ -373,8 +376,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
             chosenPlayerCapital.setOwner(activePlayer);
             chosenPlayer.addCapital(activePlayerCapital);
 
-            activePlayer.removeCapital(activePlayerCapital);
-            chosenPlayer.removeCapital(chosenPlayerCapital);
+
 
             JOptionPane.showMessageDialog(
                     null,
@@ -401,16 +403,16 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
                 " Are you okay with this trade?"
                 + "\n You are getting " + offer + "gold coins for " + chosenPlayerCapital.getName());
         if (confirm == 0) {
+            activePlayer.addCapital(chosenPlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
             activePlayer.decreaseBalance(offer);
             activePlayer.decreaseNetWorth(offer);
 
             chosenPlayer.increaseBalance(offer);
             chosenPlayer.increaseNetWorth(offer);
 
-            activePlayerCapital.setOwner(chosenPlayer);
-
-            activePlayer.addCapital(chosenPlayerCapital);
-            chosenPlayer.removeCapital(chosenPlayerCapital);
+            chosenPlayerCapital.setOwner(activePlayer);
 
             JOptionPane.showMessageDialog(null, "Trade Complete!");
 
@@ -437,14 +439,16 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         );
 
         if (confirm == 0) {
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
             activePlayerCapital.setOwner(chosenPlayer);
             activePlayer.addCapital(chosenPlayerCapital);
 
             chosenPlayerCapital.setOwner(activePlayer);
             chosenPlayer.addCapital(activePlayerCapital);
 
-            activePlayer.removeCapital(activePlayerCapital);
-            chosenPlayer.removeCapital(chosenPlayerCapital);
+
 
             JOptionPane.showMessageDialog(
                     null,

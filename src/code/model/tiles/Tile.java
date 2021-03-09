@@ -19,6 +19,11 @@ public abstract class Tile {
     }
 
     public String getDescription() {
+        if (this instanceof Property) {
+            ((Property) this).generateTileInfo();
+        }else if(this instanceof Tavern){
+            ((Tavern) this).generateTileInfo();
+        }
         return description;
     }
 

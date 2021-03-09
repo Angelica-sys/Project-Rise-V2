@@ -27,7 +27,7 @@ public class Property extends Purchasable {
 	 */
 	public Property(String name, int price, int baseRent, int rentPerLevel, Color color, int levelPrice, ImageIcon image) {
 		super(name, "", null, baseRent, image, true);
-		getTileInfo();
+		generateTileInfo();
 		this.baseRent = baseRent;
 		this.color = color;
 
@@ -39,13 +39,13 @@ public class Property extends Purchasable {
 	public void purchase(Player player) {
 		this.setOwner(player);
 		this.setPurchasable(false);
-		this.getTileInfo();
+		this.generateTileInfo();
 	}
 	
 	/**
 	 * Returns information about tile
 	 */
-	public String getTileInfo() {
+	public String generateTileInfo() {
 		String ownerName;
 
 		if (getOwner() == null) {
