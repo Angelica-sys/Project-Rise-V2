@@ -33,9 +33,10 @@ import code.model.player.PlayerList;
 public class StartingScreen extends JFrame {
     private static final long serialVersionUID = 1L;
 
+    private Menu menu;
     private BackgroundMusic bgm = new BackgroundMusic();
     private PlayerList playerList = new PlayerList();
-    private GamePanels mainWindow = new GamePanels();
+    private GamePanels mainWindow = new GamePanels(bgm);
 
     private JButton btnConfirm = new JButton("Confirm");
     private JButton btnStartGame = new JButton("Start Game");
@@ -186,7 +187,7 @@ public class StartingScreen extends JFrame {
         lblBackground.add(btnStartGame);
         lblBackground.add(mute);
         add(lblBackground);
-        new Menu(bgm);
+        //new Menu(bgm);
     }
 
     public void createFrame() {

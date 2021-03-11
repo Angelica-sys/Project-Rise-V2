@@ -20,12 +20,14 @@ import code.view.board.Board;
 import code.view.dice.Dice;
 import code.view.eastSidePanels.EastSidePanel;
 import code.model.player.PlayerList;
+import code.view.startMenu.BackgroundMusic;
 
 /**
  * This class combines most of the panels in the game and adds appropriate references.
  * @author Abdulkhuder Muhammad
  */
 public class GamePanels extends JPanel {
+	private BackgroundMusic bgm;
 	private static final long serialVersionUID = 1L;
 	private EastSidePanel tPanel = new EastSidePanel();
 	private WestSidePanel westPanel = new WestSidePanel();
@@ -35,14 +37,16 @@ public class GamePanels extends JPanel {
 	private Dice dice = new Dice(board, playerList, westPanel, tPanel);
 	private JFrame frame = new JFrame();
 	private JLabel lblPic = new JLabel();
-	private Menu m = new Menu();
+	private Menu m;
 	private int width = (int) screenSize.getWidth();
 	private int height = (int) screenSize.getHeight();
 
 	/**
 	 * adds the panels and sets the bounds
 	 */
-	public GamePanels() {
+	public GamePanels(BackgroundMusic bgm) {
+		this.bgm = bgm;
+		m = new Menu(bgm);
 		setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.BLACK));
 
 		setBackground(Color.DARK_GRAY);
