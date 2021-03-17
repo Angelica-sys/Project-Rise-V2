@@ -10,7 +10,7 @@ import code.view.eastSidePanels.EastSidePanel;
 
 /**
  * A class that holds all active players 
- * @author Seth Oberg
+ * @author Seth Oberg, Hanna My Jansson
  */
 public class PlayerList {
 	private LinkedList<Player> activePlayers = new LinkedList<>();

@@ -17,7 +17,7 @@ import code.view.WestSidePanel;
 
 /**
 * The class handles all the code.controller.events that occur when a code.model.player lands on a tile.
-* @author Seth Oberg, Rohan Samandari,Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino.
+* @author Seth Oberg, Rohan Samandari,Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino, Hanna My Jansson
 */
 public class ManageEvents {
 	private PlayerList playerList;

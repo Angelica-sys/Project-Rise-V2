@@ -17,7 +17,7 @@ import code.model.tiles.TileCollection;
 import code.view.WestSidePanel;
 
 /**
- * @author Muhammad Abdulkhuder, Seth �berg, Rohan Samandari
+ * @author Muhammad Abdulkhuder, Seth �berg, Rohan Samandari, Hanna My Jansson
  */
 public class Board extends JPanel {
 	private WestSidePanel pnlWest;

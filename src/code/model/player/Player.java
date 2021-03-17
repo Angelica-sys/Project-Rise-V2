@@ -12,7 +12,7 @@ import code.model.tiles.Tavern;
 
 /**
  * Player class deals with everything that has to do with a code.model.player.
- * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro
+ * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro, Hanna My Jansson
  */
 public class Player {
 	private String name;

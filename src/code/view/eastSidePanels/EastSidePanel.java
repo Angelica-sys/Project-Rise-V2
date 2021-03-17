@@ -13,7 +13,7 @@ import code.model.player.PlayerList;
 /**
  * this class add tabs that displays information about the players in tabs
  *
- * @author Abdulkhuder Muhammad, Sebastian Viro. Hanna-My Jansson
+ * @author Abdulkhuder Muhammad, Sebastian Viro, Hanna My Jansson
  */
 public class EastSidePanel extends JPanel {
     private static final long serialVersionUID = 15L;

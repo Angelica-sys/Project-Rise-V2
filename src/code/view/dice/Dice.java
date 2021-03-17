@@ -20,7 +20,7 @@ import code.model.player.PlayerList;
 import code.view.WestSidePanel;
 
 /**
- * @author Muhammad Abdulkhuder, Aevan Dino, Sebastian Viro, Seth Oberg
+ * @author Muhammad Abdulkhuder, Aevan Dino, Sebastian Viro, Seth Oberg, Hanna My Jansson
  */
 public class Dice extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;

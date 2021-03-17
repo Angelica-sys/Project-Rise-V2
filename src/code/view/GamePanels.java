@@ -24,7 +24,7 @@ import code.view.startMenu.BackgroundMusic;
 
 /**
  * This class combines most of the panels in the game and adds appropriate references.
- * @author Abdulkhuder Muhammad
+ * @author Abdulkhuder Muhammad, Hanna My Jansson
  */
 public class GamePanels extends JPanel {
 	private BackgroundMusic bgm;

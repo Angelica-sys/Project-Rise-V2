@@ -27,7 +27,7 @@ import code.model.tiles.TradeType;
 /**
  * A class representing each Purchasable a Player owns.
  *
- * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro.
+ * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro, Hanna My Jansson
  */
 public class PlayerPropertyPanel extends JPanel implements ActionListener {
     private JTextArea taLevel = new JTextArea("");
