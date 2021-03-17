@@ -131,6 +131,10 @@ public class ManageEvents {
 				eastPanel.setCurrentPlayer(newplayerNewIndex);
 				dice.setPlayerList(playerList.getList());
 				dice.activateRollDice();
+				//loopar igenom alla spelare och placerar om dem på rätt plats.
+				for(int i = 0; i< playerList.getLength();i++){
+					//playerList.
+				}
 				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}

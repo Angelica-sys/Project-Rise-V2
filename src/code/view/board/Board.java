@@ -352,7 +352,8 @@ public class Board extends JPanel {
 	 * @param player
 	 */
 	public void setPlayer(Player player) {
-		guiTiles[player.getPosition()].setPlayer(player); 
+
+		guiTiles[player.getPosition()].setPlayer(player);
 	}
 	
 	/**

@@ -126,7 +126,7 @@ public class GUITile extends JLabel {
 	 * @param player
 	 */
 	public void setPlayer(Player player) {
-		labels[player.getPlayerIndex()].setIcon(player.getImage());
+		labels[player.getPlayerIndex()].setIcon(player.getImage()); //TODO det blir fel här eftersom spelaren byter index när den andra döör då byter den plats på rutan och då blir det två.
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
 	}
 
@@ -134,5 +134,9 @@ public class GUITile extends JLabel {
 		//System.out.println("player index: " + player.getPlayerIndex());
 		labels[player.getPlayerIndex()].setIcon(null);
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
+	}
+
+	public void resetPlayerPosition(){
+		//labels[]
 	}
 }
