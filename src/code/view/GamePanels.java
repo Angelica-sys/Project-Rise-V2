@@ -33,8 +33,7 @@ public class GamePanels extends JPanel {
 	private WestSidePanel westPanel = new WestSidePanel();
 	private Board board = new Board(westPanel);
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	private PlayerList playerList;
-	private Dice dice = new Dice(board, playerList, westPanel, tPanel);
+	private Dice dice = new Dice(board,null, westPanel, tPanel);
 	private JFrame frame = new JFrame();
 	private JLabel lblPic = new JLabel();
 	private Menu m;
