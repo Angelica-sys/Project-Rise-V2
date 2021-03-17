@@ -39,10 +39,8 @@ public class EastSidePanel extends JPanel {
 			this.tab.setOpaque(false);
 		}
 
-		this.tab.setSelectedIndex(this.currentPlayer);
-		this.tab.setForeground(Color.white);
-		this.tab.setBackground(new Color(157, 0, 0));
-		this.tab.setBackgroundAt(this.currentPlayer, new Color(0, 157, 0));
+		updateTab();
+
 	}
 
 	/**

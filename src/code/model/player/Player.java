@@ -161,7 +161,7 @@ public class Player {
 	 * method used to move the player by either one or many steps
 	 * @param amountOfStepsToMove
 	 */
-	public void setPosition(int amountOfStepsToMove) {
+	public void increasePosition(int amountOfStepsToMove) {
 		for (int i = 0; i < amountOfStepsToMove; i++) {
 			if (counter < 39) {
 				counter++;
@@ -356,8 +356,11 @@ public class Player {
 		this.capital.forEach(e -> {
 			if (e instanceof Property) {
 				((Property) e).clearProperty();
+				((Property) e).setOwner(null);
+
 			} else {
 				((Tavern)e).clearTavern();
+				((Tavern)e).setOwner(null);
 			}
 		});
 	}

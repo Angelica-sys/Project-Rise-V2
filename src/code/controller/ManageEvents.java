@@ -110,35 +110,44 @@ public class ManageEvents {
 			int oldPlayerOldIndex = eastPanel.getTab();
 			int newplayerNewIndex = 0;
 
-			if(oldPlayerOldIndex==(playerList.getLength()-1)){
-				newplayerNewIndex = 0;
-			}else{
-				newplayerNewIndex = oldPlayerOldIndex;
-			}
+            if(oldPlayerOldIndex==(playerList.getLength()-1)){
+                newplayerNewIndex = 0;
+            }else{
+                newplayerNewIndex = oldPlayerOldIndex;
+            }
+
+
 			player.setIsAlive(false);
 			//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
 			//System.out.println("eliminated player: " + player.getPlayerIndex());
 			board.removePlayer(player);
 
+
 			if (playerList.getLength() == 1) {
 				new WinGui();
 			}else {
 				deathGUI.showGUI();
+                playerList.setCurrentPlayer(newplayerNewIndex);
 				playerList.updatePlayerList();
-				playerList.setCurrentPlayer(newplayerNewIndex);
+                eastPanel.setCurrentPlayer(newplayerNewIndex);
 				eastPanel.addPlayerList(playerList.getList());
-				eastPanel.setCurrentPlayer(newplayerNewIndex);
 				dice.setPlayerList(playerList.getList());
 				dice.activateRollDice();
-				//loopar igenom alla spelare och placerar om dem på rätt plats.
-				for(int i = 0; i< playerList.getLength();i++){
-					//playerList.
-				}
+                updatePlayersPosition();
 				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}
 	}
+    //loopar igenom alla spelare och placerar om dem på rätt plats.
+	public void updatePlayersPosition(){
+        for(int i = 0; i< playerList.getLength();i++){
+            Player player = playerList.getPlayerFromIndex(i);
+            board.removePlayer(player);
+            board.clearLabel(player.getPlayerIndex()+1, player.getPosition());
+            board.setPlayer(playerList.getPlayerFromIndex(i));
+        }
+    }
 
 	/**
 	 * @author Chanon Borgström, Lanna Maslo

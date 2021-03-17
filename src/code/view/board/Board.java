@@ -364,6 +364,10 @@ public class Board extends JPanel {
 		guiTiles[player.getPosition()].removePlayer(player);
 	}
 
+	public void clearLabel(int indexOfLabel, int indexOfTile){
+		guiTiles[indexOfTile].clearLabel(indexOfLabel);
+	}
+
 	/**
 	 * Method is called when the user arrives at the destination tile
 	 * @param index of tile.

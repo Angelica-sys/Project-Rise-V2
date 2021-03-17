@@ -235,7 +235,7 @@ public class Dice extends JPanel implements ActionListener {
 		setRoll(i);
 		playerList.getActivePlayer().checkPlayerRank();
 		board.removePlayer(playerList.getActivePlayer());
-		playerList.getActivePlayer().setPosition(getRoll());
+		playerList.getActivePlayer().increasePosition(getRoll());
 		board.setPlayer(playerList.getActivePlayer());
 
 		manageEvents.setRoll(this);
@@ -295,7 +295,7 @@ public class Dice extends JPanel implements ActionListener {
 		public void run() {
 			for (int i = 0; i < getRoll(); i++) {
 				board.removePlayer(playerList.getActivePlayer());
-				playerList.getActivePlayer().setPosition(1);
+				playerList.getActivePlayer().increasePosition(1);
 				board.setPlayer(playerList.getActivePlayer());
 
 				if (i == (getRoll() - 1)) {
