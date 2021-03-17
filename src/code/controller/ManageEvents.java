@@ -97,7 +97,7 @@ public class ManageEvents {
 			new WinGui();
 		}
 
-		eastPanel.addPlayerList(playerList);
+		eastPanel.setPlayerList(playerList);
 	}
 
 	/**
@@ -128,10 +128,11 @@ public class ManageEvents {
 				new WinGui();
 			}else {
 				deathGUI.showGUI();
+				westPanel.append(player.getName() + " has died");
                 playerList.setCurrentPlayer(newplayerNewIndex);
 				playerList.updatePlayerList();
                 eastPanel.setCurrentPlayer(newplayerNewIndex);
-				eastPanel.addPlayerList(playerList.getList());
+				eastPanel.setPlayerList(playerList.getList());
 				dice.setPlayerList(playerList.getList());
 				dice.activateRollDice();
                 updatePlayersPosition();

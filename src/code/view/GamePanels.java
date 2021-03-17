@@ -102,7 +102,7 @@ public class GamePanels extends JPanel {
 	public void addPlayer(PlayerList playerList) {
 		board.addPlayers(playerList);
 		board.setPlayers();
-		tPanel.addPlayerList(playerList);
+		tPanel.setPlayerList(playerList);
 		dice.addPlayerList(playerList);
 	}
 

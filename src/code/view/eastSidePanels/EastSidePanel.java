@@ -12,82 +12,87 @@ import code.model.player.PlayerList;
 
 /**
  * this class add tabs that displays information about the players in tabs
+ *
  * @author Abdulkhuder Muhammad, Sebastian Viro. Hanna-My Jansson
  */
 public class EastSidePanel extends JPanel {
-	private static final long serialVersionUID = 15L;
-	private PlayerList playerList;
-	private JTabbedPane tab;
-	private PlayerInfoPanel playerInfoPnl;
-	private int currentPlayer = 0;
+    private static final long serialVersionUID = 15L;
+    private PlayerList playerList;
+    private JTabbedPane tab;
+    private PlayerInfoPanel playerInfoPnl;
+    private int currentPlayer = 0;
 
-	/**
-	 * @param playerList
-	 * this method is also used to update the information displayed
-	 * this method adds tabs according to the amount of players
-	 */
-	public void addPlayerList(PlayerList playerList) {
-		this.playerList = playerList;
+    /**
+     * @param playerList this method is also used to update the information displayed
+     *                   this method adds tabs according to the amount of players
+     */
+    public void setPlayerList(PlayerList playerList) {
+        this.playerList = playerList;
+        updatePanel();
 
-		this.tab.removeAll();
 
-		for (int i=0; i<playerList.getLength(); i++) {
-			new EastSidePanel();
-			this.playerInfoPnl = new PlayerInfoPanel(playerList, i, this);
-			this.playerInfoPnl.setOpaque(false);
-			this.tab.addTab("Player " + (i + 1), this.playerInfoPnl);
-			this.tab.setOpaque(false);
-		}
+    }
 
-		updateTab();
+    public void updatePanel() {
+        this.tab.removeAll();
 
-	}
+        for (int i = 0; i < playerList.getLength(); i++) {
+            //new EastSidePanel();
+            this.playerInfoPnl = new PlayerInfoPanel(playerList, i, this);
+            this.playerInfoPnl.setOpaque(false);
+            this.tab.addTab("Player " + (i + 1), this.playerInfoPnl);
+            this.tab.setOpaque(false);
+        }
 
-	/**
-	 * Draws the GUI
-	 */
-	public EastSidePanel() {
-		setPreferredSize(new Dimension(345, 860));
-		setOpaque(false);
-		setLayout(null);
-		UIManager.put("TabbedPane.contentOpaque", false);
-		UIManager.put("TabbedPane.selected", Color.cyan);
+        updateTab();
+    }
 
-		tab = new JTabbedPane();
+    /**
+     * Draws the GUI
+     */
+    public EastSidePanel() {
+        setPreferredSize(new Dimension(345, 860));
+        setOpaque(false);
+        setLayout(null);
+        UIManager.put("TabbedPane.contentOpaque", false);
+        UIManager.put("TabbedPane.selected", Color.cyan);
 
-		tab.setBounds(0, 0, 355, 860);
-		tab.setBackground(new Color(0, 0, 0));
-		add(tab);
-	}
+        tab = new JTabbedPane();
 
-	/**
-	 * this method is used to display the correct color
-	 * the active players turn should be green and the others should be red.
-	 */
-	public void nextPlayerUpdateTab() {
-		tab.setBackgroundAt(currentPlayer, null);
-		currentPlayer++;
+        tab.setBounds(0, 0, 355, 860);
+        tab.setBackground(new Color(0, 0, 0));
+        add(tab);
+    }
 
-		if (currentPlayer > playerList.getLength() - 1) {
-			currentPlayer = 0;
-		}
-		updateTab();
-	}
+    /**
+     * this method is used to display the correct color
+     * the active players turn should be green and the others should be red.
+     */
+    public void nextPlayerUpdateTab() {
+        tab.setBackgroundAt(currentPlayer, null);
+        currentPlayer++;
 
-	public void updateTab() {
-		tab.setSelectedIndex(currentPlayer);
-		tab.setForeground(Color.white);
-		tab.setBackground(new Color(157, 0, 0));
-		tab.setBackgroundAt(currentPlayer, new Color(0, 157, 0));
-	}
+        if (currentPlayer > playerList.getLength() - 1) {
+            currentPlayer = 0;
+        }
+        updateTab();
+    }
 
-	public int getTab() {
-		return currentPlayer;
-	}
-	public void setCurrentPlayer(int currentPlayerIndex){
-		if(currentPlayerIndex<playerList.getLength()) {
-			currentPlayer = currentPlayerIndex;
-			updateTab();
-		}
-	}
+    public void updateTab() {
+        tab.setSelectedIndex(currentPlayer);
+        tab.setForeground(Color.white);
+        tab.setBackground(new Color(157, 0, 0));
+        tab.setBackgroundAt(currentPlayer, new Color(0, 157, 0));
+    }
+
+    public int getTab() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int currentPlayerIndex) {
+        if (currentPlayerIndex < playerList.getLength()) {
+            currentPlayer = currentPlayerIndex;
+            updateTab();
+        }
+    }
 }

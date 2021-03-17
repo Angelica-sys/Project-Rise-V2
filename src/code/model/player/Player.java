@@ -162,6 +162,7 @@ public class Player {
 	 * @param amountOfStepsToMove
 	 */
 	public void increasePosition(int amountOfStepsToMove) {
+		//System.out.println("Steg/position på banan" + counter +"  +  " + amountOfStepsToMove);
 		for (int i = 0; i < amountOfStepsToMove; i++) {
 			if (counter < 39) {
 				counter++;

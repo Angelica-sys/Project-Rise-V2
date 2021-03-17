@@ -194,9 +194,9 @@ public class Dice extends JPanel implements ActionListener {
 			movePlayerThread = new Thread(new LoopThread(getRoll()));
 			movePlayerThread.start();
 
-			goEvent();
 
-			eastSidePnl.addPlayerList(playerList);
+
+			eastSidePnl.setPlayerList(playerList);
 			btnRollDice.setEnabled(false);
 		}
 
@@ -222,7 +222,7 @@ public class Dice extends JPanel implements ActionListener {
 				btnEndTurn.setEnabled(false);
 			}
 			
-			eastSidePnl.addPlayerList(playerList);
+			eastSidePnl.setPlayerList(playerList);
 			eastSidePnl.nextPlayerUpdateTab();
 		}
 	}
@@ -242,7 +242,7 @@ public class Dice extends JPanel implements ActionListener {
 		goEvent();
 		manageEvents.newEvent(board.getDestinationTile(playerList.getActivePlayer().getPosition()),
 				playerList.getActivePlayer());
-		eastSidePnl.addPlayerList(playerList);
+		eastSidePnl.setPlayerList(playerList);
 	}
 
 	/**
@@ -303,8 +303,9 @@ public class Dice extends JPanel implements ActionListener {
 							board.getDestinationTile(playerList.getActivePlayer().getPosition()),
 							playerList.getActivePlayer()
 					);
-					eastSidePnl.addPlayerList(playerList);
+					eastSidePnl.setPlayerList(playerList);
 					btnEndTurn.setEnabled(true);
+					goEvent();
 				}
 
 				try {
@@ -326,6 +327,7 @@ public class Dice extends JPanel implements ActionListener {
 
 			westSidePnl.append("Passed Go and received 200 GC\n");
 			playerList.getActivePlayer().resetPassedGo();
+			eastSidePnl.updatePanel();
 		}
 	}
 }

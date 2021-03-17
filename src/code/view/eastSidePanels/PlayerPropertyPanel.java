@@ -168,7 +168,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
         } else if (e.getSource() == this.btnTrade) {
             tradeCapital();
         }
-        eastSidePanel.addPlayerList(playerList);
+        eastSidePanel.setPlayerList(playerList);
     }
 
     private void sellCapital() {
