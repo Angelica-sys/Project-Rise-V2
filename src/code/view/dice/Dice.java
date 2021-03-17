@@ -223,7 +223,7 @@ public class Dice extends JPanel implements ActionListener {
 			}
 			
 			eastSidePnl.addPlayerList(playerList);
-			eastSidePnl.setTab();
+			eastSidePnl.nextPlayerUpdateTab();
 		}
 	}
 
@@ -266,6 +266,7 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	public void setPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
+		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(), playerList.getActivePlayer().getPlayerColor());
 	}
 	
 	/**

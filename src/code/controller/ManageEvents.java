@@ -107,6 +107,14 @@ public class ManageEvents {
 	 */
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
+			int oldPlayerOldIndex = eastPanel.getTab();
+			int newplayerNewIndex = 0;
+
+			if(oldPlayerOldIndex==(playerList.getLength()-1)){
+				newplayerNewIndex = 0;
+			}else{
+				newplayerNewIndex = oldPlayerOldIndex;
+			}
 			player.setIsAlive(false);
 			//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
@@ -118,9 +126,11 @@ public class ManageEvents {
 			}else {
 				deathGUI.showGUI();
 				playerList.updatePlayerList();
-				playerList.switchToNextPlayer();
+				playerList.setCurrentPlayer(newplayerNewIndex);
 				eastPanel.addPlayerList(playerList.getList());
+				eastPanel.setCurrentPlayer(newplayerNewIndex);
 				dice.setPlayerList(playerList.getList());
+				dice.activateRollDice();
 				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}

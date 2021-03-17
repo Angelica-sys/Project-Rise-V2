@@ -123,4 +123,10 @@ public class PlayerList {
 			currentPlayer = 0; 
 		}	
 	}
+
+	public void setCurrentPlayer(int currentPlayer) {
+		if(currentPlayer < activePlayers.size()) {
+			this.currentPlayer = currentPlayer;
+		}
+	}
 }

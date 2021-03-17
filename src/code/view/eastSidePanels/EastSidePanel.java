@@ -12,7 +12,7 @@ import code.model.player.PlayerList;
 
 /**
  * this class add tabs that displays information about the players in tabs
- * @author Abdulkhuder Muhammad, Sebastian Viro.
+ * @author Abdulkhuder Muhammad, Sebastian Viro. Hanna-My Jansson
  */
 public class EastSidePanel extends JPanel {
 	private static final long serialVersionUID = 15L;
@@ -66,21 +66,18 @@ public class EastSidePanel extends JPanel {
 	 * this method is used to display the correct color
 	 * the active players turn should be green and the others should be red.
 	 */
-	public void setTab() {
+	public void nextPlayerUpdateTab() {
 		tab.setBackgroundAt(currentPlayer, null);
 		currentPlayer++;
 
 		if (currentPlayer > playerList.getLength() - 1) {
 			currentPlayer = 0;
-
-			tab.setSelectedIndex(currentPlayer);
-			tab.setForeground(Color.white);
-			tab.setBackground(new Color(157, 0, 0));
-			tab.setBackgroundAt(currentPlayer, new Color(0, 157, 0));
-		} else {
-			tab.setSelectedIndex(currentPlayer);
 		}
+		updateTab();
+	}
 
+	public void updateTab() {
+		tab.setSelectedIndex(currentPlayer);
 		tab.setForeground(Color.white);
 		tab.setBackground(new Color(157, 0, 0));
 		tab.setBackgroundAt(currentPlayer, new Color(0, 157, 0));
@@ -88,5 +85,11 @@ public class EastSidePanel extends JPanel {
 
 	public int getTab() {
 		return currentPlayer;
+	}
+	public void setCurrentPlayer(int currentPlayerIndex){
+		if(currentPlayerIndex<playerList.getLength()) {
+			currentPlayer = currentPlayerIndex;
+			updateTab();
+		}
 	}
 }
