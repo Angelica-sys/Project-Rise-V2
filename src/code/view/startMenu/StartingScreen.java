@@ -25,7 +25,7 @@ import code.view.Menu;
 import code.model.player.PlayerList;
 
 /**
- * First screen which code.model.player sees, here he is able to choose the amount of players and
+ * First screen a player sees, here he is able to choose the amount of players and
  * what names and colors the players will have during the game.
  * @author Aevan Dino
  */
@@ -354,7 +354,7 @@ public class StartingScreen extends JFrame {
 		}
 		
 		/**
-		 * Whenever code.model.player chooses to reset the start screen
+		 * Whenever a player chooses to reset the start screen
 		 * @param amountOfPlayers, how many players to draw
 		 * @param bool, boolean indicating whether or not components should be visible.
 		 */
@@ -371,7 +371,7 @@ public class StartingScreen extends JFrame {
 	}
 
 	/**
-	 * MouseClickedListener for the name inserting so the text disappear when the code.model.player clicks.
+	 * MouseClickedListener for the name inserting so the text disappear when the player clicks.
 	 */
 	private class MouseAction implements MouseListener{
 		int counter1 = 0, counter2 = 0, counter3 =0, counter4=0;
