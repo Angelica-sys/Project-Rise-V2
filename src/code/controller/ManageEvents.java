@@ -17,7 +17,7 @@ import code.view.WestSidePanel;
 
 /**
 * The class handles all the events that occur when a code.model.player lands on a tile.
-* @author Seth Oberg, Rohan Samandari, Muhammad Abdulkhuder ,Sebastian Viro, Aevan Dino, Tor Stenfeldt
+* @author Seth Oberg, Rohan Samandari, Muhammad Abdulkhuder, Sebastian Viro, Aevan Dino, Tor Stenfeldt
 */
 public class ManageEvents {
 	private PlayerList playerList;
@@ -32,7 +32,7 @@ public class ManageEvents {
 	private WestSidePanel westPanel;
 
 	/**
-	 * Constructor initializes objects in the parameter. Creates Death -and MessageGUI.
+	 * Constructor initializes objects in the parameter. Creates Death- and MessageGUI.
 	 * @param board
 	 * @param playerList
 	 * @param pnlWest
@@ -52,8 +52,8 @@ public class ManageEvents {
 
 	/**
 	 * Method checks what type of tile the player has landed on.
-	 * @param tile the player landed on.
-	 * @param player, player who landed on a tile.
+	 * @param tile the Tile the Player landed on.
+	 * @param player the Player who landed on the Tile.
 	 */
 	public void newEvent(Tile tile, Player player) {
 		if (playerList.getLength() == 1) {
@@ -338,8 +338,8 @@ public class ManageEvents {
 
 	/**
 	 * Method for a dialog if the player wants to purchase a tavern.
-	 * @param tavern, the to buy.
-	 * @param player, code.model.player who landed on the tavern.
+	 * @param tavern, the Tavern to buy.
+	 * @param player the Player who landed on the tavern.
 	 */
 	public void tavernDialog(Tavern tavern, Player player) {
 		int playerResponse = JOptionPane.showConfirmDialog(

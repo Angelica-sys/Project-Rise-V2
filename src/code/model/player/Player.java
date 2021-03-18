@@ -296,8 +296,6 @@ public class Player {
 	}
 
 	public void removeCapital(Purchasable capital) {
-		this.capital.remove(capital);
-
 		if (capital instanceof Property) {
 			this.nProperties--;
 		} else {
@@ -312,7 +310,8 @@ public class Player {
 			}
 		}
 
-		capital.setOwner(null); //TODO: null pointer after selling?
+		this.capital.remove(capital);
+		capital.setOwner(null);
 	}
 
 	public void sellCapital(Purchasable capital) {

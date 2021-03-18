@@ -7,6 +7,6 @@ capital and Rise(tm?) in rank until you've reached the rank of King.
 How to play:
 This project shouldn't have any real dependencies so just open this
 project up in your favourite IDE, set the JDK to 14.0 and run the main
-method found in the file 'code.view.startMenu.StartingScreen.java'.
+method found in the file 'src.code.controller.Start.java'.
 
 Good luck on your quest!

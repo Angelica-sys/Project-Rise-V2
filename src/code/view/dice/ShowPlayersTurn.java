@@ -1,5 +1,7 @@
 package code.view.dice;
 
+import code.model.player.Player;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -41,13 +43,12 @@ public class ShowPlayersTurn extends JPanel {
 	}
 
 	/**
-	 * @param playerName
-	 * @param color
+	 * @param p the Player whose turn it is.
 	 * Updates the label
 	 */
-	public void uppdateGUI(String playerName, Color color) {
+	public void uppdateGUI(Player p) {
 		lblPlayer.setOpaque(true);
-		lblPlayer.setBackground(color);
-		lblPlayer.setText(playerName+"'s turn");	
+		lblPlayer.setBackground(p.getPlayerColor());
+		lblPlayer.setText(p.getName() + "'s turn");
 	}
 }

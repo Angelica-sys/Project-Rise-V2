@@ -92,15 +92,6 @@ public class StartingScreen extends JFrame {
 	private int amountOfPlayers;
 
 	/**
-	 * Used to start the program
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		StartingScreen su = new StartingScreen();
-		su.initializeGUI();
-	}
-
-	/**
 	 * Method to initilize the GUI.
 	 */
 	public void initializeGUI() {

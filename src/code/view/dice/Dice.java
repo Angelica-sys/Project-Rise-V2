@@ -1,10 +1,6 @@
 package code.view.dice;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import code.model.player.Player;
 import code.view.board.Board;
 import code.view.eastSidePanels.EastSidePanel;
 import code.controller.ManageEvents;
@@ -53,7 +50,7 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	public void addPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
-		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(), playerList.getActivePlayer().getPlayerColor());
+		showPlayersTurn.uppdateGUI(playerList.getActivePlayer());
 		manageEvents = new ManageEvents(board, playerList, westSidePnl, this, eastSidePnl);
 	}
 
@@ -207,9 +204,7 @@ public class Dice extends JPanel implements ActionListener {
 		 */
 		if (e.getSource() == btnEndTurn) {
 			playerList.switchToNextPlayer();
-			
-			showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(),
-					playerList.getActivePlayer().getPlayerColor());
+			showPlayersTurn.uppdateGUI(playerList.getActivePlayer());
 			
 			if (playerList.getActivePlayer().isPlayerInJail()) {
 				btnRollDice.setEnabled(false);
