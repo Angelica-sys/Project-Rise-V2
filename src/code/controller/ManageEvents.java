@@ -211,11 +211,19 @@ public class ManageEvents {
 					westPanel.append("\n");
 
 					player.decreaseBalance(tempInt);
-					if (tempProperty.getLevel() == 0) {
+
+					//Såhär ska det väll inte vara?
+					/*if (tempProperty.getLevel() == 0) {
 						player.decreaseNetWorth(tempInt);
 					}
+
+					 */
+					//jag gör såhär istället
+					player.decreaseNetWorth(tempInt);
+
 					tempProperty.getOwner().increaseBalance(tempInt);
-				}
+					tempProperty.getOwner().increaseNetWorth(tempInt);
+			}
 			}
 		}
 	}
