@@ -35,7 +35,7 @@ public class Player {
 	 * are automatically set at index 0 on the board with the counter variable set to 0
 	 * @param inPlayerName chosen Name
 	 * @param playerIcon   imageIcon from ColorIconMap
-	 * @param playerIndex  index of code.model.player (for example if second player the playerIndex is 1)
+	 * @param playerIndex  index of player (for example if second player the playerIndex is 1)
 	 */
 	public Player(String inPlayerName, ImageIcon playerIcon, int playerIndex) {
 		setName(inPlayerName);
@@ -173,21 +173,21 @@ public class Player {
 	}
 
 	/**
-	 * @return playerPassedgo boolean to keep track if user has passed go
+	 * @return a boolean representing whether the player has passed Go or not.
 	 */
 	public boolean passedGo() {
 		return playerPassedgo;
 	}
 
 	/**
-	 * reset has passedGo variable to false
+	 * sets the boolean representing the player having passed Go to false
 	 */
 	public void resetPassedGo() {
 		playerPassedgo = false;
 	}
 
 	/**
-	 * @return balance, the player balance
+	 * @return an int representing the players balance.
 	 */
 	public int getBalance() {
 		return this.balance;

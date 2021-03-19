@@ -1,4 +1,4 @@
-package code.controller;
+package code.controller.tests;
 
 import code.model.player.Player;
 import code.model.tiles.Tavern;
@@ -14,16 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Angelica Asplund, Tor Stenfeldt
  * @date 2021-03-18
  */
-
 class TavernTest {
     private String playerPath = "src/resources/images/players/";
-
-    @Test
-    @DisplayName("A Player should start with 1500 gold coins.")
-    void testPlayer() {
-        Player player = new Player("Hans", new ImageIcon(this.playerPath+"playerRed.jpg"), 0);
-        assertEquals(1500 , player.getBalance());
-    }
 
     @Test
     @DisplayName("The price of a Tavern should be a static 150.")
@@ -82,7 +74,7 @@ class TavernTest {
     }
 
     @Test
-    @DisplayName("If a player owned both Taverns and sold one, its rent should decrease.")
+    @DisplayName("If a player owned both Taverns and sold one, all tavern rents should decrease.")
     void getRentSoldTavern() {
         ImageIcon imageA = new ImageIcon(this.playerPath + "playerRed.jpg");
         Player playerA = new Player("Player A", imageA, 0);
@@ -103,7 +95,7 @@ class TavernTest {
     }
 
     @Test
-    @DisplayName("If a player owned both Taverns and sold one, its rent should decrease.")
+    @DisplayName("If a player owned both Taverns and sold one, all tavern rents should decrease.")
     void getRentSoldTavern2() {
         ImageIcon imageA = new ImageIcon(this.playerPath + "playerRed.jpg");
         Player playerA = new Player("Player A", imageA, 0);

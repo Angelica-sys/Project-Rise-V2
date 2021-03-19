@@ -30,10 +30,11 @@ public class Property extends Purchasable {
 		getTileInfo();
 		this.baseRent = baseRent;
 		this.color = color;
+		this.levels = 0;
 
 		setPrice(price);
 		setRentPerLevel(rentPerLevel);
-		this.levelPrice= levelPrice;
+		this.levelPrice = levelPrice;
 	}
 
 	public void purchase(Player player) {
@@ -104,33 +105,37 @@ public class Property extends Purchasable {
 	/**
 	 * Increases the level of the property.
 	 */
-	public void increaseLevel() {
-		int res = JOptionPane.showConfirmDialog(
-				null,
-				"Do you want to upgrade " + getName() + " for: " + getLevelPrice()
-		);
+	public boolean increaseLevel() {
+		boolean upgraded = false;
 
-		if (res == 0 && getOwner().getPlayerRank().nbrOfLevels() > levels && getOwner().getBalance() >= getLevelPrice()) {
-			this.levels+=1;
+		Player p = getOwner();
+		int maxPlayerPropertyRank = p.getPlayerRank().nbrOfLevels();
+		int playerBalance = p.getBalance();
+
+		if (maxPlayerPropertyRank > getLevel() && playerBalance >= getLevelPrice()) {
+			this.levels += 1;
 			this.setRent(this.baseRent + this.rentPerLevel*this.levels);
 			getOwner().decreaseBalace(getLevelPrice());
+			upgraded = true;
 		}
+
+		return upgraded;
 	}
 
 	/**
 	 * Decreases the level of the property.
 	 */
-	public void decreaseLevel() {
-		int res = JOptionPane.showConfirmDialog(
-				null,
-				"Do you really want to downgrade " + getName() + " for: " + getLevelPrice()
-		);
+	public boolean decreaseLevel() {
+		boolean downgraded = false;
 
-		if (levels>0 && res == 0) {
-			this.levels-=1;
+		if (this.levels > 0) {
+			this.levels -= 1;
 			this.setRent(this.baseRent + this.rentPerLevel*this.levels);
 			getOwner().increaseBalance(getLevelPrice());
+			downgraded = true;
 		}
+
+		return downgraded;
 	}
 		
 	public int getLevel() {

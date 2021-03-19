@@ -175,26 +175,35 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 		Purchasable capital = p.getCapital(this.capitalNumber);
 
 		if (capital instanceof Property) {
-			((Property) capital).increaseLevel();
-			String tempRes = taLevel.getText();
+			String message = "Do you want to upgrade " + capital.getName() + " for: " +
+					((Property) capital).getLevelPrice() + " GC?";
+			int res = JOptionPane.showConfirmDialog (null, message);
 
-			if (tempRes.length() < ((Property) capital).getLevel()) {
-				taLevel.append("+");
+			if (res == 0) {
+				if (((Property) capital).increaseLevel()) {
+					int propertyLevel = ((Property) capital).getLevel();
+					String upgrades = "+".repeat(propertyLevel);
+					this.taLevel.setText(upgrades);
+				}
 			}
 		}
 	}
 
 	private void downgradeProperty() {
 		Player p = this.playerList.getPlayerFromIndex(this.playerNumber);
-		Purchasable capital = p.getCapital(this.playerNumber);
+		Purchasable capital = p.getCapital(this.capitalNumber);
 
 		if (capital instanceof Property) {
-			((Property) capital).decreaseLevel();
-			String tempRes = this.taLevel.getText();
+			String message = "Do you want to downgrade " + capital.getName() + " and gain " +
+					((Property) capital).getLevelPrice() + " GC?";
+			int res = JOptionPane.showConfirmDialog (null, message);
 
-			if (tempRes.length() > ((Property) capital).getLevel()) {
-				tempRes = tempRes.substring(0, tempRes.length() - 1);
-				this.taLevel.setText(tempRes);
+			if (res == 0) {
+				if (((Property) capital).decreaseLevel()) {
+					int propertyLevel = ((Property) capital).getLevel();
+					String upgrades = "+".repeat(propertyLevel);
+					this.taLevel.setText(upgrades);
+				}
 			}
 		}
 	}
