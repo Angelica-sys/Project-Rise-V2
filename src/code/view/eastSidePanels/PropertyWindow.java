@@ -45,7 +45,7 @@ public class PropertyWindow extends JPanel {
 	 */
 	public void addPlayerList(PlayerList playerList) {
 		Player p = playerList.getPlayerFromIndex(this.currentPlayer);
-		int nCapital = p.getCapitals().size();
+		int nCapital = p.getCapital().size();
 
 		// If the number of Purchasables a Player owns has changed.
 		if (nCapital != this.nCapital) {
@@ -59,7 +59,7 @@ public class PropertyWindow extends JPanel {
 				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i, eastSidePanel);
 				this.tab.addTab("Capital " + (i+1), playerPropertyPanel);
 
-				Purchasable playerCapital = p.getCapitals(i);
+				Purchasable playerCapital = p.getCapital(i);
 				if (playerCapital instanceof Property) {
 					this.tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
 				} else {

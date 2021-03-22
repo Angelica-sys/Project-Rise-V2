@@ -3,8 +3,6 @@ package code.view.startMenu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -21,18 +19,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import code.view.GamePanels;
-import code.view.Menu;
 import code.model.player.PlayerList;
 
 /**
  * First screen a player sees, here he is able to choose the amount of players and
  * what names and colors the players will have during the game.
- * @author Aevan Dino, Chanon Borgström, Lanna Maslo
+ * @author Aevan Dino, Chanon Borgström, Lanna Maslo, Tor Stenfeldt
  */
 public class StartingScreen extends JFrame {
-    private static final long serialVersionUID = 1L;
-
-    private Menu menu;
     private BackgroundMusic bgm = new BackgroundMusic();
     private PlayerList playerList = new PlayerList();
     private GamePanels mainWindow = new GamePanels(bgm);
@@ -43,7 +37,8 @@ public class StartingScreen extends JFrame {
 
     String imageSource = "src/resources/images/popups/fancyRoll.jpg";
     private ImageIcon imgBackground = new ImageIcon(
-            new ImageIcon(imageSource).getImage().getScaledInstance(900, 860, Image.SCALE_SMOOTH));
+            new ImageIcon(imageSource).getImage().getScaledInstance(900, 860, Image.SCALE_SMOOTH)
+    );
 
     private Font fontRadioButtons = new Font("Gabriola", Font.PLAIN, 24);
     private Font fontHeader = new Font("Gabriola", Font.BOLD, 92);
@@ -71,137 +66,78 @@ public class StartingScreen extends JFrame {
     private JTextField tfPlayer4 = new JTextField("Name4...");
     private JTextField[] playerTf = new JTextField[]{tfPlayer1, tfPlayer2, tfPlayer3, tfPlayer4};
 
-    private String[] colors = new String[]{"RED", "GREEN", "ORANGE", "YELLOW", "CYAN", "MAGENTA"};
-    private String[] colors1 = new String[]{"GREEN", "ORANGE", "YELLOW", "CYAN", "MAGENTA", "RED"};
-    private String[] colors2 = new String[]{"ORANGE", "YELLOW", "CYAN", "MAGENTA", "RED", "GREEN"};
-    private String[] colors3 = new String[]{"YELLOW", "CYAN", "MAGENTA", "RED", "GREEN", "ORANGE"};
-
-    private JComboBox<String> playerColors1 = new JComboBox<>(colors);
-    private JComboBox<String> playerColors2 = new JComboBox<>(colors1);
-    private JComboBox<String> playerColors3 = new JComboBox<>(colors2);
-    private JComboBox<String> playerColors4 = new JComboBox<>(colors3);
-    private JComboBox[] playerColors = new JComboBox[]{playerColors1, playerColors2, playerColors3, playerColors4};
-
-    /**
-     * Mute button
-     */
     private JCheckBox mute = new JCheckBox("Mute music");
-
-    /**
-     * Integers
-     */
     private int amountOfPlayers;
 
-    /**
-     * Used to start the program
-     * @param args
-     */
-    public static void main(String[] args) {
-        StartingScreen su = new StartingScreen();
-        su.initializeGUI();
+    private JComboBox<String>[] playerColors;
+
+    public StartingScreen() {
+        String[] colors = new String[] {"RED", "GREEN", "ORANGE", "YELLOW", "CYAN", "MAGENTA"};
+
+        this.playerColors = new JComboBox[] {
+                new JComboBox<>(colors),
+                new JComboBox<>(colors),
+                new JComboBox<>(colors),
+                new JComboBox<>(colors)
+        };
+
+        for (int i=0; i<this.playerColors.length; i++) {
+            this.playerColors[i].setSelectedIndex(i);
+        }
+
+        initializeGUI();
     }
 
     /**
      * Method to initilize the GUI.
      */
     public void initializeGUI() {
-        createFrame();
-        bgm.startMusic();
 
-        /*
-         * JPanel for information about players
-         */
-        pnlPlayerInfo.setBounds(0, 0, 900, 830);
-        pnlPlayerInfo.setOpaque(false);
-        pnlPlayerInfo.setLayout(null);
+        // JPanel for information about players
+        this.pnlPlayerInfo.setBounds(0, 0, 900, 830);
+        this.pnlPlayerInfo.setOpaque(false);
+        this.pnlPlayerInfo.setLayout(null);
 
-        /*
-         * Label used to create a background
-         */
-        lblBackground.setBounds(0, 0, 900, 830);
-        lblBackground.setIcon(imgBackground);
-        lblBackground.setLayout(null);
+        // Label used to create a background
+        this.lblBackground.setBounds(0, 0, 900, 830);
+        this.lblBackground.setIcon(imgBackground);
+        this.lblBackground.setLayout(null);
 
-        /*
-         *  Header reading "RISE"
-         */
-        lblRise.setFont(fontHeader);
-        lblRise.setBounds(375, 125, 175, 200);
-        lblBackground.add(lblRise);
+        // Header reading "RISE"
+        this.lblRise.setFont(fontHeader);
+        this.lblRise.setBounds(375, 125, 175, 200);
+        this.lblBackground.add(lblRise);
 
-        /*
-         * JLabel reading "How many players?"
-         */
-        lblPlayer.setFont(fontLabel);
-        lblPlayer.setBounds(315, 175, 300, 200);
+        // JLabel reading "How many players?"
+        this.lblPlayer.setFont(fontLabel);
+        this.lblPlayer.setBounds(315, 175, 300, 200);
 
-        /*
-         * Create three JRadioButtons
-         */
-        createRadioButtons();
-
-        /*
-         * Confirm button
-         */
-        btnConfirm.setBounds(375, 315, 150, 30);
-        btnConfirm.addActionListener(new ButtonListener());
-
-        /*
-         * Create players
-         */
-        CreatePlayers();
-
-        /*
-         * Start game button
-         */
-        btnStartGame.setBounds(350, 530, 200, 40);
-        btnStartGame.setVisible(false);
-        btnStartGame.addActionListener(new ButtonListener());
-
-        /*
-         * Rest button
-         */
-        btnReset.setBounds(375, 575, 150, 30);
-        btnReset.setVisible(false);
-        btnReset.addActionListener(new ButtonListener());
-
-        /*
-         * Mute button
-         */
-        mute.setBounds(2, 740, 150, 35);
-        mute.setForeground(Color.white);
-        mute.setFont(fontRadioButtons);
-        mute.setOpaque(false);
-        mute.addActionListener(new ButtonListener());
-
-        /*
-         * Adding stuff to background label
-         */
-        lblBackground.add(lblRise);
-        lblBackground.add(lblPlayer);
-        lblBackground.add(btnConfirm);
-        lblBackground.add(pnlPlayerInfo);
-        lblBackground.add(btnReset);
-        lblBackground.add(btnStartGame);
-        lblBackground.add(mute);
-        add(lblBackground);
-        //new Menu(bgm);
+        // Create three JRadioButtons
+        initRadioButtons();
+        initPlayers();
+        initButtons();
+        initFrame();
     }
 
-    public void createFrame() {
-        setSize(900, 830);
-        setTitle("Choose Player!");
-        setLayout(null);
-        setVisible(true);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public void initFrame() {
+        this.setSize(900, 830);
+        this.setTitle("Configure the different players.");
+        this.setLayout(null);
+        this.setVisible(false);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public void start() {
+        this.setVisible(true);
+        this.bgm.startMusic();
     }
 
     /**
      * Methods create radio buttons using for-loop
      */
-    public void createRadioButtons() {
+    public void initRadioButtons() {
         for (int i = 0; i < 3; i++) {
             JRadioButton btnRadio = new JRadioButton((i + 2) + "");
             btnRadio.setBounds(375 + i * 65, 275, 50, 50);
@@ -216,7 +152,7 @@ public class StartingScreen extends JFrame {
     /**
      * Creates all players, textfields, labels and color choice boxes
      */
-    public void CreatePlayers() {
+    public void initPlayers() {
         for (int i = 0; i < 4; i++) {
             playerLabels[i].setBounds(280, 360 + i * 40, 150, 50);
             playerLabels[i].setFont(fontLabelPlayer);
@@ -235,165 +171,167 @@ public class StartingScreen extends JFrame {
         }
     }
 
+    private void initButtons() {
+        // Confirm button
+        this.btnConfirm.setBounds(375, 315, 150, 30);
+        this.btnConfirm.addActionListener(e -> confirm());
+
+        // Start game button
+        this.btnStartGame.setBounds(350, 530, 200, 40);
+        this.btnStartGame.setVisible(false);
+        this.btnStartGame.addActionListener(e -> {
+            if (checkNames() && checkColours()) {
+                startUpGame();
+            }
+        });
+
+        // Rest button
+        this.btnReset.setBounds(375, 575, 150, 30);
+        this.btnReset.setVisible(false);
+        this.btnReset.addActionListener(e -> btnPressed(3, false));
+
+        // Mute button
+        this.mute.setBounds(2, 740, 150, 35);
+        this.mute.setForeground(Color.white);
+        this.mute.setFont(fontRadioButtons);
+        this.mute.setOpaque(false);
+        this.mute.addActionListener(e -> toggleMute());
+
+        // Adding stuff to background label
+        this.lblBackground.add(lblRise);
+        this.lblBackground.add(lblPlayer);
+        this.lblBackground.add(btnConfirm);
+        this.lblBackground.add(pnlPlayerInfo);
+        this.lblBackground.add(btnReset);
+        this.lblBackground.add(btnStartGame);
+        this.lblBackground.add(mute);
+        this.add(lblBackground);
+    }
+
     /**
-     * Buttonlistener class, listens for clicks.
-     * @author Aevan Dino
+     * Checks if the player names are unique
+     * @return false if invalid name, true if valid name
+     * @author Chanon Borgström, Lanna Maslo, Tor Stenfeldt
      */
-    private class ButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+    private boolean checkNames() {
+        String[] playerNames = new String[4];
+        playerNames[0] = this.tfPlayer1.getText();
+        playerNames[1] = this.tfPlayer2.getText();
+        playerNames[2] = this.tfPlayer3.getText();
+        playerNames[3] = this.tfPlayer4.getText();
 
-            if (e.getSource() == btnReset) {
-                btnPressed(3, false);
-            }
-
-            if (e.getSource() == mute) {
-                if (mute.isSelected()) {
-                    bgm.pauseMusic();
-                } else {
-                    bgm.startMusic();
-                }
-            }
-
-            if (e.getSource() == btnConfirm) {
-
-                if (radioButtons[0].isSelected()) {
-                    btnPressed(2, true);
-                    amountOfPlayers = 2;
-                } else if (radioButtons[1].isSelected()) {
-                    btnPressed(3, true);
-                    amountOfPlayers = 3;
-
-                } else if (radioButtons[2].isSelected()) {
-                    btnPressed(4, true);
-                    amountOfPlayers = 4;
-                }
-            }
-
-            if (e.getSource() == btnStartGame) {
-                if (checkUniqueName()) {
-                    checkUniqueColors();
-                }
-            }
-        }
-
-        /**
-         * Checks if the player names are unique
-         * @author Chanon Borgström, Lanna Maslo
-         * @return false if invalid name, true if valid name
-         */
-        public boolean checkUniqueName() {
-            String[] playerNames = new String[4];
-            playerNames[0] = tfPlayer1.getText();
-            playerNames[1] = tfPlayer2.getText();
-            playerNames[2] = tfPlayer3.getText();
-            playerNames[3] = tfPlayer4.getText();
-
-            if (
-                    tfPlayer1.getText().length() == 0 ||
-                    tfPlayer2.getText().length() == 0 ||
-                    tfPlayer3.getText().length() == 0 ||
-                    tfPlayer4.getText().length() == 0
-            ) {
+        for (String s : playerNames) {
+            if (s.length() == 0) {
                 JOptionPane.showMessageDialog(null, "All players must have a name");
                 return false;
             }
+        }
 
-            for (int i = 0; i < playerNames.length - 1; i++) {
-                for (int j = i + 1; j < playerNames.length; j++) {
-                    if (playerNames[i].equals(playerNames[j])) {
-                        JOptionPane.showMessageDialog(null, "Two players can not have the same name");
-                        return false;
-                    }else if(!validateName(playerNames[i])){
-                        JOptionPane.showMessageDialog(null, playerNames[i] + " is not a valid name");
-                        return false;
-                    }
+        for (int i=0; i<playerNames.length-1; i++) {
+            for (int j=i+1; j<playerNames.length; j++) {
+                if (playerNames[i].equals(playerNames[j])) {
+                    JOptionPane.showMessageDialog(null, "Two players can not have the same name");
+                    return false;
+                } else if(!validateName(playerNames[i])) {
+                    JOptionPane.showMessageDialog(null, playerNames[i] + " is not a valid name");
+                    return false;
                 }
             }
-            return true;
         }
 
-        /**
-         * Checks if the name is more than three characters long and has no blank spaces in the beginning or end
-         * @author Chanon Borgström, Lanna Maslo
-         * @return false if invalid name, true if valid name (according to regex)
-         */
-        public boolean validateName(String inputName){
-            return inputName.matches("^[^\\s].+[^\\s]${3,10}");
-        }
+        return true;
+    }
 
-        /**
-         * Checks if the users have chosen unique colors
-         * @author Chanon Borgström, Lanna Maslo
-         * @return false if invalid name, true if valid name
-         */
-        public void checkUniqueColors() {
-            switch (amountOfPlayers) {
-                case 2:
-                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())) {
-                        JOptionPane.showMessageDialog(null, "Two players are not allowed to have the same color");
-                    } else {
-                        startUpGame();
-                    }
-                    break;
+    /**
+     * Checks if the name is more than three characters long and has no blank spaces in the beginning or end
+     * @return false if invalid name, true if valid name (according to regex)
+     * @author Chanon Borgström, Lanna Maslo
+     */
+    private boolean validateName(String inputName){
+        return inputName.matches("^[^\\s].+[^\\s]${3,10}");
+    }
 
-                case 3:
-                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
-                            || playerColors[2].getSelectedItem().equals(playerColors[0].getSelectedItem())) {
-                        JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-                    } else {
-                        startUpGame();
-                    }
-                    break;
+    /**
+     * Checks if the users have chosen unique colors
+     * @author Chanon Borgström, Lanna Maslo, Tor Stenfeldt
+     */
+    private boolean checkColours() {
+        boolean approved = true;
 
-                case 4:
-                    if (playerColors[0].getSelectedItem().equals(playerColors[1].getSelectedItem())
-                            || playerColors[2].getSelectedItem().equals(playerColors[3].getSelectedItem())
-                            || playerColors[0].getSelectedItem().equals(playerColors[3].getSelectedItem())) {
-                        JOptionPane.showMessageDialog(null, "Two or more players are not allowed to have the same color");
-                    } else {
-                        startUpGame();
-                    }
-                    break;
-            }
-        }
-
-        /**
-         * Method called when player clicks start game
-         */
-        public void startUpGame() {
-            createNewUsers();
-            mainWindow.addPlayer(playerList);
-            mainWindow.startboard();
-            dispose();
-            Introduction intro = new Introduction(playerList);
-        }
-
-        /**
-         * Creates the right amount of players.
-         */
-        private void createNewUsers() {
-            for (int i = 0; i < amountOfPlayers; i++) {
-                if (playerTf[i].getText().length() >= 10) {
-                    playerTf[i].setText(playerTf[i].getText().substring(0, 10));
+        outer: for (int i=0; i<this.amountOfPlayers; i++) {
+            for (int j=i+1; j<this.amountOfPlayers; j++) {
+                if (this.playerColors[i].getSelectedIndex() == this.playerColors[j].getSelectedIndex()) {
+                    approved = false;
+                    String s = "Two players are not allowed to have the same color";
+                    JOptionPane.showMessageDialog(null, s);
+                    break outer;
                 }
-                playerList.addNewPlayer(playerTf[i].getText(), (String) playerColors[i].getSelectedItem());
             }
         }
 
-        /**
-         * Whenever player chooses to reset the start screen
-         * @param amountOfPlayers, how many players to draw
-         * @param bool,            boolean indicating whether or not components should be visible.
-         */
-        public void btnPressed(int amountOfPlayers, boolean bool) {
-            for (int i = 0; i < amountOfPlayers; i++) {
-                playerLabels[i].setVisible(bool);
-                playerTf[i].setVisible(bool);
-                playerColors[i].setVisible(bool);
+        return approved;
+    }
+
+    /**
+     * Method called when player clicks start game
+     */
+    private void startUpGame() {
+        createNewUsers();
+        this.mainWindow.addPlayer(this.playerList);
+        this.mainWindow.startboard();
+        dispose();
+        Introduction intro = new Introduction(this.playerList);
+    }
+
+    /**
+     * Creates the right amount of players.
+     */
+    private void createNewUsers() {
+        for (int i=0; i<this.amountOfPlayers; i++) {
+            if (this.playerTf[i].getText().length() >= 10) {
+                this.playerTf[i].setText(this.playerTf[i].getText().substring(0, 10));
             }
-            btnStartGame.setVisible(bool);
-            btnReset.setVisible(bool);
-            btnConfirm.setEnabled(!bool);
+
+            this.playerList.addNewPlayer(this.playerTf[i].getText(), (String) this.playerColors[i].getSelectedItem());
+        }
+    }
+
+    private void confirm() {
+        if (this.radioButtons[0].isSelected()) {
+            btnPressed(2, true);
+            this.amountOfPlayers = 2;
+        } else if (radioButtons[1].isSelected()) {
+            btnPressed(3, true);
+            this.amountOfPlayers = 3;
+
+        } else if (radioButtons[2].isSelected()) {
+            btnPressed(4, true);
+            this.amountOfPlayers = 4;
+        }
+    }
+
+    /**
+     * Whenever player chooses to reset the start screen
+     * @param amountOfPlayers, how many players to draw
+     * @param bool,            boolean indicating whether or not components should be visible.
+     */
+    private void btnPressed(int amountOfPlayers, boolean bool) {
+        for (int i=0; i<amountOfPlayers; i++) {
+            this.playerLabels[i].setVisible(bool);
+            this.playerTf[i].setVisible(bool);
+            this.playerColors[i].setVisible(bool);
+        }
+
+        this.btnStartGame.setVisible(bool);
+        this.btnReset.setVisible(bool);
+        this.btnConfirm.setEnabled(!bool);
+    }
+
+    private void toggleMute() {
+        if (this.mute.isSelected()) {
+            this.bgm.pauseMusic();
+        } else {
+            this.bgm.startMusic();
         }
     }
 

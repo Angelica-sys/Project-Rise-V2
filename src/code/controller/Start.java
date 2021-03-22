@@ -9,7 +9,7 @@ import code.view.startMenu.StartingScreen;
  */
 public class Start {
     public static void main(String[] args) {
-        StartingScreen su = new StartingScreen();
-        su.initializeGUI();
+        StartingScreen game = new StartingScreen();
+        game.start();
     }
 }

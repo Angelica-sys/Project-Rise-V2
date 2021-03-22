@@ -27,7 +27,6 @@ import code.view.startMenu.BackgroundMusic;
  * @author Abdulkhuder Muhammad
  */
 public class GamePanels extends JPanel {
-	private BackgroundMusic bgm;
 	private static final long serialVersionUID = 1L;
 	private EastSidePanel tPanel = new EastSidePanel();
 	private WestSidePanel westPanel = new WestSidePanel();
@@ -35,8 +34,6 @@ public class GamePanels extends JPanel {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private Dice dice = new Dice(board,null, westPanel, tPanel);
 	private JFrame frame = new JFrame();
-	private JLabel lblPic = new JLabel();
-	private Menu m;
 	private int width = (int) screenSize.getWidth();
 	private int height = (int) screenSize.getHeight();
 
@@ -44,8 +41,7 @@ public class GamePanels extends JPanel {
 	 * adds the panels and sets the bounds
 	 */
 	public GamePanels(BackgroundMusic bgm) {
-		this.bgm = bgm;
-		m = new Menu(bgm);
+		Menu menu = new Menu(bgm);
 		setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.BLACK));
 
 		setBackground(Color.DARK_GRAY);
@@ -61,8 +57,8 @@ public class GamePanels extends JPanel {
 		add(board);
 		dice.setBounds(346, 751, 750, 109);
 		add(dice);
-		m.setBounds(0, 0, 50, 18);
-		add(m);
+		menu.setBounds(0, 0, 50, 18);
+		add(menu);
 
 		BufferedImage img = null;
 		try {
@@ -74,6 +70,7 @@ public class GamePanels extends JPanel {
 		}
 
 		Image bimg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		JLabel lblPic = new JLabel();
 		lblPic.setBounds(0, 0, width, height);
 
 		lblPic.setIcon(new ImageIcon(bimg));
