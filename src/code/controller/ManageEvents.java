@@ -45,7 +45,6 @@ public class ManageEvents {
 		this.board = board;
 		this.playerList = playerList;
 		this.eastPanel = eastPanel;
-		deathGUI = new DeathGUI();
 		msgGUI = new FortuneTellerGUI();
 		deathGUI = new DeathGUI();
 	}
@@ -103,22 +102,35 @@ public class ManageEvents {
 
 	/**
 	 * This method is supposed to be called from any class that requires the current
-	 * code.model.player to pay any amount, if the user does not have the amount required they
+	 * player to pay any amount, if the user does not have the amount required they
 	 * should be removed from the game
 	 */
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
 			player.setIsAlive(false);
-			playerList.switchToNextPlayer();
+			//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
-			playerList.updatePlayerList();
-			eastPanel.addPlayerList(playerList.getList());
-			dice.setPlayerList(playerList.getList());
+			//System.out.println("eliminated player: " + player.getPlayerIndex());
 			board.removePlayer(player);
-			deathGUI.showGUI();
+
+			if (playerList.getLength() == 1) {
+				new WinGui();
+			}else {
+				deathGUI.showGUI();
+				playerList.updatePlayerList();
+				playerList.switchToNextPlayer();
+				eastPanel.addPlayerList(playerList.getList());
+				dice.setPlayerList(playerList.getList());
+				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
+			}
 		}
 	}
 
+	/**
+	 * @author Chanon Borgström, Lanna Maslo
+	 * Method that checks if a player has upgraded/downgraded and informs them about the event in a pop up message
+	 * @param player active player
+	 */
 	public void checkPlayerUpgrade(Player player){
 		String levelUpMsg = "Congratulations!\nYou have leveled up to ";
 		String levelDownMsg = "Oh no!\nYou have leveled down to ";
@@ -174,7 +186,7 @@ public class ManageEvents {
 					westPanel.append(effect);
 					westPanel.append("\n");
 
-					player.decreaseBalace(tempInt);
+					player.decreaseBalance(tempInt);
 					if (tempProperty.getLevel() == 0) {
 						player.decreaseNetWorth(tempInt);
 					}
@@ -186,7 +198,7 @@ public class ManageEvents {
 
 	/**
 	 * Method called when the player lands on a work tile.
-	 * @param player
+	 * @param player active player
 	 */
 	public void workEvent(Player player) {
 		int roll = getRoll();
@@ -214,7 +226,7 @@ public class ManageEvents {
 
 		if (player.isAlive()) {
 			westPanel.append(player.getName() + " paid 200 GC in tax\n");
-			player.decreaseBalace(chargePlayer);
+			player.decreaseBalance(chargePlayer);
 			player.decreaseNetWorth(chargePlayer);
 			taxCounter++;
 		}
@@ -256,7 +268,7 @@ public class ManageEvents {
 
 					tavern.getOwner().increaseBalance(randomValue);
 					tavern.getOwner().increaseNetWorth(randomValue);
-					player.decreaseBalace(randomValue);
+					player.decreaseBalance(randomValue);
 				}
 			}
 		}
@@ -328,7 +340,7 @@ public class ManageEvents {
 		if (purchase && (property.getPrice() <= player.getBalance())) {
 			property.purchase(player);
 			player.addCapital(property);
-			player.decreaseBalace(property.getPrice());
+			player.decreaseBalance(property.getPrice());
 
 			westPanel.append(player.getName() + " purchased " + property.getName() + "\n");
 		} else {
@@ -353,7 +365,7 @@ public class ManageEvents {
 			tavern.purchase(player);
 			player.addCapital(tavern);
 
-			player.decreaseBalace(tavern.getPrice());
+			player.decreaseBalance(tavern.getPrice());
 
 			westPanel.append(player.getName() + " purchased " + tavern.getName() + "\n");
 		} else {
@@ -416,7 +428,7 @@ public class ManageEvents {
 
             if (player.isAlive()) {
                 westPanel.append(player.getName() + " paid " + pay + " GC\n");
-                player.decreaseBalace(pay);
+                player.decreaseBalance(pay);
                 player.decreaseNetWorth(pay);
                 msgGUI.newFortune(false, pay);
             }

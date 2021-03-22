@@ -210,7 +210,7 @@ public class Player {
 	/**
 	 * @param decrease amount to decrease players balance by
 	 */
-	public void decreaseBalace(int decrease) {
+	public void decreaseBalance(int decrease) {
 		this.balance -= decrease;
 	}
 
@@ -312,16 +312,21 @@ public class Player {
 			}
 		}
 
-		capital.setOwner(null); //TODO: null pointer after selling?
+
 	}
 
 	public void sellCapital(Purchasable capital) {
 		int total;
+		int amountOfLevels;
 
 		if (capital instanceof Property) {
+			amountOfLevels = ((Property) capital).getLevel();
 			total = ((Property) capital).getPrice();
-			total += ((Property) capital).getLevel();
-			total *= ((Property) capital).getLevelPrice();
+
+			for(int i = 0; i < amountOfLevels; i++){
+				total += ((Property) capital).getLevelPrice();
+			}
+
 		} else {
 			total = ((Tavern) capital).getPrice();
 		}
@@ -334,11 +339,13 @@ public class Player {
 		if (res == 0) {
 			increaseBalance(total);
 			removeCapital(capital);
+			capital.setOwner(null);
+			capital.setPurchasable(true);
 		}
 	}
 
 	public void sellCapital(int capitalNumber) {
-		sellCapital(this.getCapital(capitalNumber));
+		sellCapital(this.getCapitals(capitalNumber));
 	}
 
 	/**
@@ -360,14 +367,14 @@ public class Player {
 	 * @param pos
 	 * @return
 	 */
-	public Purchasable getCapital(int pos) {
+	public Purchasable getCapitals(int pos) {
 		return this.capital.get(pos);
 	}
 
 	/**
 	 * @return propertiesOwned, returns entire ArrayList of properties owned.
 	 */
-	public ArrayList<Purchasable> getCapital() {
+	public ArrayList<Purchasable> getCapitals() {
 		return this.capital;
 	}
 
