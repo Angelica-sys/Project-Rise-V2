@@ -21,7 +21,7 @@ import code.view.startMenu.StartingScreen;
  * @autho Muhammad Hasan, Rohan Samandari
  */
 public class Menu extends JPanel {
-	private BackgroundMusic music;
+	private BackgroundMusic bgm;
 	private JMenu jmMenu = new JMenu("Menu");
 	private JMenuBar jmMenuBar = new JMenuBar();
 	private JMenuItem jmExit = new JMenuItem("Exit");
@@ -29,17 +29,18 @@ public class Menu extends JPanel {
 	private JMenuItem jmRestart = new JMenuItem("Restart Game");
 	private JMenuItem jmRules = new JMenuItem("Read Rules");
 	private Rules rules = new Rules();
-	
+	private int musicValue = 0;
+
 	/**
 	 * Constructor which draws the gui
 	 */
-	public Menu() {
+	public Menu(BackgroundMusic music) {
 		setOpaque(false);
 		setPreferredSize(new Dimension(400, 40));
 		setLayout(new BorderLayout());
-		jmMenuBar.setPreferredSize(new Dimension(100,5));
-		jmExit.addActionListener(new ButtonListener()); 
-		jmOptions.addActionListener(new ButtonListener()); 
+		jmMenuBar.setPreferredSize(new Dimension(100, 5));
+		jmExit.addActionListener(new ButtonListener());
+		jmOptions.addActionListener(new ButtonListener());
 		jmRules.addActionListener(new ButtonListener());
 		jmRestart.addActionListener(new ButtonListener());
 		jmMenu.add(jmOptions);
@@ -47,37 +48,56 @@ public class Menu extends JPanel {
 		jmMenu.add(jmRestart);
 		jmMenu.add(jmExit);
 		jmMenuBar.add(jmMenu);
-		
+
 		add(jmMenuBar, BorderLayout.WEST);
 		setBackground(Color.black);
+		this.bgm = music;
 	}
-	
+
 	/**
 	 * Sets music reference
 	 * @param music
 	 */
-	public Menu(BackgroundMusic music) {
+	/*public Menu(BackgroundMusic music) {
 		this.music = music;
 	}
-	
+
+	 */
+
 	/**
 	 * Button listener class used to listen for actions
-	 * @author Rohan Samandari
 	 *
+	 * @author Rohan Samandari
 	 */
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource()==jmOptions) {
-				JOptionPane.showInputDialog("Hello");
-			} else if (e.getSource()==jmRestart) {
-				StartingScreen ss = new StartingScreen();
-				ss.initializeGUI();
-				GamePanels gp = new GamePanels();
-				gp.Dispose();
-			} else if (e.getSource()==jmExit) {
-				System.exit(0);
-			} else if (e.getSource()==jmRules) {
-				rules.showRules();
+			{
+				if (e.getSource() == jmOptions) {
+
+					if (musicValue == 0) {
+						System.out.println("pause");
+						bgm.pauseMusic();
+						jmOptions.setText("Start Music");
+						musicValue += 1;
+					} else {
+						bgm.startMusic();
+						jmOptions.setText("Pause Music");
+						musicValue -= 1;
+					}
+
+
+				} else if (e.getSource() == jmRestart) {
+					StartingScreen ss = new StartingScreen();
+					ss.initializeGUI();
+					GamePanels gp = new GamePanels(bgm);
+					gp.Dispose();
+
+
+				} else if (e.getSource() == jmExit) {
+					System.exit(0);
+				} else if (e.getSource() == jmRules) {
+					rules.showRules();
+				}
 			}
 		}
 	}

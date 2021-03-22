@@ -27,7 +27,7 @@ public class Property extends Purchasable {
 	 */
 	public Property(String name, int price, int baseRent, int rentPerLevel, Color color, int levelPrice, ImageIcon image) {
 		super(name, "", null, baseRent, image, true);
-		getTileInfo();
+		generateTileInfo();
 		this.baseRent = baseRent;
 		this.color = color;
 		this.levels = 0;
@@ -40,13 +40,13 @@ public class Property extends Purchasable {
 	public void purchase(Player player) {
 		this.setOwner(player);
 		this.setPurchasable(false);
-		this.getTileInfo();
+		this.generateTileInfo();
 	}
 	
 	/**
 	 * Returns information about tile
 	 */
-	public String getTileInfo() {
+	public String generateTileInfo() {
 		String ownerName;
 
 		if (getOwner() == null) {
@@ -112,10 +112,10 @@ public class Property extends Purchasable {
 		int maxPlayerPropertyRank = p.getPlayerRank().nbrOfLevels();
 		int playerBalance = p.getBalance();
 
-		if (maxPlayerPropertyRank > getLevel() && playerBalance >= getLevelPrice()) {
+		if (maxPlayerPropertyRank > this.levels && playerBalance >= getLevelPrice()) {
 			this.levels += 1;
 			this.setRent(this.baseRent + this.rentPerLevel*this.levels);
-			getOwner().decreaseBalace(getLevelPrice());
+			getOwner().decreaseBalance(getLevelPrice());
 			upgraded = true;
 		}
 

@@ -142,7 +142,7 @@ public class Player {
 	}
 
 	/**
-	 * Get the position a code.model.player has on the board from 0-39
+	 * Get the position a player has on the board from 0-39
 	 * @return counter
 	 */
 	public int getPosition() {
@@ -210,7 +210,7 @@ public class Player {
 	/**
 	 * @param decrease amount to decrease players balance by
 	 */
-	public void decreaseBalace(int decrease) {
+	public void decreaseBalance(int decrease) {
 		this.balance -= decrease;
 	}
 
@@ -316,11 +316,16 @@ public class Player {
 
 	public void sellCapital(Purchasable capital) {
 		int total;
+		int amountOfLevels;
 
 		if (capital instanceof Property) {
+			amountOfLevels = ((Property) capital).getLevel();
 			total = ((Property) capital).getPrice();
-			total += ((Property) capital).getLevel();
-			total *= ((Property) capital).getLevelPrice();
+
+			for(int i = 0; i < amountOfLevels; i++){
+				total += ((Property) capital).getLevelPrice();
+			}
+
 		} else {
 			total = ((Tavern) capital).getPrice();
 		}
@@ -333,6 +338,8 @@ public class Player {
 		if (res == 0) {
 			increaseBalance(total);
 			removeCapital(capital);
+			capital.setOwner(null);
+			capital.setPurchasable(true);
 		}
 	}
 

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,13 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants; 
+import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import code.model.player.Player;
 import code.model.player.PlayerList;
 import code.model.tiles.Property;
 import code.model.tiles.Purchasable;
+import code.model.tiles.TradeType;
 
 /**
  * A class representing each Purchasable a Player owns.
@@ -35,6 +38,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 	private JButton btnSell = new JButton("Sell");
 	private PlayerList playerList;
 	private int playerNumber, capitalNumber;
+	private EastSidePanel eastSidePanel;
 
 	/**
 	 * Constructs a new instance of PlayerProperties, containing objects representing each capital a player owns.
@@ -42,10 +46,11 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 	 * @param playerNumber an int representing a specific player.
 	 * @param capitalNumber an int representing a specific property.
 	 */
-	public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber) {
+	public PlayerPropertyPanel(PlayerList players, int playerNumber, int capitalNumber, EastSidePanel eastSidePanel) {
 		Player p = players.getPlayerFromIndex(playerNumber);
 		Purchasable capital = p.getCapital(capitalNumber);
 
+		this.eastSidePanel = eastSidePanel;
 		this.playerList = players;
 		this.playerNumber = playerNumber;
 		this.capitalNumber = capitalNumber;
@@ -163,6 +168,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == this.btnTrade) {
 			tradeCapital();
 		}
+		eastSidePanel.addPlayerList(playerList);
 	}
 
 	private void sellCapital() {
@@ -208,123 +214,250 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 		}
 	}
 
-	private void tradeCapital() {
-		int otherPlayerInt = 0;
-		int whichPropertyToGive = 0;
-		int whichPropertyYouWant = 0;
-		int offer = 0;
-		int choice = 0;
-		int confirm;
+    /**
+     * Makes it possible for a player to trade a property for money, a property for property or
+     * both a property and money for property
+     * @author Chanon Borgström, Lanna Maslo
+     */
+    private void tradeCapital() {
+        Player activePlayer = playerList.getActivePlayer();
+        Player chosenPlayer = choosePlayer();
+        int offer = 0;
+        int giveAwayProperty = 0;
+        int wantedProperty;
 
-		Player activePlayer = this.playerList.getActivePlayer();
-		Player otherPlayer = this.playerList.getPlayerFromIndex(otherPlayerInt);
 
-		do {
-			String otherPlayerChoice = JOptionPane.showInputDialog(
-					null,
-					"Which code.model.player do you want to trade with?\n " +
-							"1 for code.model.player 1 \n " +
-							"2 for code.model.player 2 and so on..."
-			);
-			otherPlayerInt = (Integer.parseInt(otherPlayerChoice) - 1);
+        if (chosenPlayer.getCapital().size() > 0) {
+            TradeType tradeType = tradeType();
+            if (tradeType == TradeType.Property || tradeType == TradeType.Both) {
+                giveAwayProperty = chooseProperty(activePlayer);
+            }
 
-		} while (
-				otherPlayerInt == this.playerList.getActivePlayer().getPlayerIndex() ||
-				otherPlayerInt > this.playerList.getLength()-1
-		);
+            if (tradeType == TradeType.Money || tradeType == TradeType.Both) {
+                do {
+                    offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
+                            "How much do you offer " + chosenPlayer.getName() + "?")));
+                } while (offer > activePlayer.getBalance());
+            }
 
-		if (otherPlayer.getCapital().size() > 0) {
-			do {
-				choice = (Integer.parseInt(JOptionPane.showInputDialog(
-						null,
-						"Pick a trade type\n 1 = Property for property \n" +
-								"2 = Money for property\n" +
-								"3 = Both"))
-				);
-			} while (choice<0 || choice >3);
+            do {
+                wantedProperty = chooseProperty(chosenPlayer);
+            } while (wantedProperty > chosenPlayer.getCapital().size());
 
-			if (choice == 1 || choice == 3) {
-				do {
-					whichPropertyToGive = (Integer.parseInt(JOptionPane.showInputDialog(
-							null,
-							"Which property do you want to give away \n" +
-									"1 for property 1 \n" +
-									"2 for property 2 and so on...")) - 1
-					);
-				} while (whichPropertyToGive > activePlayer.getCapital().size());
-			}
+            Purchasable activePlayerCapital = activePlayer.getCapital(giveAwayProperty);
+            Purchasable chosenPlayerCapital = chosenPlayer.getCapital(wantedProperty);
 
-			if (choice == 2 || choice == 3) {
-				do {
-					offer = (Integer.parseInt(JOptionPane.showInputDialog(null,
-							"How much do you offer " + otherPlayer.getName() + "?")));
-				} while (offer > activePlayer.getBalance());
+            if (tradeType == TradeType.Money) {
+                if (!confirmMoneyTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			}
+            if (tradeType == TradeType.Property) {
+                if (!confirmPropertyTrade(activePlayer, chosenPlayer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			do {
-				whichPropertyYouWant = (Integer.parseInt(JOptionPane.showInputDialog(
-						null,
-						"Which property do you want \n 1 for property 1 \n 2 for property 2 and so on...")) - 1
-				);
-			} while (whichPropertyYouWant > otherPlayer.getCapital().size());
+            if (tradeType == TradeType.Both) {
+                if(!confirmBothTrade(activePlayer, chosenPlayer, offer, activePlayerCapital, chosenPlayerCapital)){
+                    JOptionPane.showMessageDialog(null, "Trade can not be done! :(");
+                }
+            }
 
-			Purchasable activePlayerCapital = activePlayer.getCapital(whichPropertyToGive);
-			Purchasable otherPlayerCapital = otherPlayer.getCapital(whichPropertyYouWant);
+        } else {
+            JOptionPane.showMessageDialog(null, "Trade can not be done! The player you picked does not own any properties!");
+        }
+    }
 
-			if (choice == 1 || choice == 3) {
-				confirm = JOptionPane.showConfirmDialog(
-						null,
-						otherPlayer.getName() + " Are you okay with this trade?" + "\n You are getting " +
-								offer + "Gold coins" + "\n and are trading away " + otherPlayerCapital.getName() +
-								"\n for " + activePlayerCapital.getName()
-				);
+    /**
+     * Makes it possible for an active player to choose another player to trade with
+     * @author Chanon Borgström, Lanna Maslo
+     * @return the chosen player to trade with
+     */
+    public Player choosePlayer() {
+        Player activePlayer = playerList.getActivePlayer();
+        LinkedList<Player> players = playerList.getPlayers();
+        String[] playerNames = new String[playerList.getLength()];
+        Player choice = null;
 
-				if (confirm == 0) {
-					activePlayer.removeCapital(activePlayerCapital);
-					otherPlayer.removeCapital(otherPlayerCapital);
+        for (int i = 0; i < playerList.getLength(); i++) {
+            if (!activePlayer.getName().equals(players.get(i).getName())) {
+                playerNames[i] = players.get(i).getName();
+            }
+        }
 
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
+        String chosenPlayer = (String) JOptionPane.showInputDialog(null, "Choose a player to trade with...",
+                "Trade", JOptionPane.QUESTION_MESSAGE, null, playerNames, // Array of choices
+                playerNames[playerNames.length - 1]);
 
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
+        for (int i = 0; i < playerList.getLength(); i++) {
+            if (chosenPlayer.equals(players.get(i).getName())) {
+                choice = players.get(i);
+            }
+        }
 
-					activePlayerCapital.setOwner(otherPlayer);
-					activePlayer.addCapital(otherPlayerCapital);
+        return choice;
+    }
 
-					otherPlayerCapital.setOwner(activePlayer);
-					otherPlayer.addCapital(activePlayerCapital);
+    /**
+     * Allows the active player to choose a type of trade
+     * @author Chanon Borgström, Lanna Maslo
+     * @return the chosen type of trade as an Enum
+     */
+    public TradeType tradeType() {
+        TradeType tradeType = TradeType.Money;
+        int choice = JOptionPane.showOptionDialog(null, "Choose a trade type", "Trade",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, TradeType.values(), tradeType);
 
-					JOptionPane.showMessageDialog(
-							null,
-							"Trade Complete!"
-					);
-				}
-			}
+        switch (choice){
+            case 0:
+                tradeType = TradeType.Money;
+                break;
+            case 1:
+                tradeType = TradeType.Property;
+                break;
+            case 2:
+                tradeType = TradeType.Both;
+                break;
+        }
+        return tradeType;
+    }
 
-			if (choice == 2) {
-				confirm = JOptionPane.showConfirmDialog(null, otherPlayer.getName() +
-						" Are you okay with this trade?"
-						+ "\n You are getting " + offer + "Gold coins for " + otherPlayerCapital.getName());
-				if (confirm == 0) {
-					otherPlayer.removeCapital(otherPlayerCapital);
-					activePlayerCapital.setOwner(otherPlayer);
-					activePlayer.removeCapital(otherPlayerCapital);
+    /**
+     * Makes it possible for the active player to choose which properties should be involved in the trade
+     * @author Chanon Borgström, Lanna Maslo
+     * @param player
+     * @return The chosen property to trade with
+     */
+    public int chooseProperty(Player player){
+        ArrayList<Purchasable> ownedProperties = player.getCapital();
+        String[] propertyNames = new String[ownedProperties.size()];
 
-					activePlayer.decreaseBalace(offer);
-					activePlayer.decreaseNetWorth(offer);
+        for (int i = 0; i < ownedProperties.size(); i++) {
+            propertyNames[i] = ownedProperties.get(i).getName();
+        }
 
-					otherPlayer.increaseBalance(offer);
-					otherPlayer.increaseNetWorth(offer);
-					JOptionPane.showMessageDialog(null, "Trade Complete!");
-				}
-			}
-		} else {
-			JOptionPane.showMessageDialog(
-					null,
-					"Trade can not be done! The player you picked does not own any properties!"
-			);
-		}
-	}
+        int choice = JOptionPane.showOptionDialog(null, player.getName() + ", choose a property to trade with", "Property",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, propertyNames, propertyNames[0]);
+
+        return choice;
+    }
+
+    /**
+     * Confirms the trade between the active player and the chosen player
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param offer the amount of gold coins that the active player has offered the chosen player for their property
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
+    public boolean confirmBothTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
+        int confirm = JOptionPane.showConfirmDialog(
+                null,
+                chosenPlayer.getName() + ", are you okay with this trade?" + "\n You are getting " +
+                        offer + "gold coins" + "\n and are trading away " + chosenPlayerCapital.getName() +
+                        "\n for " + activePlayerCapital.getName()
+        );
+
+        if (confirm == 0) {
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            activePlayer.decreaseBalance(offer);
+            activePlayer.decreaseNetWorth(offer);
+
+            chosenPlayer.increaseBalance(offer);
+            chosenPlayer.increaseNetWorth(offer);
+
+            activePlayerCapital.setOwner(chosenPlayer);
+            activePlayer.addCapital(chosenPlayerCapital);
+
+            chosenPlayerCapital.setOwner(activePlayer);
+            chosenPlayer.addCapital(activePlayerCapital);
+
+
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Trade Complete!"
+            );
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Confirms the trade between the active player and the chosen player
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param offer the amount of gold coins that the active player has offered the chosen player for their property
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
+    public boolean confirmMoneyTrade(Player activePlayer, Player chosenPlayer, int offer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
+        int confirm = JOptionPane.showConfirmDialog(null, chosenPlayer.getName() +
+                " Are you okay with this trade?"
+                + "\n You are getting " + offer + "gold coins for " + chosenPlayerCapital.getName());
+        if (confirm == 0) {
+            activePlayer.addCapital(chosenPlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            activePlayer.decreaseBalance(offer);
+            activePlayer.decreaseNetWorth(offer);
+
+            chosenPlayer.increaseBalance(offer);
+            chosenPlayer.increaseNetWorth(offer);
+
+            chosenPlayerCapital.setOwner(activePlayer);
+
+            JOptionPane.showMessageDialog(null, "Trade Complete!");
+
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Confirms the trade between the active player and the chosen player
+     * @author Chanon Borgström, Lanna Maslo
+     * @param activePlayer the player that initiated the trade
+     * @param chosenPlayer the player that has been chosen to be traded with
+     * @param activePlayerCapital the property that the active player is trading with
+     * @param chosenPlayerCapital the property that the chosen player is trading with
+     * @return false if the trade has not been accepted, true if the trade is a success
+     */
+    private boolean confirmPropertyTrade(Player activePlayer, Player chosenPlayer, Purchasable activePlayerCapital, Purchasable chosenPlayerCapital) {
+        int confirm = JOptionPane.showConfirmDialog(
+                null,
+                chosenPlayer.getName() + ", are you okay with this trade?" + "\n You are trading away " + chosenPlayerCapital.getName() +
+                        "\n for " + activePlayerCapital.getName()
+        );
+
+        if (confirm == 0) {
+            activePlayer.removeCapital(activePlayerCapital);
+            chosenPlayer.removeCapital(chosenPlayerCapital);
+
+            activePlayerCapital.setOwner(chosenPlayer);
+            activePlayer.addCapital(chosenPlayerCapital);
+
+            chosenPlayerCapital.setOwner(activePlayer);
+            chosenPlayer.addCapital(activePlayerCapital);
+
+
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Trade Complete!"
+            );
+            return true;
+        }
+        return false;
+    }
 }

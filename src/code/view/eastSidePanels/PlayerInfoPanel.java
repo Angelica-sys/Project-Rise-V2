@@ -18,14 +18,12 @@ import code.model.player.PlayerList;
  * @author Abdulkhuder Muhammad, Sebastian Viro, Tor Stenfeldt
  */
 public class PlayerInfoPanel extends JPanel {
-	//private static final long serialVersionUID = 13L;
-
 	/**
 	 * player list is used to get the players to display correct information
 	 * @param playerList a PlayerList containing all active players.
 	 * @param playerNumber an integer specifying which character the information is regarding.
 	 */
-	public PlayerInfoPanel(PlayerList playerList, int playerNumber) {
+	public PlayerInfoPanel(PlayerList playerList, int playerNumber, EastSidePanel eastSidePanel) {
 		Player p = playerList.getPlayerFromIndex(playerNumber);
 		setPreferredSize(new Dimension(345, 860));
 		JPanel p1 = new JPanel();
@@ -80,7 +78,7 @@ public class PlayerInfoPanel extends JPanel {
 		lblRank.setHorizontalAlignment(SwingConstants.CENTER);
 		p4.add(lblRank);
 		add(p4);
-		PropertyWindow propertyWindow = new PropertyWindow();
+		PropertyWindow propertyWindow = new PropertyWindow(eastSidePanel);
 		propertyWindow.setBounds(10, 210, 335, 626);
 
 		propertyWindow.setCurrentPlayer(playerNumber);

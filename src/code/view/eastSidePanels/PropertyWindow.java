@@ -15,16 +15,17 @@ import code.model.tiles.Purchasable;
  * @author Muhammad Abdulkhuder, Aevan Dino, Tor Stenfeldt
  */
 public class PropertyWindow extends JPanel {
-	//private static final long serialVersionUID = 12L;
-
 	private JTabbedPane tab;
 	private int currentPlayer;
 	private int nCapital;
+	private EastSidePanel eastSidePanel;
 
 	/**
 	 *this method is used to update the panel
 	 */
-	public PropertyWindow() {
+	public PropertyWindow(EastSidePanel eastSidePanel) {
+		this.eastSidePanel = eastSidePanel;
+
 		setPreferredSize(new Dimension(330, 600));
 		setOpaque(false);
 		setLayout(null);
@@ -44,7 +45,7 @@ public class PropertyWindow extends JPanel {
 	 */
 	public void addPlayerList(PlayerList playerList) {
 		Player p = playerList.getPlayerFromIndex(this.currentPlayer);
-		int nCapital = p.getCapital().size();
+		int nCapital = p.getCapitals().size();
 
 		// If the number of Purchasables a Player owns has changed.
 		if (nCapital != this.nCapital) {
@@ -54,11 +55,11 @@ public class PropertyWindow extends JPanel {
 
 			// For every Purchasable a Player owns.
 			for (int i=0; i<nCapital; i++) {
-				new PropertyWindow();
-				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i);
+				new PropertyWindow(eastSidePanel);
+				PlayerPropertyPanel playerPropertyPanel = new PlayerPropertyPanel(playerList, this.currentPlayer, i, eastSidePanel);
 				this.tab.addTab("Capital " + (i+1), playerPropertyPanel);
 
-				Purchasable playerCapital = p.getCapital(i);
+				Purchasable playerCapital = p.getCapitals(i);
 				if (playerCapital instanceof Property) {
 					this.tab.setBackgroundAt(i, ((Property) playerCapital).getColor());
 				} else {

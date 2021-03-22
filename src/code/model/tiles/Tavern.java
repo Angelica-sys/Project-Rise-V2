@@ -15,20 +15,20 @@ public class Tavern extends Purchasable {
 	public Tavern(String name, int rent) {
 		super(name, "", null, rent, new ImageIcon("src/resources/images/tiles/tavern.png"), true);
 		this.price = 150;
-		getTileInfo();
+		generateTileInfo();
 	}
 
 	public void purchase(Player player) {
 		this.setOwner(player);
 		this.setPurchasable(false);
-		this.getTileInfo();
+		this.generateTileInfo();
 	}
 	
 	public int getPrice() {
 		return this.price;
 	}
 	
-	public String getTileInfo() {
+	public String generateTileInfo() {
 		String ownerName;
 
 		if (getOwner() == null) {
