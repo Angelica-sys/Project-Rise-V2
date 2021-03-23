@@ -79,36 +79,38 @@ public class Player {
 	 * if less than 3 the "roll dice" button is to be inactivated and the end turn activated
 	 * @return playerJailCounter
 	 */
-	public int getJailCounter() {
-		return playerJailCounter;
-	}
-
-	/**
-	 * method used for increasing or resetting the jailCounter of a player
-	 * @param amount
-	 */
-	public void setJailCounter(int amount) {
-		this.playerJailCounter = amount;
+	public int getIncarceration() {
+		return this.playerJailCounter;
 	}
 
 	/**
 	 * Increase number of turns spent in jail by one
 	 */
-	public void increaseJailCounter() {
-		this.playerJailCounter++;
+	public int decreaseIncarceration() {
+		if (this.playerJailCounter > 0) {
+			this.playerJailCounter--;
+		}
+
+		return this.playerJailCounter;
 	}
 
 	/**
-	 * @param isInJail if player is sent to jail send true, if player is not in jail anymore set to false
+	 * @param inJail if player is sent to jail send true, if player is not in jail anymore set to false
 	 */
-	public void setPlayerIsInJail(boolean isInJail) {
-		this.playerIsInJail = isInJail;
+	public void setIncarcerated(boolean inJail) {
+		if (inJail) {
+			this.playerJailCounter = 4;
+		} else {
+			this.playerJailCounter = 0;
+		}
+
+		this.playerIsInJail = inJail;
 	}
 
 	/**
 	 * @return Return either true or false if player in in jail or not
 	 */
-	public Boolean isPlayerInJail() {
+	public Boolean isIncarcerated() {
 		return this.playerIsInJail;
 	}
 

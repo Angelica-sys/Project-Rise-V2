@@ -55,10 +55,6 @@ public class ManageEvents {
 	 * @param player the Player who landed on the Tile.
 	 */
 	public void newEvent(Tile tile, Player player) {
-		if (playerList.getLength() == 1) {
-			new WinGui();
-		}
-
 		if (tile instanceof Property) {
 			propertyEvent(tile, player);
 		}
@@ -68,11 +64,11 @@ public class ManageEvents {
 		}
 
 		if (tile instanceof Jail) {
-			jailEvent(tile, player);
+			jailEvent(player);
 		}
 
 		if (tile instanceof GoToJail) {
-			goToJailEvent(tile, player);
+			goToJailEvent(player);
 		}
 
 		if (tile instanceof Tavern) {
@@ -91,13 +87,12 @@ public class ManageEvents {
 			fortuneTellerEvent((FortuneTeller)tile, player);
 		}
 
-		checkPlayerUpgrade(player);
-
-		if (player.getPlayerRank() == PlayerRanks.KINGS) {
+		if (player.getPlayerRank() == PlayerRanks.KINGS || this.playerList.getLength() == 1) {
 			new WinGui();
+		} else {
+			checkPlayerUpgrade(player);
+			this.eastPanel.addPlayerList(this.playerList);
 		}
-
-		eastPanel.addPlayerList(playerList);
 	}
 
 	/**
@@ -108,9 +103,7 @@ public class ManageEvents {
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
 			player.setIsAlive(false);
-			//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			playerList.eliminatePlayer(player);
-			//System.out.println("eliminated player: " + player.getPlayerIndex());
 			board.removePlayer(player);
 
 			if (playerList.getLength() == 1) {
@@ -121,17 +114,16 @@ public class ManageEvents {
 				playerList.switchToNextPlayer();
 				eastPanel.addPlayerList(playerList.getList());
 				dice.setPlayerList(playerList.getList());
-				//System.out.println("playerList: " + playerList.getList().getLength() + " " + playerList.getLength());
 			}
 		}
 	}
 
 	/**
-	 * @author Chanon Borgström, Lanna Maslo
 	 * Method that checks if a player has upgraded/downgraded and informs them about the event in a pop up message
 	 * @param player active player
+	 * @author Chanon Borgström, Lanna Maslo
 	 */
-	public void checkPlayerUpgrade(Player player){
+	public void checkPlayerUpgrade(Player player) {
 		String levelUpMsg = "Congratulations!\nYou have leveled up to ";
 		String levelDownMsg = "Oh no!\nYou have leveled down to ";
 
@@ -140,7 +132,7 @@ public class ManageEvents {
 				player.checkPlayerRank();
 				JOptionPane.showMessageDialog(null, levelUpMsg + player.getPlayerRank());
 			}
-		}else if (player.getPlayerRank() == PlayerRanks.KNIGHT){
+		} else if (player.getPlayerRank() == PlayerRanks.KNIGHT){
 			if (player.getNetWorth() >= 4000){
 				player.checkPlayerRank();
 				JOptionPane.showMessageDialog(null, levelUpMsg + player.getPlayerRank());
@@ -148,10 +140,10 @@ public class ManageEvents {
 				player.checkPlayerRank();
 				JOptionPane.showMessageDialog(null, levelDownMsg + player.getPlayerRank());
 			}
-		}else if (player.getPlayerRank() == PlayerRanks.LORD){
+		} else if (player.getPlayerRank() == PlayerRanks.LORD) {
 			if (player.getNetWorth() >= 7500){
 				player.checkPlayerRank();
-			} else if (player.getNetWorth() < 4000){
+			} else if (player.getNetWorth() < 4000) {
 				player.checkPlayerRank();
 				JOptionPane.showMessageDialog(null, levelDownMsg + player.getPlayerRank());
 			}
@@ -276,37 +268,58 @@ public class ManageEvents {
 
 	/**
 	 * Method for jailed players, giving them the option to pay bail if the have enough balance.
-	 * @param tile
 	 * @param player in jail
 	 */
-	public void jailEvent(Tile tile, Player player) {
-		if (player.isPlayerInJail() && (player.getJailCounter()) < 2) {
-			westPanel.append(player.getName() + " is in jail for " + (2 - player.getJailCounter()) + " more turns\n");
-			player.increaseJailCounter();
-			if (player.getBalance() > (player.getJailCounter() * 50)) {
-				jailDialog(player);
+	public void jailEvent(Player player) {
+		int jailTime = player.decreaseIncarceration();
+
+		if (player.isIncarcerated()) {
+			if (jailTime > 0) {
+				westPanel.append(player.getName() + " is in jail for " + (jailTime) + " more turns\n");
+				payBail(player);
 			} else {
-				JOptionPane.showMessageDialog(null, "You can not afford the bail");
+				player.setIncarcerated(false);
+				dice.activateRollDice();
 			}
-		} else if (player.getJailCounter() >= 2) {
-			player.setPlayerIsInJail(false);
-			player.setJailCounter(0);
-			dice.activateRollDice();
+		}
+	}
+
+	/**
+	 * Message for the prisoner to choose if the player wants to pay the bail and get free
+	 * @param player in jail.
+	 */
+	public void payBail(Player player) {
+		int bail = player.getIncarceration()*50;
+
+		if (player.getBalance() >= bail) {
+			String message = "Do you want to pay the bail\nWhich is " + bail + " GC?";
+			int response = JOptionPane.showConfirmDialog(null, message, "JOption", JOptionPane.YES_NO_OPTION);
+
+			if (response == 0) {
+				player.decreaseBalance(bail);
+				player.setIncarcerated(false);
+				westPanel.append(player.getName() + " paid the bail and\ngot free from jail\n");
+				dice.activateRollDice();
+			} else {
+				westPanel.append(player.getName() + " did not pay tha bail\n and is still in jail\n");
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "You can not afford the bail");
 		}
 	}
 
 	/**
 	 * Method to jail player.
-	 * @param tile
 	 * @param player
 	 */
-	public void goToJailEvent(Tile tile, Player player) {
-		player.setPlayerIsInJail(true);
+	public void goToJailEvent(Player player) {
+		player.setIncarcerated(true);
 		board.removePlayer(player);
 		player.setPositionInSpecificIndex(10);
 		board.setPlayer(player);
+
 		JOptionPane.showMessageDialog(null, player.getName() + " got in jail.");
-		westPanel.append(player.getName() + " is in jail for " + (2 - player.getJailCounter()) + " more turns\n");
+		westPanel.append(player.getName() + " is in jail for " + (2 - player.getIncarceration()) + " more turns\n");
 	}
 
 	/**
@@ -386,30 +399,6 @@ public class ManageEvents {
 	 */
 	public void setRoll(Dice dice) {
 		this.roll = dice.getRoll();
-	}
-
-	/**
-	 * Message for the prisoner to choose if the player wants to pay the bail and
-	 * get free
-	 * @param player in jail.
-	 */
-	public void jailDialog(Player player) {
-		int yesOrNo = JOptionPane.showConfirmDialog(
-				null,
-				"Do you want to pay the bail\nWhich is " + (player.getJailCounter() * 50) + " GC?",
-				"JOption",
-				JOptionPane.YES_NO_OPTION
-		);
-
-		int totalBail = player.getJailCounter() * 50;
-		if (yesOrNo == 0 && (totalBail <= player.getBalance())) {
-			player.setJailCounter(0);
-			player.setPlayerIsInJail(false);
-			westPanel.append(player.getName() + " paid the bail and\ngot free from jail\n");
-			dice.activateRollDice();
-		} else {
-			westPanel.append(player.getName() + " did not pay tha bail\n and is still in jail\n");
-		}
 	}
 	
 	/**

@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * @date 2021-03-19
  */
 public class PropertyTest {
-    private String propertyPath = "src/resources/images/tiles/";
     private String playerPath = "src/resources/images/players/";
+    private String propertyPath = "src/resources/images/tiles/";
 
     @Test
     @DisplayName("Whenever a Property is purchased, its owner should be changed.")

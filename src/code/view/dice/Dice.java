@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import code.model.player.Player;
 import code.view.board.Board;
 import code.view.eastSidePanels.EastSidePanel;
 import code.controller.ManageEvents;
@@ -206,7 +205,7 @@ public class Dice extends JPanel implements ActionListener {
 			playerList.switchToNextPlayer();
 			showPlayersTurn.uppdateGUI(playerList.getActivePlayer());
 			
-			if (playerList.getActivePlayer().isPlayerInJail()) {
+			if (playerList.getActivePlayer().isIncarcerated()) {
 				btnRollDice.setEnabled(false);
 				btnEndTurn.setEnabled(true);
 				manageEvents.newEvent(board.getDestinationTile(playerList.getActivePlayer().getPosition()),

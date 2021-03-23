@@ -76,8 +76,8 @@ public class GamePanels extends JPanel {
 		lblPic.setIcon(new ImageIcon(bimg));
 		add(lblPic);
 
-		// TODO: remove on release.
-		CheatGui cheatGui = new CheatGui(dice);
+		//TODO: This is a cheat GUI used for forcefully moving a player to a specific location.
+		//CheatGui cheatGui = new CheatGui(dice);
 	}
 
 	/**
