@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import code.model.player.Player;
 import code.view.board.Board;
 import code.view.eastSidePanels.EastSidePanel;
 import code.controller.ManageEvents;
@@ -259,7 +260,8 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	public void setPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
-		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(), playerList.getActivePlayer().getPlayerColor());
+		Player p = playerList.getActivePlayer();
+		showPlayersTurn.uppdateGUI(p);
 	}
 	
 	/**

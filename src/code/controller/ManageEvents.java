@@ -92,7 +92,7 @@ public class ManageEvents {
 			new WinGui();
 		} else {
 			checkPlayerUpgrade(player);
-			this.eastPanel.addPlayerList(this.playerList);
+			this.eastPanel.setPlayerList(this.playerList);
 		}
 
 		eastPanel.setPlayerList(playerList);

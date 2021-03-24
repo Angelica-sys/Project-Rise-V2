@@ -18,7 +18,7 @@ import javax.swing.*;
 
 /**
  * Panel that shows up when players start the game. This contains information about the game
- * @author Muhammad Abdulkhuder, Sebastian Viro
+ * @author Muhammad Abdulkhuder, Sebastian Viro, Gustaf Hermansson
  */
 public class Introduction extends JPanel {
 	private JLabel lblTitel = new JLabel("Welcome to Rise!");
@@ -72,23 +72,13 @@ public class Introduction extends JPanel {
 		btnContinue.setBounds(225, 315, 150, 30);
 		btnContinue.addActionListener(new ButtonListener());
 
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("src/resources/images/board/backpaper.jpg"));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		Image resizedImg = img.getScaledInstance(lblPic.getWidth(), lblPic.getHeight(), Image.SCALE_SMOOTH);
-		lblPic.setIcon(new ImageIcon(resizedImg));
+		lblPic.setIcon(new ImageIcon("src/resources/images/board/backpaper.jpg"));
 
 
-		add(lblTitel);
-		add(taText);
-		add(lblPic);
-		lblPic.add(btnContinue);
-
+		this.add(btnContinue);
+		this.add(lblTitel);
+		this.add(taText);
+		this.add(lblPic);
 	}
 
 	 /**
