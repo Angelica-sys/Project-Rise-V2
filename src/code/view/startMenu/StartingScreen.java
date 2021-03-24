@@ -267,6 +267,7 @@ public class StartingScreen extends JFrame {
                     break outer;
                 }
             }
+
         }
 
         return approved;
