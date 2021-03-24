@@ -33,11 +33,11 @@ public class Tavern extends Purchasable {
 		}
 
 		String description =
-				"\nOwner: \t         " + ownerName +
-				"\nPrice:\t\t" + this.price +
-				"\nDefault rent:    Read Rules" +
-				"\nRent with Levels:\t" 	+ 0 +
-				"\nTotal rent:        Read Rules";
+				"\nOwner:\t" + ownerName +
+				"\nPrice:\t" + this.price +
+				"\nOne Tavern Owned:\t 10x sum of dice roll" +
+				"\nTwo Taverns Owned:\t 20x sum of dice roll"
+				;
 
 		setDescription(description);
 		return description;

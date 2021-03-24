@@ -55,13 +55,26 @@ public class Property extends Purchasable {
 		}
 
 		String description =
-				"\nOwner: \t         " + ownerName +
-				"\nPrice:\t\t" + this.price +
-				"\nDefault rent:\t" + this.getRent() +
-				"\nRent per level:\t" + this.rentPerLevel +
-				"\nTotal rent:\t" + getRent();
+				"\nOwner:\t           " + ownerName +
+				"\nPrice:\t           " + this.price +
+				"\nBase rent:\t       " + this.getRent() +
+				"\nRent per level:\t  " + this.rentPerLevel +
+				"\nTotal rent:\t      " + getRent();
 
 		setDescription(description);
+		return description;
+	}
+
+	/**
+	 * Returns relevent information about purchasable tile
+	 */
+	public String generatePurchaseInfo(){
+		String description =
+						"\nOwner:" + "No Owner" +
+						"\nPrice:" + this.price +
+						"\nBase rent:" + this.getRent() +
+						"\nRent per level:" + this.rentPerLevel;
+
 		return description;
 	}
 

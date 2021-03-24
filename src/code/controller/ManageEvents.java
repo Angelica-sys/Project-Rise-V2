@@ -1,7 +1,7 @@
 package code.controller;
 
 import java.util.Random;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import code.model.tiles.*;
 import code.view.board.Board;
@@ -30,6 +30,7 @@ public class ManageEvents {
 	private int roll;
 	private int taxCounter = 0;
 	private WestSidePanel westPanel;
+	private JDialog jd;
 
 	/**
 	 * Constructor initializes objects in the parameter. Creates Death -and MessageGUI.
@@ -326,15 +327,16 @@ public class ManageEvents {
 	 * @param player in question.
 	 */
 	public void propertyDialog(Property property, Player player) {
-		String question = property.getName() + "\n" + "Do you want to purchase this property for " +
-				property.getPrice() + " GC";
 
-		boolean purchase = (JOptionPane.showConfirmDialog(
-				null,
+		String question = property.getName() + "\n"
+				+ "Do you want to purchase this property"
+				+ "\n" + property.generatePurchaseInfo();
+		boolean purchase = (JOptionPane.showConfirmDialog(null
+				,
 				question,
 				"Decide your fate!",
 				JOptionPane.YES_NO_OPTION
-		) == 0);
+				) == 0);
 
 		if (purchase && (property.getPrice() <= player.getBalance())) {
 			property.purchase(player);
@@ -355,8 +357,8 @@ public class ManageEvents {
 	public void tavernDialog(Tavern tavern, Player player) {
 		int playerResponse = JOptionPane.showConfirmDialog(
 				null,
-				"Do you want to purchase this property?",
-				"JOption",
+				"Do you want to purchase this property?" + "\n" + tavern.generateTileInfo(),
+				"Decide your fate!",
 				JOptionPane.YES_NO_OPTION
 		);
 

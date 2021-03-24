@@ -276,6 +276,7 @@ public class StartingScreen extends JFrame {
                     checkUniqueColors();
                 }
             }
+
         }
 
         /**

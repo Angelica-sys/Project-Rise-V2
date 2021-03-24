@@ -7,17 +7,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 /**
  * Panel that shows up when players start the game. This contains information about the game
@@ -30,6 +27,7 @@ public class Introduction extends JPanel {
 	private JTextArea taText = new JTextArea();
 	private Font fontTitel = new Font("ALGERIAN", Font.ITALIC, 20);
 	private Font fontText = new Font("Gabriola", Font.ITALIC, 22);
+	private JButton btnContinue = new JButton("Click To Continue!");
 
 	/**
 	 * Constructor that calls upon method which draws gui
@@ -47,6 +45,7 @@ public class Introduction extends JPanel {
 		String playerOne = playerList.getPlayers().get(0).getName();
 		String playerTwo = playerList.getPlayers().get(1).getName();
 		setPreferredSize(new Dimension(600, 350));
+		getFrame();
 		lblTitel.setBounds(87, -20, 411, 86);
 		taText.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		taText.setBounds(10, 53, 600, 286);
@@ -70,6 +69,8 @@ public class Introduction extends JPanel {
 		setLayout(null);
 		taText.setOpaque(false);
 		lblPic.setBounds(0, 0, 600, 350);
+		btnContinue.setBounds(225, 315, 150, 30);
+		btnContinue.addActionListener(new ButtonListener());
 
 		BufferedImage img = null;
 		try {
@@ -81,11 +82,13 @@ public class Introduction extends JPanel {
 
 		Image resizedImg = img.getScaledInstance(lblPic.getWidth(), lblPic.getHeight(), Image.SCALE_SMOOTH);
 		lblPic.setIcon(new ImageIcon(resizedImg));
-		
+
+
 		add(lblTitel);
 		add(taText);
 		add(lblPic);
-		getFrame();
+		lblPic.add(btnContinue);
+
 	}
 
 	 /**
@@ -99,5 +102,14 @@ public class Introduction extends JPanel {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
+	}
+
+	private class ButtonListener implements ActionListener {
+
+    	public void actionPerformed (ActionEvent e){
+    		if(e.getSource() == btnContinue){
+				frame.dispose();
+			}
+		}
 	}
 }
