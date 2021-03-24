@@ -17,7 +17,7 @@ import code.view.WestSidePanel;
 
 /**
 * The class handles all the events that occur when a code.model.player lands on a tile.
-* @author Seth Oberg, Rohan Samandari, Muhammad Abdulkhuder, Sebastian Viro, Aevan Dino, Tor Stenfeldt
+* @author Seth Oberg, Rohan Samandari, Muhammad Abdulkhuder, Sebastian Viro, Aevan Dino, Tor Stenfeldt, Hanna My Jansson
 */
 public class ManageEvents {
 	private PlayerList playerList;
@@ -94,6 +94,8 @@ public class ManageEvents {
 			checkPlayerUpgrade(player);
 			this.eastPanel.addPlayerList(this.playerList);
 		}
+
+		eastPanel.setPlayerList(playerList);
 	}
 
 	/**
@@ -103,21 +105,45 @@ public class ManageEvents {
 	 */
 	public void checkPlayerBalance(Player player, int amount) {
 		if (player.getBalance() < amount) {
+			int oldPlayerOldIndex = eastPanel.getTab();
+			int newplayerNewIndex = 0;
+
+            if(oldPlayerOldIndex==(playerList.getLength()-1)){
+                newplayerNewIndex = 0;
+            }else{
+                newplayerNewIndex = oldPlayerOldIndex;
+            }
+
+
 			player.setIsAlive(false);
 			playerList.eliminatePlayer(player);
 			board.removePlayer(player);
+
 
 			if (playerList.getLength() == 1) {
 				new WinGui();
 			}else {
 				deathGUI.showGUI();
+				westPanel.append(player.getName() + " has died");
+                playerList.setCurrentPlayer(newplayerNewIndex);
 				playerList.updatePlayerList();
-				playerList.switchToNextPlayer();
-				eastPanel.addPlayerList(playerList.getList());
+                eastPanel.setCurrentPlayer(newplayerNewIndex);
+				eastPanel.setPlayerList(playerList.getList());
 				dice.setPlayerList(playerList.getList());
+				dice.activateRollDice();
+                updatePlayersPosition();
 			}
 		}
 	}
+    //loopar igenom alla spelare och placerar om dem på rätt plats.
+	public void updatePlayersPosition(){
+        for(int i = 0; i< playerList.getLength();i++){
+            Player player = playerList.getPlayerFromIndex(i);
+            board.removePlayer(player);
+            board.clearLabel(player.getPlayerIndex()+1, player.getPosition());
+            board.setPlayer(playerList.getPlayerFromIndex(i));
+        }
+    }
 
 	/**
 	 * Method that checks if a player has upgraded/downgraded and informs them about the event in a pop up message
@@ -180,11 +206,19 @@ public class ManageEvents {
 					westPanel.append("\n");
 
 					player.decreaseBalance(tempInt);
-					if (tempProperty.getLevel() == 0) {
+
+					//Såhär ska det väll inte vara?
+					/*if (tempProperty.getLevel() == 0) {
 						player.decreaseNetWorth(tempInt);
 					}
+
+					 */
+					//jag gör såhär istället
+					player.decreaseNetWorth(tempInt);
+
 					tempProperty.getOwner().increaseBalance(tempInt);
-				}
+					tempProperty.getOwner().increaseNetWorth(tempInt);
+			}
 			}
 		}
 	}

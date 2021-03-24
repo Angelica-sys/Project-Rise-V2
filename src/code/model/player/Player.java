@@ -12,7 +12,7 @@ import code.model.tiles.Tavern;
 
 /**
  * Player class deals with everything that has to do with a player.
- * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro, Tor Stenfeldt
+ * @author AevanDino, Seth �berg, Muhammad Hasan, Sebastian Viro, Tor Stenfeldt, Hanna My Jansson
  */
 public class Player {
 	private String name;
@@ -163,7 +163,8 @@ public class Player {
 	 * method used to move the player by either one or many steps
 	 * @param amountOfStepsToMove
 	 */
-	public void setPosition(int amountOfStepsToMove) {
+	public void increasePosition(int amountOfStepsToMove) {
+		//System.out.println("Steg/position på banan" + counter +"  +  " + amountOfStepsToMove);
 		for (int i = 0; i < amountOfStepsToMove; i++) {
 			if (counter < 39) {
 				counter++;
@@ -357,8 +358,11 @@ public class Player {
 		this.capital.forEach(e -> {
 			if (e instanceof Property) {
 				((Property) e).clearProperty();
+				((Property) e).setOwner(null);
+
 			} else {
 				((Tavern)e).clearTavern();
+				((Tavern)e).setOwner(null);
 			}
 		});
 	}

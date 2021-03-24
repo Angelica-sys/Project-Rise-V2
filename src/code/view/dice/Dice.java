@@ -16,7 +16,7 @@ import code.model.player.PlayerList;
 import code.view.WestSidePanel;
 
 /**
- * @author Muhammad Abdulkhuder, Aevan Dino, Sebastian Viro, Seth Oberg
+ * @author Muhammad Abdulkhuder, Aevan Dino, Sebastian Viro, Seth Oberg, Hanna My Jansson
  */
 public class Dice extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -190,9 +190,9 @@ public class Dice extends JPanel implements ActionListener {
 			movePlayerThread = new Thread(new LoopThread(getRoll()));
 			movePlayerThread.start();
 
-			goEvent();
 
-			eastSidePnl.addPlayerList(playerList);
+
+			eastSidePnl.setPlayerList(playerList);
 			btnRollDice.setEnabled(false);
 		}
 
@@ -215,8 +215,8 @@ public class Dice extends JPanel implements ActionListener {
 				btnEndTurn.setEnabled(false);
 			}
 			
-			eastSidePnl.addPlayerList(playerList);
-			eastSidePnl.setTab();
+			eastSidePnl.setPlayerList(playerList);
+			eastSidePnl.nextPlayerUpdateTab();
 		}
 	}
 
@@ -228,14 +228,14 @@ public class Dice extends JPanel implements ActionListener {
 		setRoll(i);
 		playerList.getActivePlayer().checkPlayerRank();
 		board.removePlayer(playerList.getActivePlayer());
-		playerList.getActivePlayer().setPosition(getRoll());
+		playerList.getActivePlayer().increasePosition(getRoll());
 		board.setPlayer(playerList.getActivePlayer());
 
 		manageEvents.setRoll(this);
 		goEvent();
 		manageEvents.newEvent(board.getDestinationTile(playerList.getActivePlayer().getPosition()),
 				playerList.getActivePlayer());
-		eastSidePnl.addPlayerList(playerList);
+		eastSidePnl.setPlayerList(playerList);
 	}
 
 	/**
@@ -259,6 +259,7 @@ public class Dice extends JPanel implements ActionListener {
 	 */
 	public void setPlayerList(PlayerList playerList) {
 		this.playerList = playerList;
+		showPlayersTurn.uppdateGUI(playerList.getActivePlayer().getName(), playerList.getActivePlayer().getPlayerColor());
 	}
 	
 	/**
@@ -287,7 +288,7 @@ public class Dice extends JPanel implements ActionListener {
 		public void run() {
 			for (int i = 0; i < getRoll(); i++) {
 				board.removePlayer(playerList.getActivePlayer());
-				playerList.getActivePlayer().setPosition(1);
+				playerList.getActivePlayer().increasePosition(1);
 				board.setPlayer(playerList.getActivePlayer());
 
 				if (i == (getRoll() - 1)) {
@@ -295,8 +296,9 @@ public class Dice extends JPanel implements ActionListener {
 							board.getDestinationTile(playerList.getActivePlayer().getPosition()),
 							playerList.getActivePlayer()
 					);
-					eastSidePnl.addPlayerList(playerList);
+					eastSidePnl.setPlayerList(playerList);
 					btnEndTurn.setEnabled(true);
+					goEvent();
 				}
 
 				try {
@@ -318,6 +320,7 @@ public class Dice extends JPanel implements ActionListener {
 
 			westSidePnl.append("Passed Go and received 200 GC\n");
 			playerList.getActivePlayer().resetPassedGo();
+			eastSidePnl.updatePanel();
 		}
 	}
 }

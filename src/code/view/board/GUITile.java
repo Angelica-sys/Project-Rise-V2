@@ -16,7 +16,7 @@ import code.model.player.Player;
 /**
  * Every tile is a guiTile object they are used to display the players.
  * It could also be used to show the level on the properties.
- * @author sethoberg
+ * @author sethoberg, Hanna My Jansson
  */
 public class GUITile extends JLabel {
 	private static final long serialVersionUID = 1L;
@@ -134,5 +134,11 @@ public class GUITile extends JLabel {
 		//System.out.println("player index: " + player.getPlayerIndex());
 		labels[player.getPlayerIndex()].setIcon(null);
 		labels[player.getPlayerIndex()].setHorizontalAlignment(CENTER);
+	}
+
+	public void clearLabel(int index){
+		if(index < labels.length) {
+			labels[index].setIcon(null);
+		}
 	}
 }

@@ -24,7 +24,7 @@ import code.view.startMenu.BackgroundMusic;
 
 /**
  * This class combines most of the panels in the game and adds appropriate references.
- * @author Abdulkhuder Muhammad
+ * @author Abdulkhuder Muhammad, Hanna My Jansson
  */
 public class GamePanels extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -99,7 +99,7 @@ public class GamePanels extends JPanel {
 	public void addPlayer(PlayerList playerList) {
 		board.addPlayers(playerList);
 		board.setPlayers();
-		tPanel.addPlayerList(playerList);
+		tPanel.setPlayerList(playerList);
 		dice.addPlayerList(playerList);
 	}
 

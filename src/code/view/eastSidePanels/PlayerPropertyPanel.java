@@ -26,11 +26,9 @@ import code.model.tiles.TradeType;
 
 /**
  * A class representing each Purchasable a Player owns.
- * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro, Tor Stenfeldt
+ * @author Muhammad Abdulkhuder Aevan Dino sebastian Viro, Tor Stenfeldt, Hanna My Jansson
  */
 public class PlayerPropertyPanel extends JPanel implements ActionListener {
-	//private static final long serialVersionUID = 14L;
-
 	private JTextArea taLevel = new JTextArea("");
 	private JButton btnUpgrade = new JButton("Upgrade");
 	private JButton btnDowngrade = new JButton("Downgrade");
@@ -168,7 +166,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 		} else if (e.getSource() == this.btnTrade) {
 			tradeCapital();
 		}
-		eastSidePanel.addPlayerList(playerList);
+		eastSidePanel.setPlayerList(playerList);
 	}
 
 	private void sellCapital() {
@@ -213,6 +211,7 @@ public class PlayerPropertyPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
+
 
     /**
      * Makes it possible for a player to trade a property for money, a property for property or
